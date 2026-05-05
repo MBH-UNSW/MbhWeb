@@ -6,12 +6,13 @@ import { MantineProvider } from '@mantine/core';
 
 import './index.css'
 import App from './App.tsx'
+import { theme } from './theme/theme.ts';
 
 const root = document.getElementById('root');
 
 createRoot(root).render(
   <StrictMode>
-    <MantineProvider>
+    <MantineProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
