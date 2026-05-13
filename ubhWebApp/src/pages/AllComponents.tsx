@@ -1,8 +1,11 @@
 import { Header1, Header2, Header3, Header4, Header5 } from "../components/typography/Header";
 import { Body1, Body2, Caption } from "../components/typography/Body";
 import { Input } from "../components/input/Input";
+import { SearchBar } from "../components/searchBar/SearchBar";
+import { useState } from "react";
 
 export default function AllComponents() {
+  const [searchQuery, setSearchQuery] = useState('');
   return (
     <div>
       <Header1>UBH Components Library</Header1>
@@ -34,25 +37,31 @@ export default function AllComponents() {
         </section>
       <Header4>Inputs:</Header4>
         <Input variant='single-line' label='Single-line (default ⇒ hover ⇒ focused ⇒ filled)' placeholder='Enter text' />
-        <Input variant='single-line' label='Single-line (error)' value='Text error' error='This field is required.'/>
-        <Input variant='single-line' label='Single-line (loading)' loading={true}/>
-        <Input variant='single-line' label='Single-line (disabled)' placeholder='Text cannot be entered' disabled/>
+        <Input variant='single-line' label='Single-line (error)' value='Text error' error='This field is required.' />
+        <Input variant='single-line' label='Single-line (loading)' loading={true} />
+        <Input variant='single-line' label='Single-line (disabled)' placeholder='Text cannot be entered' disabled />
         <Input variant='multi-line' label='Multi-line (default ⇒ hover ⇒ focused ⇒ filled)' placeholder='Enter text' />
-        <Input variant='multi-line' label='Multi-line (error)' value='Text error' error='This field is required.'/>
-        <Input variant='multi-line' label='Multi-line (loading)' loading={true}/>
-        <Input variant='multi-line' label='Multi-line (disabled)' placeholder='Text cannot be entered' disabled/>
+        <Input variant='multi-line' label='Multi-line (error)' value='Text error' error='This field is required.' />
+        <Input variant='multi-line' label='Multi-line (loading)' loading={true} />
+        <Input variant='multi-line' label='Multi-line (disabled)' placeholder='Text cannot be entered' disabled />
         <Input variant='numeric' label='Numeric (default ⇒ hover ⇒ focused ⇒ filled)' placeholder='12345678' />
-        <Input variant='numeric' label='Numeric (error)' error='This field is required'/>
-        <Input variant='numeric' label='Numeric (loading)' loading={true}/>
-        <Input variant='numeric' label='Numeric (disabled)' placeholder='12345678' disabled/>
+        <Input variant='numeric' label='Numeric (error)' error='This field is required.' />
+        <Input variant='numeric' label='Numeric (loading)' loading={true} />
+        <Input variant='numeric' label='Numeric (disabled)' placeholder='12345678' disabled />
         <Input variant='email' label='Email (default ⇒ hover ⇒ focused ⇒ filled)' placeholder='user@example.com' />
-        <Input variant='email' label='Email (error)' value='user@invalid' error='This field is of an invalid format.'/>
-        <Input variant='email' label='Email (loading)' value='user@saving.com' loading={true}/>
-        <Input variant='email' label='Email (disabled)' placeholder='user@example.com' disabled/>
+        <Input variant='email' label='Email (error)' value='user@invalid' error='This field is of an invalid format.' />
+        <Input variant='email' label='Email (loading)' value='user@saving.com' loading={true} />
+        <Input variant='email' label='Email (disabled)' placeholder='user@example.com' disabled />
         <Input variant='phone' label='Phone (default ⇒ hover ⇒ focused ⇒ filled)' placeholder='+61 423 456 789' />
-        <Input variant='phone' label='Phone (error)' value='+61 423 4' error='This field is of an invalid format.'/>
-        <Input variant='phone' label='Phone (loading)' value='+61 423 456 789' loading={true}/>
-        <Input variant='phone' label='Phone (disabled)' placeholder='+61 423 456 789' disabled/>
+        <Input variant='phone' label='Phone (error)' value='+61 423 4' error='This field is of an invalid format.' />
+        <Input variant='phone' label='Phone (loading)' value='+61 423 456 789' loading={true} />
+        <Input variant='phone' label='Phone (disabled)' placeholder='+61 423 456 789' disabled />
+
+      <Header4>Search bar:</Header4>
+        <SearchBar label='Search bar (default ⇒ hover ⇒ focused ⇒ filled)' placeholder='Enter text'
+          value={searchQuery} onChange={(e) => setSearchQuery(e.currentTarget.value)} onClear={() => setSearchQuery('')} />
+        <SearchBar label='Search bar (error)' value='Text error' error='This field is required.' />
+        <SearchBar label='Search bar (loading)' loading={true} />
     </div>
   );
 }
