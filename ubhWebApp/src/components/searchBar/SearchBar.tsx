@@ -27,12 +27,20 @@ export function SearchBar({
     onClear?.();
   };
 
-  const searchIconColor = error || value ? '#393939' : focused ? '#727272' : '#999999';
+  const getSearchIconColor = () => {
+    if (error || value) {
+      return 'var(--mantine-color-neutral-9)';
+    }
+    if (focused) {
+      return 'var(--mantine-color-neutral-8)';
+    }
+    return 'var(--mantine-color-neutral-7)';
+  };
 
-  const leftIcon = <IconSearch size={18} color={searchIconColor} />;
+  const leftIcon = <IconSearch size={18} color={getSearchIconColor()} />;
 
   const rightIcon = error ? (
-    <IconExclamationCircleFilled size={20} color="#941f1f" />
+    <IconExclamationCircleFilled size={20} color="var(--mantine-color-ubhRed-9)" />
   ) : loading ? (
     <Loader size={16} />
   ) : value ? (

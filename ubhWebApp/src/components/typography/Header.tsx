@@ -23,3 +23,7 @@ export const Header4 = ({ children }: { children: React.ReactNode }) => (
 export const Header5 = ({ children }: { children: React.ReactNode }) => (
   <Title order={5}>{children}</Title>
 );
+
+export const Header6 = ({ children }: { children: React.ReactNode }) => (
+  <Title order={6}>{children}</Title>
+);
