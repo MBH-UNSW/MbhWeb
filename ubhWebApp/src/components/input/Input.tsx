@@ -2,12 +2,7 @@ import { TextInput, Textarea, NumberInput, Loader } from '@mantine/core';
 import { IconExclamationCircleFilled } from '@tabler/icons-react';
 import classes from './Input.module.css';
 
-type InputVariant =
-  | 'single-line'
-  | 'multi-line'
-  | 'numeric'
-  | 'email'
-  | 'phone';
+type InputVariant = 'single-line' | 'multi-line' | 'numeric' | 'email' | 'phone';
 
 type InputProps = {
   variant?: InputVariant;

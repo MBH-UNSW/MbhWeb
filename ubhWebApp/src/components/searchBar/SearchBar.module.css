@@ -41,8 +41,8 @@
 }
 
 .search:hover {
-  color: #949494;
-  background-color: #eaeaea;
+  color: #999999;
+  background-color: #f2f2f2;
   border: 1px solid #a0a0a0;
 }
 
@@ -84,7 +84,7 @@
 }
 
 .clearButton:hover {
-  color: #757575;
+  color: #727272;
 }
 
 .clearButton:focus,

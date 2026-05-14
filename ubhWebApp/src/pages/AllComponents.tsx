@@ -1,10 +1,4 @@
-import {
-  Header1,
-  Header2,
-  Header3,
-  Header4,
-  Header5,
-} from '../components/typography/Header';
+import { Header1, Header2, Header3, Header4, Header5 } from '../components/typography/Header';
 import { Body1, Body2, Caption } from '../components/typography/Body';
 import { Input } from '../components/input/Input';
 import { SearchBar } from '../components/searchBar/SearchBar';
@@ -53,11 +47,7 @@ export default function AllComponents() {
         value="Text error"
         error="This field is required."
       />
-      <Input
-        variant="single-line"
-        label="Single-line (loading)"
-        loading={true}
-      />
+      <Input variant="single-line" label="Single-line (loading)" loading={true} />
       <Input
         variant="single-line"
         label="Single-line (disabled)"
@@ -87,18 +77,9 @@ export default function AllComponents() {
         label="Numeric (default ⇒ hover ⇒ focused ⇒ filled)"
         placeholder="12345678"
       />
-      <Input
-        variant="numeric"
-        label="Numeric (error)"
-        error="This field is required."
-      />
+      <Input variant="numeric" label="Numeric (error)" error="This field is required." />
       <Input variant="numeric" label="Numeric (loading)" loading={true} />
-      <Input
-        variant="numeric"
-        label="Numeric (disabled)"
-        placeholder="12345678"
-        disabled
-      />
+      <Input variant="numeric" label="Numeric (disabled)" placeholder="12345678" disabled />
       <Input
         variant="email"
         label="Email (default ⇒ hover ⇒ focused ⇒ filled)"
@@ -110,18 +91,8 @@ export default function AllComponents() {
         value="user@invalid"
         error="This field is of an invalid format."
       />
-      <Input
-        variant="email"
-        label="Email (loading)"
-        value="user@saving.com"
-        loading={true}
-      />
-      <Input
-        variant="email"
-        label="Email (disabled)"
-        placeholder="user@example.com"
-        disabled
-      />
+      <Input variant="email" label="Email (loading)" value="user@saving.com" loading={true} />
+      <Input variant="email" label="Email (disabled)" placeholder="user@example.com" disabled />
       <Input
         variant="phone"
         label="Phone (default ⇒ hover ⇒ focused ⇒ filled)"
@@ -133,18 +104,8 @@ export default function AllComponents() {
         value="+61 423 4"
         error="This field is of an invalid format."
       />
-      <Input
-        variant="phone"
-        label="Phone (loading)"
-        value="+61 423 456 789"
-        loading={true}
-      />
-      <Input
-        variant="phone"
-        label="Phone (disabled)"
-        placeholder="+61 423 456 789"
-        disabled
-      />
+      <Input variant="phone" label="Phone (loading)" value="+61 423 456 789" loading={true} />
+      <Input variant="phone" label="Phone (disabled)" placeholder="+61 423 456 789" disabled />
 
       <Header4>Search bar:</Header4>
       <SearchBar
@@ -154,11 +115,7 @@ export default function AllComponents() {
         onChange={e => setSearchQuery(e.currentTarget.value)}
         onClear={() => setSearchQuery('')}
       />
-      <SearchBar
-        label="Search bar (error)"
-        value="Text error"
-        error="This field is required."
-      />
+      <SearchBar label="Search bar (error)" value="Text error" error="This field is required." />
       <SearchBar label="Search bar (loading)" loading={true} />
     </div>
   );

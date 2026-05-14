@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { TextInput, Loader } from '@mantine/core';
-import {
-  IconSearch,
-  IconExclamationCircleFilled,
-  IconCircleXFilled,
-} from '@tabler/icons-react';
+import { IconSearch, IconExclamationCircleFilled, IconCircleXFilled } from '@tabler/icons-react';
 import classes from './SearchBar.module.css';
 
 type SearchProps = {
@@ -31,13 +27,7 @@ export function SearchBar({
     onClear?.();
   };
 
-  const searchIconColor = error
-    ? '#393939'
-    : value
-      ? '#393939'
-      : focused
-        ? '#727272'
-        : '#999999';
+  const searchIconColor = error || value ? '#393939' : focused ? '#727272' : '#999999';
 
   const leftIcon = <IconSearch size={18} color={searchIconColor} />;
 
