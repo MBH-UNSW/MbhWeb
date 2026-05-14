@@ -37,7 +37,6 @@ Create a new branch every time you work on a new feature, bug fix, or task.
 
 Do not reuse the same branch for multiple unrelated changes.
 
-
 ### Branch Naming Convention
 
 Use the following branch naming format:
@@ -48,13 +47,12 @@ git checkout -b 'your_name/page_or_category/feature/more_subcategories'
 
 #### Branch Naming Parts
 
-| Part | Description |
-|---|---|
-| `your_name` | Your name or nickname |
-| `page_or_category` | The page, feature area, or folder you are working on |
-| `feature` | The specific feature, fix, or task |
-| `more_subcategories` | Optional extra details if needed |
-
+| Part                 | Description                                          |
+| -------------------- | ---------------------------------------------------- |
+| `your_name`          | Your name or nickname                                |
+| `page_or_category`   | The page, feature area, or folder you are working on |
+| `feature`            | The specific feature, fix, or task                   |
+| `more_subcategories` | Optional extra details if needed                     |
 
 ### Branch Naming Examples
 
@@ -103,16 +101,16 @@ The `description` should explain what changed in a short and clear sentence.
 
 Use Conventional Commits to keep commit messages consistent.
 
-| Type | Description |
-|---|---|
-| `feat` | A new feature for the user |
-| `fix` | A bug fix for the user |
-| `docs` | Documentation-only changes |
-| `style` | Formatting, missing semicolons, spacing, etc. No production code changes |
+| Type       | Description                                                                                           |
+| ---------- | ----------------------------------------------------------------------------------------------------- |
+| `feat`     | A new feature for the user                                                                            |
+| `fix`      | A bug fix for the user                                                                                |
+| `docs`     | Documentation-only changes                                                                            |
+| `style`    | Formatting, missing semicolons, spacing, etc. No production code changes                              |
 | `refactor` | Code changes that do not fix a bug or add a feature, such as renaming variables or restructuring code |
-| `perf` | Code changes that improve performance |
-| `test` | Adding missing tests or correcting existing tests |
-| `chore` | Regular maintenance tasks, such as dependency updates or config changes |
+| `perf`     | Code changes that improve performance                                                                 |
+| `test`     | Adding missing tests or correcting existing tests                                                     |
+| `chore`    | Regular maintenance tasks, such as dependency updates or config changes                               |
 
 ### Commit Message Examples
 
@@ -159,10 +157,12 @@ git push
 ```
 
 #### Update Main Branch
+
 ```bash
 git checkout main
 git pull origin main
 ```
+
 ---
 
 If someone breaks the code, we have a deal between us:

@@ -13,30 +13,45 @@ type SearchProps = {
   onClear?: () => void;
 };
 
-export function SearchBar({label, placeholder, error, loading, value, onChange, onClear}: SearchProps) {
+export function SearchBar({
+  label,
+  placeholder,
+  error,
+  loading,
+  value,
+  onChange,
+  onClear,
+}: SearchProps) {
   const [focused, setFocused] = useState(false);
   const handleClear = () => {
     onClear?.();
   };
 
-  const searchIconColor = error ? '#393939'
-    : value ? '#393939'
-    : focused ? '#727272'
-    : '#999999';
+  const getSearchIconColor = () => {
+    if (error || value) {
+      return 'var(--mantine-color-neutral-9)';
+    }
+    if (focused) {
+      return 'var(--mantine-color-neutral-8)';
+    }
+    return 'var(--mantine-color-neutral-7)';
+  };
 
-  const leftIcon = <IconSearch size={18} color={searchIconColor} />;
+  const leftIcon = <IconSearch size={18} color={getSearchIconColor()} />;
 
-  const rightIcon = error ? <IconExclamationCircleFilled size={20} color='#941f1f' />
-    : loading ? <Loader size={16} />
-    : value ?
-      <button className={classes.clearButton} onClick={handleClear}>
-        <IconCircleXFilled size={20}/>
-      </button>
-    : null;
+  const rightIcon = error ? (
+    <IconExclamationCircleFilled size={20} color="var(--mantine-color-ubhRed-9)" />
+  ) : loading ? (
+    <Loader size={16} />
+  ) : value ? (
+    <button className={classes.clearButton} onClick={handleClear}>
+      <IconCircleXFilled size={20} />
+    </button>
+  ) : null;
 
   return (
     <TextInput
-      type='text'
+      type="text"
       label={label}
       placeholder={placeholder}
       error={error}

@@ -12,18 +12,29 @@ type InputProps = {
   loading?: boolean;
   disabled?: boolean;
   value?: string | number;
-  onChange?: (e: any) => void;  // 'any' is temporary
+  onChange?: (e: any) => void; // 'any' is temporary
 };
 
-export function Input({label, placeholder, variant='single-line', error, loading, disabled, value, onChange}: InputProps) {
-  const rightIcon = error ? <IconExclamationCircleFilled size={20} color='#941f1f' />
-    : loading ? <Loader size={16} />
-    : null;
+export function Input({
+  label,
+  placeholder,
+  variant = 'single-line',
+  error,
+  loading,
+  disabled,
+  value,
+  onChange,
+}: InputProps) {
+  const rightIcon = error ? (
+    <IconExclamationCircleFilled size={20} color="var(--mantine-color-ubhRed-9)" />
+  ) : loading ? (
+    <Loader size={16} />
+  ) : null;
 
   if (variant === 'single-line') {
     return (
       <TextInput
-        type='text'
+        type="text"
         label={label}
         placeholder={placeholder}
         error={error}
@@ -90,7 +101,7 @@ export function Input({label, placeholder, variant='single-line', error, loading
   if (variant === 'email') {
     return (
       <TextInput
-        type='email'
+        type="email"
         label={label}
         placeholder={placeholder}
         error={error}
@@ -111,7 +122,7 @@ export function Input({label, placeholder, variant='single-line', error, loading
   if (variant === 'phone') {
     return (
       <TextInput
-        type='tel'
+        type="tel"
         label={label}
         placeholder={placeholder}
         error={error}
