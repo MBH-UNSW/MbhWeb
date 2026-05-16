@@ -1,6 +1,8 @@
 import { Button as MantineButton } from "@mantine/core";
 import { type LucideIcon } from "lucide-react";
 
+import classes from './Button.module.css'
+
 type ButtonVariant = 'default' | 'outlined' | 'text';
 
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -26,6 +28,7 @@ export function Button({
   onClick,
   fullWidth
 }: ButtonProps) {
+
   let mantineVariant = 'filled';
 
   if (variant === 'outlined') {
@@ -53,8 +56,15 @@ export function Button({
       disabled={disabled}
       onClick={onClick}
       fullWidth={fullWidth}
-      leftSection={LeftIcon ? <LeftIcon size={iconSize} /> : undefined}
-      rightSection={RightIcon ? <RightIcon size={iconSize} /> : undefined}
+      leftSection={
+        LeftIcon ? <LeftIcon size={iconSize} /> : undefined
+      }
+      rightSection={
+        RightIcon ? <RightIcon size={iconSize} /> : undefined
+      }
+      classNames={{
+        root: `${classes.root} ${classes[variant]}`,
+      }}
     >
       {children}
     </MantineButton>
