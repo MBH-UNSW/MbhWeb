@@ -1,9 +1,7 @@
 import AllComponents from './pages/AllComponents';
 
 function App() {
-  return (
-    <AllComponents />
-  );
+  return <AllComponents />;
 }
 
 export default App;
