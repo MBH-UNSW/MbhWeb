@@ -134,7 +134,7 @@ export default function AllComponents() {
           placeholder="Select an item"
           value={selectedValue}
           data={['Item 1', 'Item 2', 'Item 3', 'Item 4']}
-          onChange={(value) => setSelectedValue(value)}
+          onChange={value => setSelectedValue(value)}
           searchable
         />
         <DropdownList label="Dropdown list (loading)" loading={true} />

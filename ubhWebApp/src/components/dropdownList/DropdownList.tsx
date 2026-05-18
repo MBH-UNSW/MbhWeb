@@ -21,11 +21,10 @@ export function DropdownList({
   onChange,
   searchable,
 }: DropdownProps) {
-
   const rightIcon = loading ? (
-    <Loader size={16} color="var(--mantine-color-ubhRed-9)"/>
+    <Loader size={16} color="var(--mantine-color-ubhRed-9)" />
   ) : (
-    <IconChevronDownFilled size={24} color='var(--mantine-color-neutral-9)'/>
+    <IconChevronDownFilled size={24} color="var(--mantine-color-neutral-9)" />
   );
 
   return (
