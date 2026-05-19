@@ -130,7 +130,6 @@ export default function AllComponents() {
         <SearchBar label="Search bar (error)" value="Text error" error="This field is required." />
         <SearchBar label="Search bar (loading)" loading={true} />
       </section>
-<<<<<<< HEAD
       {/* BUTTONS */}
       <section style={{ marginTop: "48px" }}>
         <Header2>Buttons:</Header2>
@@ -254,7 +253,7 @@ export default function AllComponents() {
             Full Width
           </Button>
         </div>
-=======
+      </section>
       <Header2>Dropdown List</Header2>
       <section>
         <DropdownList
@@ -266,7 +265,6 @@ export default function AllComponents() {
           searchable
         />
         <DropdownList label="Dropdown list (loading)" loading={true} />
->>>>>>> main
       </section>
     </div>
   );
