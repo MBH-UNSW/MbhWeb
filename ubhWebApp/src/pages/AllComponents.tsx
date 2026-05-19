@@ -3,7 +3,10 @@ import { Body1, Body2, Caption } from '../components/typography/Body';
 import { Input } from '../components/input/Input';
 import { SearchBar } from '../components/searchBar/SearchBar';
 import { useState } from 'react';
+import { Button } from "../components/buttons/Button";
 import { DropdownList } from '../components/dropdownList/DropdownList';
+
+import { X } from 'lucide-react';   // placeholder, maybe we can move this into individual wrapper for icons.
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -126,6 +129,130 @@ export default function AllComponents() {
         />
         <SearchBar label="Search bar (error)" value="Text error" error="This field is required." />
         <SearchBar label="Search bar (loading)" loading={true} />
+      </section>
+      {/* BUTTONS */}
+      <section style={{ marginTop: "48px" }}>
+        <Header2>Buttons:</Header2>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "36px"
+        }}>
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+            <Body1>default:</Body1>
+            <Button variant='default' size='xs'>
+              x-small
+            </Button>
+
+            <Button variant='default' size='sm'>
+              small
+            </Button>
+
+            <Button variant='default' size='md'>
+              medium
+            </Button>
+
+            <Button variant='default' size='lg'>
+              large
+            </Button>
+
+            <Button variant='default' size='xl'>
+              x-large
+            </Button>
+          </div>
+
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+            <Body1>outlined:</Body1>
+            <Button variant='outlined' size='xs'>
+              x-small
+            </Button>
+
+            <Button variant='outlined' size='sm'>
+              small
+            </Button>
+
+            <Button variant='outlined' size='md'>
+              medium
+            </Button>
+
+            <Button variant='outlined' size='lg'>
+              large
+            </Button>
+
+            <Button variant='outlined' size='xl'>
+              x-large
+            </Button>
+          </div>
+
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+            <Body1>text:</Body1>
+            <Button variant='text' size='xs'>
+              x-small
+            </Button>
+
+            <Button variant='text' size='sm'>
+              small
+            </Button>
+
+            <Button variant='text' size='md'>
+              medium
+            </Button>
+
+            <Button variant='text' size='lg'>
+              large
+            </Button>
+
+            <Button variant='text' size='xl'>
+              x-large
+            </Button>
+          </div>
+
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+            <Button>
+              Button
+            </Button>
+
+            <Button leftIcon={X}>
+              Button
+            </Button>
+
+            <Button rightIcon={X}>
+              Button
+            </Button>
+
+            <Button leftIcon={X} rightIcon={X}>
+              Button
+            </Button>
+          </div>
+
+          <Button variant='default' disabled>
+            Disabled
+          </Button>
+
+          <Button fullWidth>
+            Full Width
+          </Button>
+        </div>
       </section>
       <Header2>Dropdown List</Header2>
       <section>
