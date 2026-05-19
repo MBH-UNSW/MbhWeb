@@ -4,11 +4,13 @@ import { Input } from '../components/input/Input';
 import { SearchBar } from '../components/searchBar/SearchBar';
 import { useState } from 'react';
 import { Button } from "../components/buttons/Button";
+import { DropdownList } from '../components/dropdownList/DropdownList';
 
 import { X } from 'lucide-react';   // placeholder, maybe we can move this into individual wrapper for icons.
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
   return (
     <div>
       <div style={{ textAlign: 'center', color: 'var(--mantine-color-ubhRed-9)' }}>
@@ -128,6 +130,7 @@ export default function AllComponents() {
         <SearchBar label="Search bar (error)" value="Text error" error="This field is required." />
         <SearchBar label="Search bar (loading)" loading={true} />
       </section>
+<<<<<<< HEAD
       {/* BUTTONS */}
       <section style={{ marginTop: "48px" }}>
         <Header2>Buttons:</Header2>
@@ -251,6 +254,19 @@ export default function AllComponents() {
             Full Width
           </Button>
         </div>
+=======
+      <Header2>Dropdown List</Header2>
+      <section>
+        <DropdownList
+          label="Dropdown list (default ⇒ hover ⇒ focused ⇒ selected)"
+          placeholder="Select an item"
+          value={selectedValue}
+          data={['Item 1', 'Item 2', 'Item 3', 'Item 4']}
+          onChange={value => setSelectedValue(value)}
+          searchable
+        />
+        <DropdownList label="Dropdown list (loading)" loading={true} />
+>>>>>>> main
       </section>
     </div>
   );
