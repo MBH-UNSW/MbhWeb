@@ -18,12 +18,14 @@ import { X } from 'lucide-react'; // placeholder, maybe we can move this into in
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { RadioInput } from '../components/radio/Radio';
+import { ToggleSwitch } from '../components/toggle/Toggle';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
   const [radioChecked, setRadioChecked] = useState(false);
+  const [toggleChecked, setToggleChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -313,6 +315,17 @@ export default function AllComponents() {
         />
         <RadioInput label="Label" description="Disabled" disabled={true} />
         <RadioInput label="Label" error="There is an error" />
+      </section>
+      <Header2>Toggle Switch</Header2>
+      <section>
+        <ToggleSwitch
+          label="Label"
+          description="Unchecked ⇒ Checked"
+          checked={toggleChecked}
+          onChange={e => setToggleChecked(e.currentTarget.checked)}
+        />
+        <ToggleSwitch label="Label" description="Disabled" disabled={true} />
+        <ToggleSwitch label="Label" error="There is an error" />
       </section>
     </div>
   );

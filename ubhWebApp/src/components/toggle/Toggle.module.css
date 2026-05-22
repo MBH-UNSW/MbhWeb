@@ -1,0 +1,56 @@
+.root {
+  width: 100%;
+}
+
+.label {
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-neutral-9);
+}
+
+.description {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-regular);
+  color: var(--mantine-color-neutral-7);
+}
+
+.error {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--error-text);
+  margin-left: var(--mantine-spacing-xxxs);
+}
+
+.toggle {
+  cursor: pointer;
+  border: 1px solid var(--mantine-color-neutral-4);
+  background-color: var(--mantine-color-neutral-4);
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.toggle:hover {
+  border-color: var(--mantine-color-neutral-5);
+  background-color: var(--mantine-color-neutral-5);
+}
+
+.input:checked + .toggle {
+  border-color: var(--success-shadow);
+  background-color: var(--success-shadow);
+}
+
+.input:checked + .toggle:hover {
+  border-color: var(--success-hover);
+  background-color: var(--success-hover);
+}
+
+.input:disabled + .toggle {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.root:has(input:disabled) {
+  cursor: not-allowed;
+}
+
+.thumb {
+  color: var(--mantine-color-neutral-0);
+}
