@@ -4,10 +4,12 @@ import { Input } from '../components/input/Input';
 import { SearchBar } from '../components/searchBar/SearchBar';
 import { useState } from 'react';
 import { DropdownList } from '../components/dropdownList/DropdownList';
+import { CheckBox } from '../components/checkbox/Checkbox';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [checked, setChecked] = useState(false);
   return (
     <div>
       <div style={{ textAlign: 'center', color: 'var(--mantine-color-ubhRed-9)' }}>
@@ -138,6 +140,17 @@ export default function AllComponents() {
           searchable
         />
         <DropdownList label="Dropdown list (loading)" loading={true} />
+      </section>
+      <Header2>Checkbox</Header2>
+      <section>
+        <CheckBox
+          label="Label"
+          description="Checked ⇒ unchecked"
+          checked={checked}
+          onChange={e => setChecked(e.currentTarget.checked)}
+        />
+        <CheckBox label="Label" description="Disabled" disabled={true} />
+        <CheckBox label="Label" error='There is an error' />
       </section>
     </div>
   );
