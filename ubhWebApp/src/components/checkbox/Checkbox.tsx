@@ -10,7 +10,7 @@ type CheckboxProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function CheckBox({
+export function CheckboxInput({
   label,
   description,
   checked,
@@ -22,7 +22,8 @@ export function CheckBox({
     <Checkbox
       label={label}
       description={description}
-      color="gray"
+      iconColor="var(--mantine-color-neutral-9)"
+      color="var(--mantine-color-neutral-4)"
       variant="outline"
       radius="xs"
       checked={checked}
