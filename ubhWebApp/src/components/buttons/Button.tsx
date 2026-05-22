@@ -1,7 +1,7 @@
-import { Button as MantineButton } from "@mantine/core";
-import { type LucideIcon } from "lucide-react";
+import { Button as MantineButton } from '@mantine/core';
+import { type LucideIcon } from 'lucide-react';
 
-import classes from './Button.module.css'
+import classes from './Button.module.css';
 
 type ButtonVariant = 'default' | 'outlined' | 'text';
 
@@ -14,7 +14,7 @@ type ButtonProps = {
   leftIcon?: LucideIcon;
   rightIcon?: LucideIcon;
   disabled?: boolean;
-  onClick?: () => void;   // Temporary Placeholder
+  onClick?: () => void; // Temporary Placeholder
   fullWidth?: boolean;
 };
 
@@ -26,9 +26,8 @@ export function Button({
   rightIcon: RightIcon,
   disabled,
   onClick,
-  fullWidth
+  fullWidth,
 }: ButtonProps) {
-
   let mantineVariant = 'filled';
 
   if (variant === 'outlined') {
@@ -56,12 +55,8 @@ export function Button({
       disabled={disabled}
       onClick={onClick}
       fullWidth={fullWidth}
-      leftSection={
-        LeftIcon ? <LeftIcon size={iconSize} /> : undefined
-      }
-      rightSection={
-        RightIcon ? <RightIcon size={iconSize} /> : undefined
-      }
+      leftSection={LeftIcon ? <LeftIcon size={iconSize} /> : undefined}
+      rightSection={RightIcon ? <RightIcon size={iconSize} /> : undefined}
       classNames={{
         root: `${classes.root} ${classes[variant]}`,
       }}

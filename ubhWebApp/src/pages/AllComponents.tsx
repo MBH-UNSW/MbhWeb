@@ -12,6 +12,7 @@ import { SearchBar } from '../components/searchBar/SearchBar';
 import { useState } from 'react';
 import { Button } from '../components/buttons/Button';
 import { DropdownList } from '../components/dropdownList/DropdownList';
+import { CheckBox } from '../components/checkbox/Checkbox';
 
 import { X } from 'lucide-react'; // placeholder, maybe we can move this into individual wrapper for icons.
 import { Box } from '@mantine/core';
@@ -20,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [checked, setChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -286,6 +288,17 @@ export default function AllComponents() {
           searchable
         />
         <DropdownList label="Dropdown list (loading)" loading={true} />
+      </section>
+      <Header2>Checkbox</Header2>
+      <section>
+        <CheckBox
+          label="Label"
+          description="Checked ⇒ unchecked"
+          checked={checked}
+          onChange={e => setChecked(e.currentTarget.checked)}
+        />
+        <CheckBox label="Label" description="Disabled" disabled={true} />
+        <CheckBox label="Label" error="There is an error" />
       </section>
     </div>
   );

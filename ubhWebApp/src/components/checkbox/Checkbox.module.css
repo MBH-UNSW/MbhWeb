@@ -1,0 +1,37 @@
+.root {
+  width: 100%;
+}
+
+.label {
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-neutral-9);
+}
+
+.description {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-regular);
+  color: var(--mantine-color-neutral-7);
+}
+
+.error {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--error-text);
+  margin-left: var(--mantine-spacing-xxxs);
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--mantine-color-neutral-9);
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  accent-color: var(--mantine-color-neutral-9);
+}
+
+.checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
