@@ -1,0 +1,43 @@
+.root {
+  width: 100%;
+}
+
+.label {
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-neutral-9);
+}
+
+.description {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-regular);
+  color: var(--mantine-color-neutral-7);
+}
+
+.error {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--error-text);
+  margin-left: var(--mantine-spacing-xxxs);
+}
+
+.radio {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.radio[data-checked] {
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.radio:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.icon {
+  color: var(--mantine-color-neutral-6);
+  width: 13px;
+  height: 13px;
+}
