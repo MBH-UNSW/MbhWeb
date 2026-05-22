@@ -12,16 +12,18 @@ import { SearchBar } from '../components/searchBar/SearchBar';
 import { useState } from 'react';
 import { Button } from '../components/buttons/Button';
 import { DropdownList } from '../components/dropdownList/DropdownList';
-import { CheckBox } from '../components/checkbox/Checkbox';
+import { CheckboxInput } from '../components/checkbox/Checkbox';
 
 import { X } from 'lucide-react'; // placeholder, maybe we can move this into individual wrapper for icons.
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import { RadioInput } from '../components/radio/Radio';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
+  const [radioChecked, setRadioChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -291,14 +293,26 @@ export default function AllComponents() {
       </section>
       <Header2>Checkbox</Header2>
       <section>
-        <CheckBox
+        <CheckboxInput
           label="Label"
           description="Checked ⇒ unchecked"
           checked={checked}
           onChange={e => setChecked(e.currentTarget.checked)}
         />
-        <CheckBox label="Label" description="Disabled" disabled={true} />
-        <CheckBox label="Label" error="There is an error" />
+        <CheckboxInput label="Label" description="Disabled" disabled={true} />
+        <CheckboxInput label="Label" error="There is an error" />
+      </section>
+      <Header2>Radio</Header2>
+      <section>
+        <RadioInput label="Label" description="Unchecked" />
+        <RadioInput
+          label="Label"
+          description="Unchecked ⇒ Checked"
+          checked={radioChecked}
+          onChange={e => setRadioChecked(e.currentTarget.checked)}
+        />
+        <RadioInput label="Label" description="Disabled" disabled={true} />
+        <RadioInput label="Label" error="There is an error" />
       </section>
     </div>
   );

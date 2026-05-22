@@ -20,13 +20,24 @@
   margin-left: var(--mantine-spacing-xxxs);
 }
 
-.checkbox {
+.radio {
   width: 20px;
   height: 20px;
   cursor: pointer;
 }
 
-.checkbox:disabled {
+.radio[data-checked] {
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.radio:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.icon {
+  color: var(--mantine-color-neutral-6);
+  width: 13px;
+  height: 13px;
 }

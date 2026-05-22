@@ -1,7 +1,7 @@
-import { Checkbox } from '@mantine/core';
-import classes from './Checkbox.module.css';
+import { Radio } from '@mantine/core';
+import classes from './Radio.module.css';
 
-type CheckboxProps = {
+type RadioProps = {
   label?: string;
   description?: string;
   checked?: boolean;
@@ -10,22 +10,13 @@ type CheckboxProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function CheckboxInput({
-  label,
-  description,
-  checked,
-  error,
-  disabled,
-  onChange,
-}: CheckboxProps) {
+export function RadioInput({ label, description, checked, error, disabled, onChange }: RadioProps) {
   return (
-    <Checkbox
+    <Radio
       label={label}
       description={description}
-      iconColor="var(--mantine-color-neutral-9)"
       color="var(--mantine-color-neutral-4)"
       variant="outline"
-      radius="xs"
       checked={checked}
       onChange={onChange}
       error={error}
@@ -33,7 +24,8 @@ export function CheckboxInput({
       classNames={{
         root: classes.root,
         label: classes.label,
-        input: classes.checkbox,
+        radio: classes.radio,
+        icon: classes.icon,
         description: classes.description,
         error: classes.error,
       }}
