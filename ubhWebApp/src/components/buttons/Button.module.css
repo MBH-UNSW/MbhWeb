@@ -1,0 +1,60 @@
+.root {
+}
+
+/* default variant */
+.default {
+    background-color: #941f1f;
+    color: white;
+}
+
+.default:hover {
+    background-color: #620000;
+}
+
+.default:active {
+    background-color: #be2525;
+}
+
+/* outlined variant */
+.outlined {
+    background-color: transparent;
+    border: 1px solid #941f1f;
+    color: #941f1f;
+}
+
+.outlined:hover {
+    background-color: transparent;
+    border-color: #620000;
+    color: #620000;
+}
+
+.outlined:active {
+    background-color: transparent;
+    border-color: #be2525;
+    color: #be2525;
+}
+
+/* text variant */
+.text {
+    background-color: transparent;
+    color: #941f1f;
+}
+
+.text:hover {
+    background-color: transparent;
+    color: #620000;
+}
+
+.text:active {
+    background-color: transparent;
+    color: #be2525;
+}
+
+/* disabled variant */
+.root:disabled,
+.root[data-disabled] {
+  background-color: #c9c9c9;
+  border-color: #c9c9c9;
+  color: white;
+  cursor: not-allowed;
+}

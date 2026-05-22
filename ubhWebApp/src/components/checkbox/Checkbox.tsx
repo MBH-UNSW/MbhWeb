@@ -18,14 +18,13 @@ export function CheckBox({
   disabled,
   onChange,
 }: CheckboxProps) {
-
   return (
     <Checkbox
       label={label}
       description={description}
-      color='gray'
-      variant='outline'
-      radius='xs'
+      color="gray"
+      variant="outline"
+      radius="xs"
       checked={checked}
       onChange={onChange}
       error={error}
