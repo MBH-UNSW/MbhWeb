@@ -14,16 +14,16 @@ export const ubhRed: MantineColorsTuple = [
   '#941f1f', // Default in Figma
 ];
 export const ubhBlue: MantineColorsTuple = [
-  '#edf2f7',
-  '#e6f0fa',
+  '#edf2f7', // manually set (for figma)
+  '#e6f0fa', // manually set (for figma)
   '#c8ddf3',
   '#aacaec',
   '#8eb8e5',
   '#6fa4dd',
   '#5292d6',
   '#337ecf',
-  '#146ac7',
-  '#0056b3',
+  '#146ac7', // manually set (for figma)
+  '#0056b3', // manually set (for figma)
 ];
 
 export const neutral: MantineColorsTuple = [

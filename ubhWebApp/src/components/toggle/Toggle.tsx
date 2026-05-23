@@ -10,7 +10,14 @@ type ToggleProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function ToggleSwitch({ label, description, checked, error, disabled, onChange }: ToggleProps) {
+export function ToggleSwitch({
+  label,
+  description,
+  checked,
+  error,
+  disabled,
+  onChange,
+}: ToggleProps) {
   return (
     <Switch
       label={label}

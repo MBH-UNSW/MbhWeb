@@ -15,6 +15,11 @@
   --success-shadow: #2e7d32;
   --success-hover: #2c7530;
 
+  --emergency-pill-fill: #e14b48;
+  --appt-pill-fill: #a56fe6;
+  --supply-pill-fill: #7ba9ff;
+  --gen-pill-fill: #3ccfa0;
+
   color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
