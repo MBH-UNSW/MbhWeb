@@ -1,0 +1,31 @@
+.root {
+  width: 100%;
+}
+
+.label {
+  font-size: var(--text-size);
+  font-weight: var(--mantine-font-weight-regular);
+  padding: 0px 3px;
+}
+
+.solidPill {
+  background-color: var(--pill-colour);
+  border-radius: 30px;
+  margin: 2px 5px;
+  border: 1.5px solid var(--pill-colour);
+}
+
+.solidPill .label {
+  color: var(--mantine-color-neutral-0);
+}
+
+.outlinedPill {
+  background-color: transparent;
+  border-radius: 30px;
+  margin: 2px 5px;
+  border: 1.5px solid var(--pill-colour);
+}
+
+.outlinedPill .label {
+  color: var(--mantine-color-neutral-9);
+}

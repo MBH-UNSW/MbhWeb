@@ -19,6 +19,7 @@ import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { RadioInput } from '../components/radio/Radio';
 import { ToggleSwitch } from '../components/toggle/Toggle';
+import { PillInput } from '../components/pill/Pill';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -326,6 +327,59 @@ export default function AllComponents() {
         />
         <ToggleSwitch label="Label" description="Disabled" disabled={true} />
         <ToggleSwitch label="Label" error="There is an error" />
+      </section>
+      <Header2>Pills</Header2>
+      <section>
+        <Body1> Solid (small/medium/large): </Body1>
+        <section>
+          <PillInput variant="solid" label="Emergency" size="sm" />
+          <PillInput variant="solid" label="Appointment Making" size="sm" />
+          <PillInput variant="solid" label="Supply Restock" size="sm" />
+          <PillInput variant="solid" label="General Question" size="sm" />
+          <PillInput variant="solid" label="Archive" size="sm" />
+          <PillInput variant="solid" label="Other" size="sm" />
+        </section>
+        <section>
+          <PillInput variant="solid" label="Emergency" size="md" />
+          <PillInput variant="solid" label="Appointment Making" size="md" />
+          <PillInput variant="solid" label="Supply Restock" size="md" />
+          <PillInput variant="solid" label="General Question" size="md" />
+          <PillInput variant="solid" label="Archive" size="md" />
+          <PillInput variant="solid" label="Other" size="md" />
+        </section>
+        <section>
+          <PillInput variant="solid" label="Emergency" size="lg" />
+          <PillInput variant="solid" label="Appointment Making" size="lg" />
+          <PillInput variant="solid" label="Supply Restock" size="lg" />
+          <PillInput variant="solid" label="General Question" size="lg" />
+          <PillInput variant="solid" label="Archive" size="lg" />
+          <PillInput variant="solid" label="Other" size="lg" />
+        </section>
+        <Body1> Outlined (small/medium/large): </Body1>
+        <section>
+          <PillInput variant="outlined" label="Emergency" size="sm" />
+          <PillInput variant="outlined" label="Appointment Making" size="sm" />
+          <PillInput variant="outlined" label="Supply Restock" size="sm" />
+          <PillInput variant="outlined" label="General Question" size="sm" />
+          <PillInput variant="outlined" label="Archive" size="sm" />
+          <PillInput variant="outlined" label="Other" size="sm" />
+        </section>
+        <section>
+          <PillInput variant="outlined" label="Emergency" size="md" />
+          <PillInput variant="outlined" label="Appointment Making" size="md" />
+          <PillInput variant="outlined" label="Supply Restock" size="md" />
+          <PillInput variant="outlined" label="General Question" size="md" />
+          <PillInput variant="outlined" label="Archive" size="md" />
+          <PillInput variant="outlined" label="Other" size="md" />
+        </section>
+        <section>
+          <PillInput variant="outlined" label="Emergency" size="lg" />
+          <PillInput variant="outlined" label="Appointment Making" size="lg" />
+          <PillInput variant="outlined" label="Supply Restock" size="lg" />
+          <PillInput variant="outlined" label="General Question" size="lg" />
+          <PillInput variant="outlined" label="Archive" size="lg" />
+          <PillInput variant="outlined" label="Other" size="lg" />
+        </section>
       </section>
     </div>
   );
