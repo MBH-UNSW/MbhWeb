@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { RadioInput } from '../components/radio/Radio';
 import { ToggleSwitch } from '../components/toggle/Toggle';
 import { PillInput } from '../components/pill/Pill';
+import { IconButton } from '../components/buttons/IconButton';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -380,6 +381,39 @@ export default function AllComponents() {
           <PillInput variant="outlined" label="Archive" size="lg" />
           <PillInput variant="outlined" label="Other" size="lg" />
         </section>
+      </section>
+      <Header2>Icon Buttons:</Header2>
+      <section>
+        <Body1> Solid (x-small/small/medium/large/x-large): </Body1>
+        <div>
+          <IconButton icon={X} variant="default" size="xs" />
+          <IconButton icon={X} variant="default" size="sm" />
+          <IconButton icon={X} variant="default" size="md" />
+          <IconButton icon={X} variant="default" size="lg" />
+          <IconButton icon={X} variant="default" size="xl" />
+        </div>
+        <Body1> Outlined (x-small/small/medium/large/x-large): </Body1>
+        <div>
+          <IconButton icon={X} variant="outlined" size="xs" />
+          <IconButton icon={X} variant="outlined" size="sm" />
+          <IconButton icon={X} variant="outlined" size="md" />
+          <IconButton icon={X} variant="outlined" size="lg" />
+          <IconButton icon={X} variant="outlined" size="xl" />
+        </div>
+        <Body1> Text (x-small/small/medium/large/x-large): </Body1>
+        <div>
+          <IconButton icon={X} variant="text" size="xs" />
+          <IconButton icon={X} variant="text" size="sm" />
+          <IconButton icon={X} variant="text" size="md" />
+          <IconButton icon={X} variant="text" size="lg" />
+          <IconButton icon={X} variant="text" size="xl" />
+        </div>
+        <Body1> Disabled (default/outlined/text): </Body1>
+        <div>
+          <IconButton icon={X} variant="default" disabled />
+          <IconButton icon={X} variant="outlined" disabled />
+          <IconButton icon={X} variant="text" disabled />
+        </div>
       </section>
     </div>
   );
