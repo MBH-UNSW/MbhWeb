@@ -5,6 +5,7 @@ import {
   Header4,
   Header5,
   Header6,
+  SectionHeader,
 } from '../components/typography/Header';
 import { Body1, Body2, Caption } from '../components/typography/Body';
 import { Input } from '../components/input/Input';
@@ -43,9 +44,12 @@ export default function AllComponents() {
         </Button>
       </Box>
 
-      <Header2>Typography</Header2>
+      <SectionHeader>Typography</SectionHeader>
       <section>
         <Header1>Header 1</Header1>
+        <Header1 italic>Header 1 (italic)</Header1>
+        <Header1 bold>Header 1 (bold)</Header1>
+        <Header1 underline>Header 1 (underline)</Header1>
         <Caption>fontSize: 40px, weight: 700, lineHeight: 1.2</Caption>
 
         <Header2>Header 2</Header2>
@@ -62,17 +66,25 @@ export default function AllComponents() {
 
         <Header6>Header 6</Header6>
         <Caption>fontSize: 16px, weight: 400, lineHeight: 1.5</Caption>
+
+        <Header3 color="var(--mantine-color-ubhRed-9)">Header 3 (color)</Header3>
+        <Header4 align="center">Header 4 (centered)</Header4>
       </section>
       <section>
         <Body1>Body 1</Body1>
+        <Body1 italic>Body 1 (italic)</Body1>
+        <Body1 bold>Body 1 (bold)</Body1>
+        <Body1 underline>Body 1 (underline)</Body1>
         <Caption>fontSize: 16px, weight: 400</Caption>
 
         <Body2>Body 2</Body2>
         <Caption>fontSize: 14px, weight: 400</Caption>
 
         <Caption>Caption / Label - 12px</Caption>
+        <Caption italic>Caption (italic)</Caption>
+        <Caption color="var(--mantine-color-ubhRed-9)">Caption (color)</Caption>
       </section>
-      <Header2>Inputs</Header2>
+      <SectionHeader>Inputs</SectionHeader>
       <section>
         <Input
           variant="single-line"
@@ -145,7 +157,7 @@ export default function AllComponents() {
         <Input variant="phone" label="Phone (loading)" value="+61 423 456 789" loading={true} />
         <Input variant="phone" label="Phone (disabled)" placeholder="+61 423 456 789" disabled />
       </section>
-      <Header2>Search bar</Header2>
+      <SectionHeader>Search bar</SectionHeader>
       <section>
         <SearchBar
           label="Search bar (default ⇒ hover ⇒ focused ⇒ filled)"
@@ -157,9 +169,8 @@ export default function AllComponents() {
         <SearchBar label="Search bar (error)" value="Text error" error="This field is required." />
         <SearchBar label="Search bar (loading)" loading={true} />
       </section>
-      {/* BUTTONS */}
-      <section style={{ marginTop: '48px' }}>
-        <Header2>Buttons:</Header2>
+      <SectionHeader>Buttons</SectionHeader>
+      <section>
         <div
           style={{
             display: 'flex',
@@ -283,7 +294,7 @@ export default function AllComponents() {
           <Button fullWidth>Full Width</Button>
         </div>
       </section>
-      <Header2>Dropdown List</Header2>
+      <SectionHeader>Dropdown List</SectionHeader>
       <section>
         <DropdownList
           label="Dropdown list (default ⇒ hover ⇒ focused ⇒ selected)"
@@ -295,7 +306,7 @@ export default function AllComponents() {
         />
         <DropdownList label="Dropdown list (loading)" loading={true} />
       </section>
-      <Header2>Checkbox</Header2>
+      <SectionHeader>Checkbox</SectionHeader>
       <section>
         <CheckboxInput
           label="Label"
@@ -306,7 +317,7 @@ export default function AllComponents() {
         <CheckboxInput label="Label" description="Disabled" disabled={true} />
         <CheckboxInput label="Label" error="There is an error" />
       </section>
-      <Header2>Radio</Header2>
+      <SectionHeader>Radio</SectionHeader>
       <section>
         <RadioInput label="Label" description="Unchecked" />
         <RadioInput
@@ -318,7 +329,7 @@ export default function AllComponents() {
         <RadioInput label="Label" description="Disabled" disabled={true} />
         <RadioInput label="Label" error="There is an error" />
       </section>
-      <Header2>Toggle Switch</Header2>
+      <SectionHeader>Toggle Switch</SectionHeader>
       <section>
         <ToggleSwitch
           label="Label"
@@ -329,7 +340,7 @@ export default function AllComponents() {
         <ToggleSwitch label="Label" description="Disabled" disabled={true} />
         <ToggleSwitch label="Label" error="There is an error" />
       </section>
-      <Header2>Pills</Header2>
+      <SectionHeader>Pills</SectionHeader>
       <section>
         <Body1> Solid (small/medium/large): </Body1>
         <section>
@@ -382,7 +393,7 @@ export default function AllComponents() {
           <PillInput variant="outlined" label="Other" size="lg" />
         </section>
       </section>
-      <Header2>Icon Buttons:</Header2>
+      <SectionHeader>Icon Buttons</SectionHeader>
       <section>
         <Body1> Solid (x-small/small/medium/large/x-large): </Body1>
         <div>
