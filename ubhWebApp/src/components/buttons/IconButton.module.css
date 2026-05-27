@@ -1,4 +1,5 @@
 .root {
+  border-radius: var(--mantine-radius-xs);
 }
 
 /* default variant */
@@ -50,11 +51,27 @@
   color: #be2525;
 }
 
-/* disabled variant */
-.root:disabled,
-.root[data-disabled] {
+/* disabled — default */
+.default:disabled,
+.default[data-disabled] {
   background-color: #c9c9c9;
-  border-color: #c9c9c9;
   color: white;
+  cursor: not-allowed;
+}
+
+/* disabled — outlined */
+.outlined:disabled,
+.outlined[data-disabled] {
+  background-color: transparent;
+  border-color: #c9c9c9;
+  color: #c9c9c9;
+  cursor: not-allowed;
+}
+
+/* disabled — text */
+.text:disabled,
+.text[data-disabled] {
+  background-color: transparent;
+  color: #c9c9c9;
   cursor: not-allowed;
 }
