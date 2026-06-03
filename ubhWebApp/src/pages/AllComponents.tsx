@@ -23,6 +23,7 @@ import { ToggleSwitch } from '../components/toggle/Toggle';
 import { PillInput } from '../components/pill/Pill';
 import { IconButton } from '../components/buttons/IconButton';
 import { FileUpload } from '../components/fileUpload/fileUpload';
+import { LoadingBar } from '../components/loadingBar/LoadingBar';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -446,6 +447,36 @@ export default function AllComponents() {
         <FileUpload variant="camera" status="uploading" fileName="document.pdf" progress="TODO progress bar here." />
         <FileUpload variant="camera" status="success" fileName="document.pdf" />
         <FileUpload variant="camera" status="error" />
+      </section>
+      <SectionHeader>Loading Bar</SectionHeader>
+      <section>
+        <Body1>Default: (0%/50%/100%)</Body1>
+        <LoadingBar status="default" progress={0} label="0% complete" />
+        <LoadingBar status="default" progress={50} label="50% complete" />
+        <LoadingBar status="default" progress={100} label="0% complete" />
+        <br />
+        <LoadingBar status="default" progress={50} showLabel={false} />
+
+        <br />
+
+        <Body1>Paused:</Body1>
+        <LoadingBar status="paused" progress={50} label="Paused - 50%" />
+        <br />
+        <LoadingBar status="paused" progress={50} showLabel={false} />
+
+        <br />
+
+        <Body1>Success:</Body1>
+        <LoadingBar status="success" progress={50} label="Complete!" />
+        <br />
+        <LoadingBar status="success" progress={50} showLabel={false} />
+
+        <br />
+
+        <Body1>Error:</Body1>
+        <LoadingBar status="error" progress={50} label="Upload failed" />
+        <br />
+        <LoadingBar status="error" progress={50} showLabel={false} />
       </section>
     </div>
   );
