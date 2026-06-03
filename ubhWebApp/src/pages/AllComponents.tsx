@@ -24,6 +24,7 @@ import { PillInput } from '../components/pill/Pill';
 import { IconButton } from '../components/buttons/IconButton';
 import { FileUpload } from '../components/fileUpload/fileUpload';
 import { LoadingBar } from '../components/loadingBar/LoadingBar';
+import { Avatar } from '../components/avatar/Avatar';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -477,6 +478,24 @@ export default function AllComponents() {
         <LoadingBar status="error" progress={50} label="Upload failed" />
         <br />
         <LoadingBar status="error" progress={50} showLabel={false} />
+      </section>
+      <SectionHeader>Avatar</SectionHeader>
+      <section>
+        <Body1>Initials: (sm/md/lg/display)</Body1>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar type="initials" size="sm" initials="AR" />
+          <Avatar type="initials" size="md" initials="AR" />
+          <Avatar type="initials" size="lg" initials="AR" />
+          <Avatar type="initials" size="display" initials="AR" />
+        </div>
+
+        <Body1>Blank: (sm/md/lg/display)</Body1>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar type="blank" size="sm" />
+          <Avatar type="blank" size="md" />
+          <Avatar type="blank" size="lg" />
+          <Avatar type="blank" size="display" />
+        </div>
       </section>
     </div>
   );
