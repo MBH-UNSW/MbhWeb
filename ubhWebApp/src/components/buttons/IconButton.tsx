@@ -13,7 +13,7 @@ type IconButtonProps = {
   size?: IconButtonSize;
   disabled?: boolean;
   onClick?: () => void; // Temporary Placeholder
-}
+};
 
 export function IconButton({
   icon: Icon = X,
@@ -23,11 +23,11 @@ export function IconButton({
   onClick,
 }: IconButtonProps) {
   let mantineVariant = 'filled';
-  
+
   if (variant === 'outlined') {
-  mantineVariant = 'outline';
+    mantineVariant = 'outline';
   } else if (variant === 'text') {
-  mantineVariant = 'transparent';
+    mantineVariant = 'transparent';
   }
 
   let iconSize = 20;

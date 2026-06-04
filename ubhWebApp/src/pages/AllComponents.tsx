@@ -22,9 +22,10 @@ import { RadioInput } from '../components/radio/Radio';
 import { ToggleSwitch } from '../components/toggle/Toggle';
 import { PillInput } from '../components/pill/Pill';
 import { IconButton } from '../components/buttons/IconButton';
-import { FileUpload } from '../components/fileUpload/fileUpload';
+import { FileUpload } from '../components/fileUpload/FileUpload';
 import { LoadingBar } from '../components/loadingBar/LoadingBar';
 import { Avatar } from '../components/avatar/Avatar';
+import { NumberedPagination } from '../components/pagination/Pagination';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,6 +33,7 @@ export default function AllComponents() {
   const [checked, setChecked] = useState(false);
   const [radioChecked, setRadioChecked] = useState(false);
   const [toggleChecked, setToggleChecked] = useState(false);
+  const [activePage, setActivePage] = useState(1);
 
   const navigate = useNavigate();
 
@@ -433,19 +435,34 @@ export default function AllComponents() {
       <section>
         <Body1>Click variant:</Body1>
         <FileUpload variant="click" status="empty" />
-        <FileUpload variant="click" status="uploading" fileName="document.pdf" progress="TODO progress bar here." />
+        <FileUpload
+          variant="click"
+          status="uploading"
+          fileName="document.pdf"
+          progress="TODO progress bar here."
+        />
         <FileUpload variant="click" status="success" fileName="document.pdf" />
         <FileUpload variant="click" status="error" />
 
         <Body1>Drag variant:</Body1>
         <FileUpload variant="drag" status="empty" />
-        <FileUpload variant="drag" status="uploading" fileName="document.pdf" progress="TODO progress bar here." />
+        <FileUpload
+          variant="drag"
+          status="uploading"
+          fileName="document.pdf"
+          progress="TODO progress bar here."
+        />
         <FileUpload variant="drag" status="success" fileName="document.pdf" />
         <FileUpload variant="drag" status="error" />
 
         <Body1>Camera variant:</Body1>
         <FileUpload variant="camera" status="empty" />
-        <FileUpload variant="camera" status="uploading" fileName="document.pdf" progress="TODO progress bar here." />
+        <FileUpload
+          variant="camera"
+          status="uploading"
+          fileName="document.pdf"
+          progress="TODO progress bar here."
+        />
         <FileUpload variant="camera" status="success" fileName="document.pdf" />
         <FileUpload variant="camera" status="error" />
       </section>
@@ -496,6 +513,10 @@ export default function AllComponents() {
           <Avatar type="blank" size="lg" />
           <Avatar type="blank" size="display" />
         </div>
+      </section>
+      <SectionHeader>Pagination</SectionHeader>
+      <section>
+        <NumberedPagination total={50} value={activePage} onChange={setActivePage} />
       </section>
     </div>
   );
