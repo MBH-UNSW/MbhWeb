@@ -1,0 +1,64 @@
+.root {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: var(--mantine-spacing-lg);
+  margin-top: var(--mantine-spacing-xxxs);
+  margin-bottom: var(--mantine-spacing-lg);
+  align-items: center;
+}
+
+.passcode {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 56px;
+  line-height: var(--mantine-line-height-xs);
+  color: var(--mantine-color-neutral-9);
+  background-color: var(--mantine-color-neutral-0);
+  border: 1px solid var(--mantine-color-neutral-4);
+  border-radius: var(--mantine-radius-xs);
+  font-size: var(--mantine-font-size-md);
+  vertical-align: middle; 
+}
+
+.passcode:hover {
+  background-color: var(--mantine-color-neutral-2);
+  border: 1px solid var(--mantine-color-neutral-6);
+}
+
+.passcode:focus {
+  background-color: var(--mantine-color-ubhBlue-1);
+  border: 1px solid var(--mantine-color-ubhBlue-8);
+}
+
+.passcode:not(:placeholder-shown) {
+  background-color: var(--success-bg1);
+  border: 1px solid var(--mantine-color-neutral-6);
+  font-size: var(--mantine-font-size-xl);
+}
+
+.passcode[data-error] {
+  color: var(--error-shadow);
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  box-shadow: var(--mantine-shadow-error);
+}
+
+.passcode.success {
+  color: var(--success-text);
+  background-color: var(--success-bg2);
+  border: 1px solid var(--success-border);
+  box-shadow: var(--mantine-shadow-success);
+}
+
+.passcode:disabled,
+.passcode[data-disabled] {
+  color: var(--mantine-color-neutral-8);
+  -webkit-text-fill-color: var(--mantine-color-neutral-8);
+  background-color: var(--mantine-color-neutral-2);
+  border: 1px solid var(--mantine-color-neutral-6);
+  cursor: not-allowed;
+}

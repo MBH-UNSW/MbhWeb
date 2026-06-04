@@ -45,7 +45,7 @@ export const theme = createTheme({
     xs: '8px',
     sm: '12px',
     md: '16px',
-    lg: '24px',
+    lg: '28px',
     xl: '32px',
   },
 
@@ -75,5 +75,6 @@ export const theme = createTheme({
 
   shadows: {
     error: '0px 1px 1px #941f1f',
+    success: '0px 1px 1px #2e7d32',
   },
 });

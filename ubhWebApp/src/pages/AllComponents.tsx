@@ -26,6 +26,7 @@ import { FileUpload } from '../components/fileUpload/FileUpload';
 import { LoadingBar } from '../components/loadingBar/LoadingBar';
 import { Avatar } from '../components/avatar/Avatar';
 import { NumberedPagination } from '../components/pagination/Pagination';
+import { Passcode } from '../components/passcode/Passcode';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,6 +35,7 @@ export default function AllComponents() {
   const [radioChecked, setRadioChecked] = useState(false);
   const [toggleChecked, setToggleChecked] = useState(false);
   const [activePage, setActivePage] = useState(1);
+  const [passcode, setPasscode] = useState('');
 
   const navigate = useNavigate();
 
@@ -517,6 +519,17 @@ export default function AllComponents() {
       <SectionHeader>Pagination</SectionHeader>
       <section>
         <NumberedPagination total={50} value={activePage} onChange={setActivePage} />
+      </section>
+      <SectionHeader>Passcode Input</SectionHeader>
+      <section>
+        <Body1>Default ⇒ hover ⇒ focused ⇒ filled:</Body1>
+        <Passcode value={passcode} onChange={setPasscode} />
+        <Body1>Disabled:</Body1>
+        <Passcode value="1111" disabled />
+        <Body1>Error:</Body1>
+        <Passcode value="1111" error />
+        <Body1>Success:</Body1>
+        <Passcode value="1111" success />
       </section>
     </div>
   );
