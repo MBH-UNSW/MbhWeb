@@ -22,9 +22,10 @@ import { RadioInput } from '../components/radio/Radio';
 import { ToggleSwitch } from '../components/toggle/Toggle';
 import { PillInput } from '../components/pill/Pill';
 import { IconButton } from '../components/buttons/IconButton';
-import { FileUpload } from '../components/fileUpload/fileUpload';
+import { FileUpload } from '../components/fileUpload/FileUpload';
 import { LoadingBar } from '../components/loadingBar/LoadingBar';
 import { Avatar } from '../components/avatar/Avatar';
+import { NumberedPagination } from '../components/pagination/Pagination';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,6 +33,7 @@ export default function AllComponents() {
   const [checked, setChecked] = useState(false);
   const [radioChecked, setRadioChecked] = useState(false);
   const [toggleChecked, setToggleChecked] = useState(false);
+  const [activePage, setActivePage] = useState(1);
 
   const navigate = useNavigate();
 
@@ -496,6 +498,10 @@ export default function AllComponents() {
           <Avatar type="blank" size="lg" />
           <Avatar type="blank" size="display" />
         </div>
+      </section>
+      <SectionHeader>Pagination</SectionHeader>
+      <section>
+        <NumberedPagination total={50} value={activePage} onChange={setActivePage} />
       </section>
     </div>
   );
