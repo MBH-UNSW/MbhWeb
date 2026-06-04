@@ -10,19 +10,12 @@ type BodyProps = {
   bold?: boolean;
   underline?: boolean;
   // lineThrough?: boolean;
-}
+};
 
 //-------------------------------
 //  Body Props Wrapper
 //-------------------------------
-function propsWrapper({
-  children,
-  color,
-  align,
-  italic,
-  bold,
-  underline,
-}: BodyProps) {
+function propsWrapper({ children, color, align, italic, bold, underline }: BodyProps) {
   return {
     children,
     c: color,

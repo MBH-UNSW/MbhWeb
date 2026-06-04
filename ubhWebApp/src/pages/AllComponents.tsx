@@ -435,19 +435,34 @@ export default function AllComponents() {
       <section>
         <Body1>Click variant:</Body1>
         <FileUpload variant="click" status="empty" />
-        <FileUpload variant="click" status="uploading" fileName="document.pdf" progress="TODO progress bar here." />
+        <FileUpload
+          variant="click"
+          status="uploading"
+          fileName="document.pdf"
+          progress="TODO progress bar here."
+        />
         <FileUpload variant="click" status="success" fileName="document.pdf" />
         <FileUpload variant="click" status="error" />
 
         <Body1>Drag variant:</Body1>
         <FileUpload variant="drag" status="empty" />
-        <FileUpload variant="drag" status="uploading" fileName="document.pdf" progress="TODO progress bar here." />
+        <FileUpload
+          variant="drag"
+          status="uploading"
+          fileName="document.pdf"
+          progress="TODO progress bar here."
+        />
         <FileUpload variant="drag" status="success" fileName="document.pdf" />
         <FileUpload variant="drag" status="error" />
 
         <Body1>Camera variant:</Body1>
         <FileUpload variant="camera" status="empty" />
-        <FileUpload variant="camera" status="uploading" fileName="document.pdf" progress="TODO progress bar here." />
+        <FileUpload
+          variant="camera"
+          status="uploading"
+          fileName="document.pdf"
+          progress="TODO progress bar here."
+        />
         <FileUpload variant="camera" status="success" fileName="document.pdf" />
         <FileUpload variant="camera" status="error" />
       </section>

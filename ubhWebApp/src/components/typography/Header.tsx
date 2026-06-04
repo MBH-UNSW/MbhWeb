@@ -10,19 +10,12 @@ type HeaderProps = {
   bold?: boolean;
   underline?: boolean;
   // lineThrough?: boolean;
-}
+};
 
 //-------------------------------
 //  Header Props Wrapper
 //-------------------------------
-function propsWrapper({
-  children,
-  color,
-  align,
-  italic,
-  bold,
-  underline,
-}: HeaderProps) {
+function propsWrapper({ children, color, align, italic, bold, underline }: HeaderProps) {
   return {
     children,
     c: color,
@@ -45,9 +38,8 @@ export const Header5 = (props: HeaderProps) => <Title order={5} {...propsWrapper
 
 export const Header6 = (props: HeaderProps) => <Title order={6} {...propsWrapper(props)} />;
 
-
 // Little header thingy for separating the components page cleanly
-export function SectionHeader({ children }: {children: React.ReactNode }) {
+export function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ marginTop: '32px', marginBottom: '16px' }}>
       <Header2 color="var(--mantine-color-ubhRed-9)">{children}</Header2>

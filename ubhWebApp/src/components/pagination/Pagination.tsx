@@ -1,5 +1,4 @@
 import { Pagination } from '@mantine/core';
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import classes from './Pagination.module.css';
 
 type PaginationProps = {
@@ -9,12 +8,7 @@ type PaginationProps = {
   disabled?: boolean;
 };
 
-export function NumberedPagination({
-  total,
-  value,
-  onChange,
-  disabled,
-}: PaginationProps) {
+export function NumberedPagination({ total, value, onChange, disabled }: PaginationProps) {
   const handleChange = (newValue: number) => {
     onChange?.(newValue);
     if (typeof document !== 'undefined') {

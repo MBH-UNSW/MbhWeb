@@ -27,9 +27,7 @@ export function LoadingBar({
 
   return (
     <div className={classes.root}>
-      {showLabel && label && (
-        <span className={classes.label}>{label}</span>
-      )}
+      {showLabel && label && <span className={classes.label}>{label}</span>}
       <Progress
         value={progress}
         color={color}

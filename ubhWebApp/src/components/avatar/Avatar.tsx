@@ -13,11 +13,7 @@ type AvatarProps = {
   initials?: string;
 };
 
-export function Avatar({
-  type = 'blank',
-  size = 'md',
-  initials = 'AR',
-}: AvatarProps) {
+export function Avatar({ type = 'blank', size = 'md', initials = 'AR' }: AvatarProps) {
   let avatarSize = 48;
   let fontSize = 20;
   let iconSize = 24;

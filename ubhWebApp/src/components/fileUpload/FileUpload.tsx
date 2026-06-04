@@ -1,6 +1,6 @@
-import { Upload, FileText, Camera, CheckCircle, AlertCircle, XCircle } from "lucide-react";
-import { useRef } from "react";
-import classes from "./FileUpload.module.css";
+import { Upload, FileText, Camera, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
+import { useRef } from 'react';
+import classes from './FileUpload.module.css';
 
 type FileUploadVariant = 'click' | 'drag' | 'camera';
 
@@ -19,7 +19,7 @@ type FileUploadProps = {
   onChange?: (file: File | null) => void;
   onClear?: () => void;
   onRetry?: () => void;
-}
+};
 
 export function FileUpload({
   variant = 'click',
@@ -51,14 +51,14 @@ export function FileUpload({
     placeholderText = placeholder ?? 'Take a photo';
     descriptionText = description ?? 'Upload using camera';
   }
-  
+
   const capture = variant === 'camera' ? 'environment' : undefined;
 
   const name = fileName ?? 'filename.jpg';
   const uploadText = progress ?? 'Uploading...';
 
-  const labelElement = label ? (<span className={classes.label}>{label}</span>) : null;
-  
+  const labelElement = label ? <span className={classes.label}>{label}</span> : null;
+
   if (status == 'empty') {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
@@ -73,14 +73,14 @@ export function FileUpload({
         <div
           className={classes.stateContainer}
           onClick={() => inputRef.current?.click()}
-          onDrop={(e) => {
+          onDrop={e => {
             e.preventDefault();
             const file = e.dataTransfer.files?.[0];
             if (file && onChange) {
               onChange(file);
             }
           }}
-          onDragOver={(e) => e.preventDefault()}
+          onDragOver={e => e.preventDefault()}
         >
           <div className={classes.content}>
             <div className={classes.icon}>
@@ -110,7 +110,7 @@ export function FileUpload({
     return (
       <div className={classes.root}>
         {labelElement}
-        
+
         <div className={`${classes.stateContainer} ${classes.uploading}`}>
           <div className={classes.content}>
             <div className={classes.icon}>
@@ -123,11 +123,7 @@ export function FileUpload({
             </div>
           </div>
 
-          <button
-            type="button"
-            className={classes.clearButton}
-            onClick={onClear}
-          >
+          <button type="button" className={classes.clearButton} onClick={onClear}>
             <XCircle size={20} />
           </button>
         </div>
@@ -139,7 +135,7 @@ export function FileUpload({
     return (
       <div className={classes.root}>
         {labelElement}
-        
+
         <div className={`${classes.stateContainer} ${classes.success}`}>
           <div className={classes.content}>
             <div className={`${classes.icon} ${classes.successIcon}`}>
@@ -160,11 +156,8 @@ export function FileUpload({
     return (
       <div className={classes.root}>
         {labelElement}
-        
-        <div 
-          className={`${classes.stateContainer} ${classes.error}`}
-          onClick={() => onRetry?.()}
-        >
+
+        <div className={`${classes.stateContainer} ${classes.error}`} onClick={() => onRetry?.()}>
           <div className={classes.content}>
             <div className={`${classes.icon} ${classes.errorIcon}`}>
               <AlertCircle size={28} strokeWidth={2} />
