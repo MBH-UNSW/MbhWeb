@@ -1,17 +1,17 @@
 import { createTheme } from '@mantine/core';
 
-import { ubhRed, ubhBlue, neutral } from './colors';
+import { ubhRed, ubhBlue, ubhNeutral } from './colors';
 import { typography } from './typography';
 
 export const theme = createTheme({
   colors: {
     ubhRed,
     ubhBlue,
-    neutral,
+    ubhNeutral,
   },
 
   primaryColor: 'ubhRed',
-  primaryShade: 9,
+  primaryShade: 8,
 
   other: {
     error: {

@@ -3,58 +3,58 @@
 
 /* default variant */
 .default {
-  background-color: #941f1f;
-  color: white;
+  background-color: var(--mantine-color-ubhRed-8);
+  color: var(--mantine-color-ubhNeutral-0);
 }
 
 .default:hover {
-  background-color: #620000;
+  background-color: var(--mantine-color-ubhRed-9);
 }
 
 .default:active {
-  background-color: #be2525;
+  background-color: var(--mantine-color-ubhRed-4);
 }
 
 /* outlined variant */
 .outlined {
   background-color: transparent;
-  border: 1px solid #941f1f;
-  color: #941f1f;
+  border: 1px solid var(--mantine-color-ubhRed-8);
+  color: var(--mantine-color-ubhRed-8);
 }
 
 .outlined:hover {
   background-color: transparent;
-  border-color: #620000;
-  color: #620000;
+  border-color: var(--mantine-color-ubhRed-9);
+  color: var(--mantine-color-ubhRed-9);
 }
 
 .outlined:active {
   background-color: transparent;
-  border-color: #be2525;
-  color: #be2525;
+  border-color: var(--mantine-color-ubhRed-4);
+  color: var(--mantine-color-ubhRed-4);
 }
 
 /* text variant */
 .text {
   background-color: transparent;
-  color: #941f1f;
+  color: var(--mantine-color-ubhRed-8);
 }
 
 .text:hover {
   background-color: transparent;
-  color: #620000;
+  color: var(--mantine-color-ubhRed-9);
 }
 
 .text:active {
   background-color: transparent;
-  color: #be2525;
+  color: var(--mantine-color-ubhRed-4);
 }
 
 /* disabled variant */
 .root:disabled,
 .root[data-disabled] {
-  background-color: #c9c9c9;
-  border-color: #c9c9c9;
-  color: white;
+  background-color: var(--mantine-color-ubhNeutral-4);
+  border-color: var(--mantine-color-ubhNeutral-4);
+  color: var(--mantine-color-ubhNeutral-0);
   cursor: not-allowed;
 }

@@ -16,7 +16,7 @@
 }
 
 .solidPill .label {
-  color: var(--mantine-color-neutral-0);
+  color: var(--mantine-color-ubhNeutral-0);
 }
 
 .outlinedPill {
@@ -27,5 +27,5 @@
 }
 
 .outlinedPill .label {
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }

@@ -42,8 +42,8 @@ export const Header6 = (props: HeaderProps) => <Title order={6} {...propsWrapper
 export function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ marginTop: '32px', marginBottom: '16px' }}>
-      <Header2 color="var(--mantine-color-ubhRed-9)">{children}</Header2>
-      <Divider color="var(--mantine-color-ubhRed-9)" size="sm" mt="xxs" />
+      <Header2 color="var(--mantine-color-ubhRed-8)">{children}</Header2>
+      <Divider color="var(--mantine-color-ubhRed-8)" size="sm" mt="xxs" />
     </div>
   );
 }
