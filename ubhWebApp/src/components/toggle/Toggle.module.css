@@ -5,13 +5,13 @@
 .label {
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-medium);
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 .description {
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-regular);
-  color: var(--mantine-color-neutral-7);
+  color: var(--mantine-color-ubhNeutral-7);
 }
 
 .error {
@@ -22,14 +22,14 @@
 
 .toggle {
   cursor: pointer;
-  border: 1px solid var(--mantine-color-neutral-4);
-  background-color: var(--mantine-color-neutral-4);
+  border: 1px solid var(--mantine-color-ubhNeutral-4);
+  background-color: var(--mantine-color-ubhNeutral-4);
   transition: background-color 150ms ease, border-color 150ms ease;
 }
 
 .toggle:hover {
-  border-color: var(--mantine-color-neutral-5);
-  background-color: var(--mantine-color-neutral-5);
+  border-color: var(--mantine-color-ubhNeutral-5);
+  background-color: var(--mantine-color-ubhNeutral-5);
 }
 
 .input:checked + .toggle {
@@ -52,5 +52,5 @@
 }
 
 .thumb {
-  color: var(--mantine-color-neutral-0);
+  color: var(--mantine-color-ubhNeutral-0);
 }

@@ -8,7 +8,7 @@
 .label {
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
   display: block;
   margin-top: var(--mantine-spacing-xs);
   margin-left: var(--mantine-spacing-xxxs);
@@ -20,7 +20,7 @@
   font-size: 10px;
   font-weight: 700;
   line-height: 14px;
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
   margin-left: var(--mantine-spacing-xxxs);
 }
 
@@ -39,28 +39,28 @@
   padding: 16px;
   gap: 8px;
   min-height: 68px;
-  background-color: var(--mantine-color-neutral-0);
-  border: 1px solid var(--mantine-color-neutral-4);
+  background-color: var(--mantine-color-ubhNeutral-0);
+  border: 1px solid var(--mantine-color-ubhNeutral-4);
   border-radius: var(--mantine-radius-xs);
   cursor: pointer;
   font-size: var(--mantine-font-size-md);
   font-weight: 700;
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 .input:hover {
-  background-color: var(--mantine-color-neutral-2);
-  border-color: var(--mantine-color-neutral-6);
+  background-color: var(--mantine-color-ubhNeutral-2);
+  border-color: var(--mantine-color-ubhNeutral-6);
 }
 
 .placeholder {
   font-size: var(--mantine-font-size-md);
   font-weight: 700;
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 .section {
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 .stateContainer {
@@ -72,8 +72,8 @@
   padding: 16px;
   gap: 8px;
   min-height: 68px;
-  background-color: var(--mantine-color-neutral-0);
-  border: 1px solid var(--mantine-color-neutral-4);
+  background-color: var(--mantine-color-ubhNeutral-0);
+  border: 1px solid var(--mantine-color-ubhNeutral-4);
   border-radius: var(--mantine-radius-xs);
   cursor: pointer;
 }
@@ -93,7 +93,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 .textGroup {
@@ -105,14 +105,14 @@
   font-size: var(--mantine-font-size-md);
   font-weight: 700;
   line-height: 22px;
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 .secondaryText {
   font-size: 10px;
   font-weight: 700;
   line-height: 14px;
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 /* clear & cancel */
@@ -125,11 +125,11 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--mantine-color-neutral-0);
+  color: var(--mantine-color-ubhNeutral-0);
 }
 
 .clearButton:hover {
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
 }
 
 /* upload */
@@ -156,5 +156,5 @@
 }
 
 .errorIcon {
-  color: var(--mantine-color-ubhRed-9);
+  color: var(--mantine-color-ubhRed-8);
 }

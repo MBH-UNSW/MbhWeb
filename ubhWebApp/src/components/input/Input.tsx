@@ -26,7 +26,7 @@ export function Input({
   onChange,
 }: InputProps) {
   const rightIcon = error ? (
-    <IconExclamationCircleFilled size={20} color="var(--mantine-color-ubhRed-9)" />
+    <IconExclamationCircleFilled size={20} color="var(--mantine-color-ubhRed-8)" />
   ) : loading ? (
     <Loader size={16} />
   ) : null;

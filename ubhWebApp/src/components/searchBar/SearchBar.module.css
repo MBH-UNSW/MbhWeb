@@ -8,7 +8,7 @@
 .label {
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
   display: block;
   margin-top: var(--mantine-spacing-xs);
   margin-left: var(--mantine-spacing-xxxs);
@@ -30,9 +30,9 @@
   width: 100%;
   max-width: 100%;
   aspect-ratio: 8.5 / 1;
-  color: var(--mantine-color-neutral-7);
-  background-color: var(--mantine-color-neutral-0);
-  border: 1px solid var(--mantine-color-neutral-4);
+  color: var(--mantine-color-ubhNeutral-7);
+  background-color: var(--mantine-color-ubhNeutral-0);
+  border: 1px solid var(--mantine-color-ubhNeutral-4);
   border-radius: var(--mantine-radius-xs);
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-xl);
   font-size: var(--mantine-font-size-md);
@@ -41,34 +41,34 @@
 }
 
 .search:hover {
-  color: var(--mantine-color-neutral-7);
-  background-color: var(--mantine-color-neutral-2);
-  border: 1px solid var(--mantine-color-neutral-6);
+  color: var(--mantine-color-ubhNeutral-7);
+  background-color: var(--mantine-color-ubhNeutral-2);
+  border: 1px solid var(--mantine-color-ubhNeutral-6);
 }
 
 .search:focus {
-  color: var(--mantine-color-neutral-8);
+  color: var(--mantine-color-ubhNeutral-8);
   background-color: var(--mantine-color-ubhBlue-1);
-  border: 1px solid var(--mantine-color-ubhBlue-8);
+  border: 1px solid var(--mantine-color-ubhBlue-7);
 }
 
 .search:not(:placeholder-shown) {
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
   background-color: var(--success-bg1);
-  border: 1px solid var(--mantine-color-neutral-6);
+  border: 1px solid var(--mantine-color-ubhNeutral-6);
 }
 
 .search[data-error] {
-  color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-ubhNeutral-9);
   background-color: var(--error-bg);
   border: 1px solid var(--error-border);
   box-shadow: var(--mantine-shadow-error);
 }
 
 .search.loading {
-  color: var(--mantine-color-neutral-9);
-  background-color: var(--mantine-color-neutral-1);
-  border: 1px solid var(--mantine-color-neutral-5);
+  color: var(--mantine-color-ubhNeutral-9);
+  background-color: var(--mantine-color-ubhNeutral-1);
+  border: 1px solid var(--mantine-color-ubhNeutral-5);
 }
 
 .clearButton {
@@ -78,15 +78,15 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--mantine-color-neutral-7);
+  color: var(--mantine-color-ubhNeutral-7);
   transition: color 0.15s ease;
 }
 
 .clearButton:hover {
-  color: var(--mantine-color-neutral-8);
+  color: var(--mantine-color-ubhNeutral-8);
 }
 
 .clearButton:focus,
 .clearButton:focus-visible {
-  color: var(--mantine-color-ubhBlue-8);
+  color: var(--mantine-color-ubhBlue-7);
 }

@@ -1,32 +1,32 @@
 import type { MantineColorsTuple } from '@mantine/core';
 
-// Temporary Placeholders for UBH Colors.
 export const ubhRed: MantineColorsTuple = [
-  '#fbeeee',
-  '#f1dada',
-  '#e6b0b0',
-  '#dd8383',
-  '#d55f5d',
-  '#d04845',
-  '#cf3c38',
-  '#b72f2b',
-  '#a42825',
-  '#941f1f', // Default in Figma
-];
-export const ubhBlue: MantineColorsTuple = [
-  '#edf2f7', // manually set (for figma)
-  '#e6f0fa', // manually set (for figma)
-  '#c8ddf3',
-  '#aacaec',
-  '#8eb8e5',
-  '#6fa4dd',
-  '#5292d6',
-  '#337ecf',
-  '#146ac7', // manually set (for figma)
-  '#0056b3', // manually set (for figma)
+  '#f6d0d0',
+  '#efb2b2',
+  '#e68e8e',
+  '#da6666',
+  '#be2525',
+  '#c40904',
+  '#b10707',
+  '#a11a1a',
+  '#941f1f',
+  '#620000',
 ];
 
-export const neutral: MantineColorsTuple = [
+export const ubhBlue: MantineColorsTuple = [
+  '#edf2f7',
+  '#e6f0fa',
+  '#d6e6f5',
+  '#bdd7f0',
+  '#9fc2e3',
+  '#689abb',
+  '#4f8fcb',
+  '#146ac7',
+  '#0056b3',
+  '#023149',
+];
+
+export const ubhNeutral: MantineColorsTuple = [
   '#ffffff',
   '#fafafa',
   '#f2f2f2',

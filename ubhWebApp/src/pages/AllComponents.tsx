@@ -41,7 +41,7 @@ export default function AllComponents() {
 
   return (
     <div>
-      <div style={{ textAlign: 'center', color: 'var(--mantine-color-ubhRed-9)' }}>
+      <div style={{ textAlign: 'center', color: 'var(--mantine-color-ubhRed-8)' }}>
         <Header1>UBH Components Library</Header1>
       </div>
 
@@ -74,7 +74,7 @@ export default function AllComponents() {
         <Header6>Header 6</Header6>
         <Caption>fontSize: 16px, weight: 400, lineHeight: 1.5</Caption>
 
-        <Header3 color="var(--mantine-color-ubhRed-9)">Header 3 (color)</Header3>
+        <Header3 color="var(--mantine-color-ubhRed-8)">Header 3 (color)</Header3>
         <Header4 align="center">Header 4 (centered)</Header4>
       </section>
       <section>
@@ -89,7 +89,7 @@ export default function AllComponents() {
 
         <Caption>Caption / Label - 12px</Caption>
         <Caption italic>Caption (italic)</Caption>
-        <Caption color="var(--mantine-color-ubhRed-9)">Caption (color)</Caption>
+        <Caption color="var(--mantine-color-ubhRed-8)">Caption (color)</Caption>
       </section>
       <SectionHeader>Inputs</SectionHeader>
       <section>
