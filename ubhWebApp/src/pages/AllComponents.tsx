@@ -51,6 +51,12 @@ export default function AllComponents() {
         </Button>
       </Box>
 
+      <Box py="xl">
+        <Button variant="default" size="md" fullWidth onClick={() => navigate('/home')}>
+          The dashboard is here!
+        </Button>
+      </Box>
+
       <SectionHeader>Typography</SectionHeader>
       <section>
         <Header1>Header 1</Header1>

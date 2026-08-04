@@ -1,0 +1,39 @@
+.page {
+  min-height: 100vh;
+  background-color: var(--mantine-color-ubhNeutral-2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--mantine-color-ubhNeutral-0);
+  border-radius: 10px;
+  border: 1px solid var(--mantine-color-ubhNeutral-9);
+  padding: 26px 30px;
+  box-sizing: border-box;
+}
+
+.card-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+}
+
+.card-header h4 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.card-header h4 span {
+  display: block;
+}
