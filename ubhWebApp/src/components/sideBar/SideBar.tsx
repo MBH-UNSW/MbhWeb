@@ -1,32 +1,33 @@
-import { useState } from 'react';
 import classes from './SideBar.module.css'
+import { useLocation, Link } from 'react-router-dom';
 
 import { House, SquareActivity, Calendar, UserRound, MessageSquare, Settings, LogOut } from 'lucide-react';
 
 const tabs = {
 	nurse: [
-		{ link: '', label: 'Messages', icon: MessageSquare },
+		{ link: '/messages', label: 'Messages', icon: MessageSquare },
 	],
 	general: [
-		{ link: '', label: 'Dashboard', icon: House },
-		{ link: '', label: 'Patients', icon: SquareActivity },
-		{ link: '', label: 'Appointments', icon: Calendar },
-		{ link: '', label: 'Profile', icon: UserRound },
-		{ link: '', label: 'Settings', icon: Settings },
+		{ link: '/home', label: 'Dashboard', icon: House },
+		{ link: '/patients', label: 'Patients', icon: SquareActivity },
+		{ link: '/appointments', label: 'Appointments', icon: Calendar },
+		{ link: '/profile', label: 'Profile', icon: UserRound },
+		{ link: '/settings', label: 'Settings', icon: Settings },
 	],
 };
 
 export function SideBar() {
-  const [active, setActive] = useState('Dashboard');
+  const location = useLocation();
 
 	const links = tabs.general.map((item) => {
 		const Icon = item.icon;
+		const isActive = location.pathname === item.link;
 
 		return (
-			<button
+			<Link
 				key={item.label}
-				className={`${classes.link} ${ active === item.label ? classes.active : ''}`}
-				onClick={() => setActive(item.label)}
+				to={item.link}
+				className={`${classes.link} ${isActive ? classes.active : ''}`}
 			>
 				<Icon
 					size={22}
@@ -35,7 +36,7 @@ export function SideBar() {
 				/>
 
 				<span>{item.label}</span>
-			</button>
+			</Link>
 		);
 	});
 
@@ -52,7 +53,9 @@ export function SideBar() {
 				{links}
 			</div>
 
-			<button className={classes.logout}>
+			<button
+				className={classes.logout}
+			>
 				<LogOut size={22} strokeWidth={2.5} />
 
 				<span>Log out</span>
