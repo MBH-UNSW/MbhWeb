@@ -10,7 +10,7 @@ export const ubhRed: MantineColorsTuple = [
   '#b10707',
   '#a11a1a',
   '#941f1f',
-  '#620000',
+  '#7d0907',
 ];
 
 export const ubhBlue: MantineColorsTuple = [
