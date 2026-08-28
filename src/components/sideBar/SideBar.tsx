@@ -1,7 +1,7 @@
 import classes from './SideBar.module.css'
 import { useLocation, Link } from 'react-router-dom';
-
 import { House, SquareActivity, Calendar, UserRound, MessageSquare, Settings, LogOut } from 'lucide-react';
+import { /*Logo,*/ FullLogo } from '../icons/Logo';
 
 const tabs = {
 	nurse: [
@@ -43,8 +43,7 @@ export function SideBar() {
   return (
 		<nav className={classes.sideBar}>
 			<div className={classes.header}>
-				{/* UBH LOGO HERE */}
-				<span className={classes.title}>UNSW Bionic Heart</span>
+        <FullLogo width={200}/>
 			</div>
 
 			<div className={classes.divider} />
