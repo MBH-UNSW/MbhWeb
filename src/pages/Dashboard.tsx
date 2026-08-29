@@ -4,48 +4,84 @@ import { IconHeartExclamation, IconChecks, IconThumbUp } from '@tabler/icons-rea
 import { Header3 } from '../components/typography/Header';
 import { Button } from '../components/buttons/Button';
 
-// background color: var(--mantine-color-ubhNeutral-2);
+type Status = 'good' | 'warning' | 'critical';
+
+function getStatus(value: number, total: number, goal: 'low' | 'high'): Status {
+  if (total === 0) {
+    return 'good';
+  }
+
+  const percentage = value / total;
+  if (goal === 'low') {
+    if (percentage >= 0.75) {
+      return 'critical';
+    } else if (percentage >= 0.25) {
+      return 'warning';
+    } else {
+      return 'good';
+    }
+  }
+
+  // if the goal is higher
+  if (percentage >= 0.75) {
+    return 'good';
+  } else if (percentage >= 0.5) {
+    return 'warning';
+  } else {
+    return 'critical';
+  }
+}
 
 export default function DashboardPage() {
-  // my vision is that the cards could change colour depending on what the status of each is yk ?
-  // will add more. just getting my ass kicked by assessments rn :)
+  // filler for backend functions later !!!
+  const user = 'Dr. Asna';
+  const totalPatients = 25;
+  const needUrgentCare = 3;
+  const inGoodCondition = 12;
+  const numCompletedTasks = 11;
+  const totalNumTasks = 20;
+
+  const urgentCareStatus = getStatus(needUrgentCare, totalPatients, 'low');
+  const goodConditionStatus = getStatus(inGoodCondition, totalPatients, 'high');
+  const completedTasksStatus = getStatus(numCompletedTasks, totalNumTasks, 'high');
+
   return (
     <div className='page'>
-      <Header3>Good morning, <span style={{ color: 'var(--mantine-color-ubhRed-6)', fontWeight: 'var(--mantine-font-weight-semibold)' }}>User!</span> </Header3>
+      <Header3>
+        Good morning, <span className='greeting'>{user}!</span> 
+      </Header3>
+      <Header3>Good morning </Header3>
       <div className='card-container'>
-        <div className='card'>
+        <div className={`card card-${urgentCareStatus}`}>
           <div className='card-header'>
-            <IconHeartExclamation size={40} stroke={2} />
-            <h1>0</h1>
+            <IconHeartExclamation className='card-icon' stroke={2} />
+            <h1>{needUrgentCare}</h1>
             <h4>
-              <span>Require</span>
-              <span>Urgent Care</span>
+              <span>Require Urgent Care</span>
             </h4>
           </div>
           <Button variant="default" size="sm" fullWidth>
             See more!
           </Button>
         </div> 
-        <div className='card'>
+        <div className={`card card-${completedTasksStatus}`}>
           <div className='card-header'>
-            <IconChecks size={40} stroke={2} />
-            <h1>10</h1>
+            <IconChecks className='card-icon' stroke={2} />
+            <h1>{numCompletedTasks}</h1>
             <h4>
-              <span>Completed</span>
-              <span>Tasks</span>
+              <span>Completed Tasks</span>
             </h4>
           </div>
           <Button variant="default" size="sm" fullWidth>
             See more!
           </Button>
         </div>
-        <div className='card'>
+        <div className={`card card-${goodConditionStatus}`}>
           <div className='card-header'>
-            <IconThumbUp size={40} stroke={2} />
-            <h1>0</h1>
+            <IconThumbUp className='card-icon' stroke={2} />
+            <h1>{inGoodCondition}</h1>
             <h4>
-              <span>In Good</span>
-              <span>Condition</span>
+              <span>In Good Condition</span>
             </h4>
           </div>
           <Button variant="default" size="sm" fullWidth>
@@ -55,7 +91,7 @@ export default function DashboardPage() {
       </div>
       <div className='card'>
         <h2>Notifications</h2>
-        <div style={{ display: 'flex', gap: '7px' }}>
+        <div className='notification-filters'>
           <Button variant="outlined" size="xs">
             Critical
           </Button>
