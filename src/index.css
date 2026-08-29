@@ -8,6 +8,9 @@
   --error-border: #e57373;
   --error-shadow: #941f1f;
 
+  --warning-bg: #fef9e7;
+  --warning-border: #f7dc6f;
+
   --success-text: #2e7d32;
   --success-bg1: #f8fcf8;
   --success-bg2: #e8f5e8;
@@ -30,7 +33,6 @@
 #root {
   width: 100%;
   min-height: 100svh;
-  padding: 24px;
   text-align: left;
 }
 
