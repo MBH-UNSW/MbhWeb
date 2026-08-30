@@ -1,4 +1,6 @@
-import { Upload, FileText, Camera, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
+import { Upload, FileText, Camera, CheckCircle } from 'lucide-react';
+import { CircleAlertFilled } from '../icons/CircleAlertFilled';
+import { CircleXFilled } from '../icons/CircleXFilled';
 import { useRef } from 'react';
 import classes from './FileUpload.module.css';
 
@@ -124,7 +126,7 @@ export function FileUpload({
           </div>
 
           <button type="button" className={classes.clearButton} onClick={onClear}>
-            <XCircle size={20} />
+            <CircleXFilled width={20} height={20} />
           </button>
         </div>
       </div>
@@ -159,8 +161,8 @@ export function FileUpload({
 
         <div className={`${classes.stateContainer} ${classes.error}`} onClick={() => onRetry?.()}>
           <div className={classes.content}>
-            <div className={`${classes.icon} ${classes.errorIcon}`}>
-              <AlertCircle size={28} strokeWidth={2} />
+            <div className={classes.icon}>
+              <CircleAlertFilled width={30} height={30} />
             </div>
 
             <div className={classes.textGroup}>

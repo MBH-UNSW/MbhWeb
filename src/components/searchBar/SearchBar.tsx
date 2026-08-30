@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { TextInput, Loader } from '@mantine/core';
-import { IconSearch, IconExclamationCircleFilled, IconCircleXFilled } from '@tabler/icons-react';
+import { CircleAlertFilled } from '../icons/CircleAlertFilled';
+import { CircleXFilled } from '../icons/CircleXFilled';
+import { Search } from 'lucide-react';
 import classes from './SearchBar.module.css';
 
 type SearchProps = {
@@ -37,15 +39,15 @@ export function SearchBar({
     return 'var(--mantine-color-ubhNeutral-7)';
   };
 
-  const leftIcon = <IconSearch size={18} color={getSearchIconColor()} />;
+  const leftIcon = <Search size={16} color={getSearchIconColor()} />;
 
   const rightIcon = error ? (
-    <IconExclamationCircleFilled size={20} color="var(--mantine-color-ubhRed-8)" />
+    <CircleAlertFilled width={20} height={20} />
   ) : loading ? (
     <Loader size={16} />
   ) : value ? (
     <button className={classes.clearButton} onClick={handleClear}>
-      <IconCircleXFilled size={20} />
+      <CircleXFilled width={20} height={20} />
     </button>
   ) : null;
 

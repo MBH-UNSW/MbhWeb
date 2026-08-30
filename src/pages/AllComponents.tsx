@@ -40,7 +40,7 @@ export default function AllComponents() {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div style={{ padding: '24px' }}>
       <div style={{ textAlign: 'center', color: 'var(--mantine-color-ubhRed-8)' }}>
         <Header1>UBH Components Library</Header1>
       </div>
@@ -48,12 +48,6 @@ export default function AllComponents() {
       <Box py="xl">
         <Button variant="default" size="md" fullWidth onClick={() => navigate('/test')}>
           Hey Backend! Click this to go to blank page for testing!
-        </Button>
-      </Box>
-
-      <Box py="xl">
-        <Button variant="default" size="md" fullWidth onClick={() => navigate('/home')}>
-          The dashboard is here!
         </Button>
       </Box>
 
