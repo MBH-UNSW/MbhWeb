@@ -164,7 +164,7 @@ export default function DashboardPage() {
       <div className="card-container">
         <div className={`card ${urgentCareStatus}`}>
           <div className="card-header">
-            <HeartPulse className="\'card-icon" strokeWidth={1.9} />
+            <HeartPulse className="card-icon" strokeWidth={1.9} />
             <Header2>{needUrgentCare}</Header2>
             <Header6>
               <span>Require Urgent Care</span>
