@@ -20,6 +20,14 @@ interface Notification {
   time: string;
 }
 
+const notificationFilters: { value: NotificationFilter; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'critical', label: 'Critical' },
+  { value: 'checkup', label: 'Check-ups' },
+  { value: 'task', label: 'Tasks' },
+  { value: 'update', label: 'Updates' },
+];
+
 function getTimeOfDay(): TimePeriod {
   const current = new Date().getHours();
   if (current >= 5 && current < 12) {
@@ -195,41 +203,15 @@ export default function DashboardPage() {
       <div className="card">
         <Header4>Notifications</Header4>
         <div className="notification-filters">
-          <Button
-            variant={notificationFilter === 'all' ? 'default' : 'outlined'}
-            size="xs"
-            onClick={() => setNotificationFilter('all')}
-          >
-            All
-          </Button>
-          <Button
-            variant={notificationFilter === 'critical' ? 'default' : 'outlined'}
-            size="xs"
-            onClick={() => setNotificationFilter('critical')}
-          >
-            Critical
-          </Button>
-          <Button
-            variant={notificationFilter === 'checkup' ? 'default' : 'outlined'}
-            size="xs"
-            onClick={() => setNotificationFilter('checkup')}
-          >
-            Check-ups
-          </Button>
-          <Button
-            variant={notificationFilter === 'task' ? 'default' : 'outlined'}
-            size="xs"
-            onClick={() => setNotificationFilter('task')}
-          >
-            Tasks
-          </Button>
-          <Button
-            variant={notificationFilter === 'update' ? 'default' : 'outlined'}
-            size="xs"
-            onClick={() => setNotificationFilter('update')}
-          >
-            Updates
-          </Button>
+          {notificationFilters.map(({ value, label }) => (
+            <Button
+              variant={notificationFilter === value ? 'default' : 'outlined'}
+              size="xs"
+              onClick={() => setNotificationFilter(value)}
+            >
+              {label}
+            </Button>
+          ))}
         </div>
         <div className="scroll-container">
           {filteredNotifications.map(notification => (
