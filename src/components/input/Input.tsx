@@ -1,5 +1,5 @@
 import { TextInput, Textarea, NumberInput, Loader } from '@mantine/core';
-import { IconExclamationCircleFilled } from '@tabler/icons-react';
+import { CircleAlertFilled } from '../icons/CircleAlertFilled';
 import classes from './Input.module.css';
 
 type InputVariant = 'single-line' | 'multi-line' | 'numeric' | 'email' | 'phone';
@@ -12,7 +12,7 @@ type InputProps = {
   loading?: boolean;
   disabled?: boolean;
   value?: string | number;
-  onChange?: (e: any) => void; // 'any' is temporary
+  onChange?: (value: string | number) => void;
 };
 
 export function Input({
@@ -26,7 +26,7 @@ export function Input({
   onChange,
 }: InputProps) {
   const rightIcon = error ? (
-    <IconExclamationCircleFilled size={20} color="var(--mantine-color-ubhRed-8)" />
+    <CircleAlertFilled width={20} height={20} />
   ) : loading ? (
     <Loader size={16} />
   ) : null;
@@ -40,7 +40,7 @@ export function Input({
         error={error}
         disabled={disabled}
         value={value}
-        onChange={onChange}
+        onChange={e => onChange?.(e.currentTarget.value)}
         rightSection={rightIcon}
         classNames={{
           root: classes.root,
@@ -60,7 +60,7 @@ export function Input({
         error={error}
         disabled={disabled}
         value={value}
-        onChange={onChange}
+        onChange={e => onChange?.(e.currentTarget.value)}
         rightSection={rightIcon}
         autosize
         minRows={3}
@@ -83,7 +83,7 @@ export function Input({
         disabled={disabled}
         value={value}
         min={0}
-        onChange={onChange}
+        onChange={value => onChange?.(value)}
         rightSection={rightIcon}
         rightSectionWidth={35}
         classNames={{
@@ -107,7 +107,7 @@ export function Input({
         error={error}
         disabled={disabled}
         value={value}
-        onChange={onChange}
+        onChange={e => onChange?.(e.currentTarget.value)}
         rightSection={rightIcon}
         classNames={{
           root: classes.root,
@@ -128,7 +128,7 @@ export function Input({
         error={error}
         disabled={disabled}
         value={value}
-        onChange={onChange}
+        onChange={e => onChange?.(e.currentTarget.value)}
         rightSection={rightIcon}
         classNames={{
           root: classes.root,

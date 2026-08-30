@@ -1,5 +1,5 @@
 import { Loader, Select } from '@mantine/core';
-import { IconChevronDownFilled } from '@tabler/icons-react';
+import { ChevronDown } from 'lucide-react';
 import classes from './DropdownList.module.css';
 
 type DropdownProps = {
@@ -24,7 +24,7 @@ export function DropdownList({
   const rightIcon = loading ? (
     <Loader size={16} color="var(--mantine-color-ubhRed-8)" />
   ) : (
-    <IconChevronDownFilled size={24} color="var(--mantine-color-ubhNeutral-9)" />
+    <ChevronDown size={24} color="var(--mantine-color-ubhNeutral-9)" />
   );
 
   return (
