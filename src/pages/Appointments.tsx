@@ -1,4 +1,4 @@
-import './Dashboard.css';
+import './Page.css'
 import { Header3 } from '../components/typography/Header';
 
 export default function AppointmentsPage() {
