@@ -31,8 +31,11 @@ export function Input({
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const rightIcon = error ? ( <CircleAlertFilled width={20} height={20} />)
-    : loading ? ( <Loader size={16} /> ) : null;
+  const rightIcon = error ? (
+    <CircleAlertFilled width={20} height={20} />
+  ) : loading ? (
+    <Loader size={16} />
+  ) : null;
 
   if (variant === 'single-line') {
     return (
@@ -153,7 +156,7 @@ export function Input({
       if (error) {
         return <CircleAlertFilled width={20} height={20} />;
       }
-      return reveal ? ( <Eye width={18} height={18} /> ) : ( <EyeClosed width={18} height={18} /> );
+      return reveal ? <Eye width={18} height={18} /> : <EyeClosed width={18} height={18} />;
     };
     return (
       <PasswordInput
