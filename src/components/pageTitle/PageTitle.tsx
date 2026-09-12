@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const pageTitles: Record<string, string> = {
   '/': 'Component Library',
+  '/login': 'Log In',
   '/test': 'Backend Test',
   '/home': 'Dashboard',
   '/patients': 'Patients',
