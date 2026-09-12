@@ -1,5 +1,5 @@
 import classes from './SideBar.module.css'
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { House, SquareActivity, Calendar, UserRound, MessageSquare, Settings, LogOut } from 'lucide-react';
 import { /*Logo,*/ FullLogo } from '../icons/Logo';
 
@@ -18,6 +18,11 @@ const tabs = {
 
 export function SideBar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem('session');
+    navigate('/');
+  }
 
 	const links = tabs.general.map((item) => {
 		const Icon = item.icon;
@@ -54,6 +59,7 @@ export function SideBar() {
 
 			<button
 				className={classes.logout}
+        onClick={handleLogout}
 			>
 				<LogOut size={22} strokeWidth={2.5} />
 

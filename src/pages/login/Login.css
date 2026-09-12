@@ -1,0 +1,94 @@
+.login-page {
+  position: relative;
+  overflow: hidden;
+  height: 100dvh;
+}
+
+.login-page::before,
+.login-page::after {
+  content: "";
+  position: absolute;
+  width: 450px;
+  height: 350px;
+  border-radius: 50%;
+  background: var(--mantine-color-ubhRed-2);
+  opacity: 60%;
+}
+
+.login-page::before {
+  top: -175px;
+  right: -175px;
+}
+
+.login-page::after {
+  bottom: -175px;
+  left: -175px;
+}
+
+.login-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.login-header {
+	display: flex;
+	align-items: center;
+	gap: var(--mantine-spacing-md);
+  padding-bottom: 22px;
+}
+
+.login-header h3 {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  font-weight: var(--mantine-font-weight-semibold);
+  color: var(--mantine-color-ubhNeutral-9);
+}
+
+.user-card {
+  min-width: 0;
+  width: 50%;
+  max-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--mantine-color-ubhNeutral-0);
+  border-radius: var(--mantine-radius-sm);
+  border: transparent;
+  padding: 26px 30px 22px;
+  box-sizing: border-box;
+}
+
+.forgot-password button {
+  padding: 0;
+}
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--mantine-color-ubhNeutral-4);
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 10px;
+}
+
+.login-divider:not(:empty)::before {
+  margin-right: .75em;
+}
+
+.login-divider:not(:empty)::after {
+  margin-left: .75em;
+}
