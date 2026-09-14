@@ -6,7 +6,7 @@ import DashboardPage from './pages/dashboard/Dashboard';
 import LoginPage from './pages/login/Login';
 import PatientsPage from './pages/Patients';
 import AppointmentsPage from './pages/Appointments';
-import ProfilePage from './pages/Profile';
+import ProfilePage from './pages/profile/Profile';
 import SettingsPage from './pages/Settings';
 import { PageTitle } from './components/pageTitle/PageTitle';
 import { ProtectedRoute } from './pages/ProtectedRoute';
