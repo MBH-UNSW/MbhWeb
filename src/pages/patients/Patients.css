@@ -1,0 +1,85 @@
+.patients-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--mantine-color-ubhNeutral-0);
+  border-radius: var(--mantine-radius-sm);
+  border: 1px solid var(--mantine-color-ubhNeutral-9);
+  flex-shrink: 0;
+}
+
+.patients-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.patients-controls > *:first-child {
+  flex-grow: 1;
+  min-width: 200px;
+}
+
+/* Patient Status */
+/* NOTE TO ASNA: RN its green and red just for visibility and also cus im a chud at visual design */
+.good {
+  background: var(--success-bg2);
+  border: 1px solid var(--success-border);
+}
+
+.critical {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+}
+
+/* Grid formatting TODO: gotta make it a component... */
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 1100px) {
+  .patient-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .patient-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Patient Card */
+.patient-tile {
+  max-height: none;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.patient-tile-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.patient-card-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.patient-card {
+  cursor: pointer;
+}
