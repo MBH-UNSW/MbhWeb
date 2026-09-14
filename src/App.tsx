@@ -4,7 +4,7 @@ import AllComponents from './pages/AllComponents';
 import TestPage from './pages/BackendTest';
 import DashboardPage from './pages/dashboard/Dashboard';
 import LoginPage from './pages/login/Login';
-import PatientsPage from './pages/Patients';
+import PatientsPage from './pages/patients/Patients';
 import AppointmentsPage from './pages/Appointments';
 import ProfilePage from './pages/Profile';
 import SettingsPage from './pages/Settings';

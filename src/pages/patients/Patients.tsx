@@ -1,10 +1,10 @@
-// import '../Page.css';
+import '../Page.css';
 import './Patients.css';
-import { Header2, Header3, Header4, Header5, Header6 } from '../components/typography/Header';
-import { Body1, Body2 } from '../components/typography/Body';
-import { Button } from '../components/buttons/Button';
-import { IconButton } from '../components/buttons/IconButton';
-import { SearchBar } from '../components/searchBar/SearchBar';
+import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
+import { Body1, Body2 } from '../../components/typography/Body';
+import { Button } from '../../components/buttons/Button';
+import { IconButton } from '../../components/buttons/IconButton';
+import { SearchBar } from '../../components/searchBar/SearchBar';
 import { useState } from 'react';
 
 import { LayoutGrid, List as ListIcon, Plus, ChevronRight } from 'lucide-react';
