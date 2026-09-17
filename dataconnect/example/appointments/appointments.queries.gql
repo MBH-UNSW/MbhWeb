@@ -1,0 +1,169 @@
+# Appointment Mutations and Queries
+
+# Mutation for creating an appointment.
+# NOTE: By default the DB will assign this as 'SCHEDULED'.
+mutation CreateAppointment(
+    $patientPid: UUID!,
+    $clinicianPid: UUID!,
+    $appointmentReason: String!,
+    $scheduledAt: Timestamp!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    appointment_insert(data: {
+        patientPid: $patientPid,
+        clinicianPid: $clinicianPid,
+        appointmentReason: $appointmentReason,
+        scheduledAt: $scheduledAt
+    })
+}
+
+# Mutation for editing an appointment.
+mutation EditAppointment(
+    $id: UUID!, 
+    $appointmentReason: String,
+    $appointmentNotes: String,
+    $scheduledAt: Timestamp,
+    $status: AppointmentStatus
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    appointment_update(
+        key: { id: $id }
+        data: {
+            appointmentReason: $appointmentReason
+            appointmentNotes: $appointmentNotes
+            scheduledAt: $scheduledAt
+            status: $status
+            updatedAt_expr: "request.time"
+        }
+    ) 
+}
+
+# Mutation for cancelling appointment.
+mutation CancelAppointment(
+    $id: UUID!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    appointment_update(
+        key: { id: $id }
+        data: {
+            status: CANCELLED
+            updatedAt_expr: "request.time"
+        }
+    )
+}
+
+# Query for getting patient's ACTIVE appointments (non-cancelled and not completed appointments). 
+query GetActiveAppointmentsByPatient($patientPid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    appointments(where: {
+        patientPid: { eq: $patientPid }
+        status: { in: [SCHEDULED, IN_PROGRESS] }
+    }) {
+        id
+        scheduledAt
+        appointmentReason
+        status
+        createdAt
+        updatedAt
+        
+        patient {
+            pid
+            firstName
+            lastName
+            email
+        }
+
+        clinician {
+            pid
+            firstName
+            lastName
+            email
+        }
+    }
+}
+# Query for getting patient's appointments (including cancelled ones).
+query GetAllAppointmentsByPatient($patientPid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    appointments(where: {
+        patientPid: { eq: $patientPid }
+    }) {
+        id
+        scheduledAt
+        appointmentReason
+        status
+        createdAt
+        updatedAt
+
+        patient {
+            pid
+            firstName
+            lastName
+            email
+        }
+        
+        clinician {
+            pid
+            firstName
+            lastName
+            email
+        }
+    }
+}
+
+
+# Query for getting a clinician's ACTIVE appointments (non-cancelled ones).
+query GetActiveAppointmentsByClinician($clinicianPid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    appointments(where: {
+        clinicianPid: { eq: $clinicianPid }
+        status: { in: [SCHEDULED, IN_PROGRESS] }
+    }) {
+        id
+        scheduledAt
+        appointmentReason
+        appointmentNotes
+        status
+        createdAt
+        updatedAt
+        
+        patient {
+            pid
+            firstName
+            lastName
+            email
+        }
+
+        clinician {
+            pid
+            firstName
+            lastName
+            email
+        }
+    }
+}
+# Query for getting clinician's appointments (including cancelled ones).
+query GetAllAppointmentsByClinician($clinicianPid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    appointments(where: {
+        clinicianPid: { eq: $clinicianPid }
+    }) {
+        id
+        scheduledAt
+        appointmentReason
+        appointmentNotes
+        status
+        createdAt
+        updatedAt
+
+        patient {
+            pid
+            firstName
+            lastName
+            email
+        }
+        
+        clinician {
+            pid
+            firstName
+            lastName
+            email
+        }
+    }
+}

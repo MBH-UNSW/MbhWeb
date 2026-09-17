@@ -1,0 +1,13 @@
+type Sensor @table(key: ["sensorId"]) {
+  sensorId: UUID! @default(expr: "uuidV4()")
+
+  heartId: UUID!
+  heart: Heart! @ref(fields: ["heartId"])
+
+  type: String!
+  location: String!
+  unit: String!
+  minThreshold: Float!
+  maxThreshold: Float!
+  status: Boolean!
+}

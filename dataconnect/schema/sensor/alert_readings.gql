@@ -1,0 +1,10 @@
+type AlertReadings @table(key: ["readingId"]) {
+    readingId: UUID! @default(expr: "uuidV4()")
+    alertId: UUID!
+    sensorId: UUID!
+    alert: Alert! @ref(fields: ["alertId"])
+    sensor: Sensor! @ref(fields: ["sensorId"])
+    recordedAt: Timestamp!
+    value: Float!
+    unit: String!
+}

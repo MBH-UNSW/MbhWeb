@@ -1,0 +1,92 @@
+# This file contains basic CRUD operations for a Clinician
+mutation CreateClinician(
+  $firstName: String!
+  $lastName: String!
+  $email: String!
+  $dob: Date!
+  $phone: String!
+  $aphra: String!
+  $specialty: String!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  clinician_insert(data: {
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    dob: $dob
+    phone: $phone
+    aphra: $aphra
+    specialty: $specialty
+  })
+}
+
+query GetClinician($pid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  clinician(key: { pid: $pid }) {
+    pid
+    firstName
+    lastName
+    email
+    dob
+    phone
+    aphra
+    specialty
+    isDeactivated
+    createdAt
+    updatedAt
+  }
+}
+
+query ListClinicians
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  clinicians {
+    pid
+    firstName
+    lastName
+    email
+    dob
+    phone
+    aphra
+    specialty
+    isDeactivated
+    createdAt
+    updatedAt
+  }
+}
+
+mutation UpdateClinician(
+  $pid: UUID!
+  $firstName: String!
+  $lastName: String!
+  $email: String!
+  $dob: Date!
+  $phone: String!
+  $aphra: String!
+  $specialty: String!
+  $isDeactivated: Boolean!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  clinician_update(
+    key: { pid: $pid }
+    data: {
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      dob: $dob
+      phone: $phone
+      aphra: $aphra
+      specialty: $specialty
+      isDeactivated: $isDeactivated
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation DeactivateClinician($pid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  clinician_update(
+    key: { pid: $pid }
+    data: {
+      isDeactivated: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
