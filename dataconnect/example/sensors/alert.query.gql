@@ -1,0 +1,63 @@
+query ListAlerts
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  alerts {
+    alertId
+    sensorId
+    severity
+    triggerValue
+    triggeredAt
+    resolvedAt
+    sensor {
+      type
+      location
+      unit
+      minThreshold
+      maxThreshold
+      status
+    }
+  }
+}
+
+query ListUnresolvedAlerts
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  alerts(where: { resolvedAt: { isNull: true } }) {
+    alertId
+    sensorId
+    severity
+    triggerValue
+    triggeredAt
+    resolvedAt
+    sensor {
+      type
+      location
+      unit
+      minThreshold
+      maxThreshold
+      status
+    }
+  }
+}
+
+query ListHighSeverityAlerts
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  alerts(where: { severity: { eq: "High" } }) {
+    alertId
+    sensorId
+    severity
+    triggerValue
+    triggeredAt
+    resolvedAt
+  }
+}
+
+query ListAlertsBySensorId
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  alerts(where: { sensorId: { eq: "11111111-2222-3333-4444-555555555552" } }) {
+    alertId
+    sensorId
+    severity
+    triggerValue
+    triggeredAt
+    resolvedAt
+  }
+}

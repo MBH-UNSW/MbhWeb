@@ -1,0 +1,22 @@
+type LogbookEntry @table {
+    id: UUID! @default(expr: "uuidV4()")
+
+    patientPid: UUID!
+    patient: Patient! @ref(fields: "patientPid")
+
+    inr: Float!
+    weight: Float!
+    bloodPressureSystolic: Int!
+    bloodPressureDiastolic: Int!
+    isDeactivated: Boolean! @default(value: false)
+    updatedAt: Timestamp # So initially nullable can indicate whether change made or not
+    createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type LogbookEntryFile @table(key: ["logbookEntry", "file"]) {
+    logbookEntry: LogbookEntry!
+    file: File!
+
+    updatedAt: Timestamp
+    createdAt: Timestamp! @default(expr: "request.time")
+}

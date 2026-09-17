@@ -1,0 +1,23 @@
+type Patient @table(key: "pid") {
+    # Every table has an implicit primary key field that looks something like:
+    #  id: UUID! @default(expr: "uuidV4()")
+    # ! means the field is required
+    pid: UUID! @default(expr: "uuidV4()")
+
+    # Immutable Firebase Authentication identity. Nullable while existing
+    # patient records are progressively linked to their Firebase accounts.
+    firebaseAuthUid: String @unique
+
+    email: String! @unique
+    firstName: String!
+    lastName: String!
+    dob: Date!
+    phone: String!
+    bloodType: String!
+    diagnosis: String!
+    status: String! @default(value: "Normal")
+    address: String!
+
+    createdAt: Timestamp! @default(expr: "request.time")
+    updatedAt: Timestamp @default(expr: "request.time")
+}

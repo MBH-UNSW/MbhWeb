@@ -1,0 +1,107 @@
+# This file contains basic CRUD operations for a Patient
+mutation CreatePatient(
+  $email: String!
+  $firstName: String!
+  $lastName: String!
+  $dob: Date!
+  $phone: String!
+  $bloodType: String!
+  $diagnosis: String!
+  $status: String!
+  $address: String!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  patient_insert(data: {
+    email: $email
+    firstName: $firstName
+    lastName: $lastName
+    dob: $dob
+    phone: $phone
+    bloodType: $bloodType
+    diagnosis: $diagnosis
+    status: $status
+    address: $address
+  })
+}
+
+query GetPatient($pid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  patient(key: { pid: $pid }) {
+    pid
+    email
+    firstName
+    lastName
+    dob
+    phone
+    bloodType
+    diagnosis
+    status
+    address
+    createdAt
+    updatedAt
+  }
+}
+
+query ListPatients
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  patients {
+    pid
+    email
+    firstName
+    lastName
+    dob
+    phone
+    bloodType
+    diagnosis
+    status
+    address
+    createdAt
+    updatedAt
+  }
+}
+
+mutation UpdatePatient(
+  $pid: UUID!
+  $email: String!
+  $firstName: String!
+  $lastName: String!
+  $dob: Date!
+  $phone: String!
+  $bloodType: String!
+  $diagnosis: String!
+  $status: String!
+  $address: String!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  patient_update(
+    key: { pid: $pid }
+    data: {
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      dob: $dob
+      phone: $phone
+      bloodType: $bloodType
+      diagnosis: $diagnosis
+      status: $status
+      address: $address
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation UpdatePatientStatus(
+  $pid: UUID!
+  $status: String!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  patient_update(
+    key: { pid: $pid }
+    data: {
+      status: $status
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation DeletePatient($pid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  patient_delete(key: { pid: $pid })
+}
