@@ -1,0 +1,67 @@
+query GetSensorLive($sensorId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensorLive(key: { sensorId: $sensorId }) {
+    sensorId
+    value
+    unit
+    recordedAt
+    sensor {
+      sensorId
+      type
+      location
+      unit
+      minThreshold
+      maxThreshold
+      status
+    }
+  }
+}
+
+query ListSensorLive
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensorLives {
+    sensorId
+    value
+    unit
+    recordedAt
+    sensor {
+      type
+      location
+      unit
+      minThreshold
+      maxThreshold
+      status
+    }
+  }
+}
+
+query ListSensorLiveBySensorId($sensorId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensorLives(where: { sensorId: { eq: $sensorId } }) {
+    sensorId
+    value
+    unit
+    recordedAt
+  }
+}
+
+mutation UpdateSensorLive(
+  $sensorId: UUID!
+  $value: Float!
+  $unit: String!
+  $recordedAt: Timestamp!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensorLive_update(
+    key: { sensorId: $sensorId }
+    data: {
+      value: $value
+      unit: $unit
+      recordedAt: $recordedAt
+    }
+  )
+}
+
+mutation DeleteSensorLive($sensorId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensorLive_delete(key: { sensorId: $sensorId })
+}
