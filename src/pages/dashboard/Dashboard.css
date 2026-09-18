@@ -34,6 +34,21 @@
   }
 }
 
+/* duplicate card so it works w jade's rn (since i am inefficiently giving each page its own card css) */
+.card {
+  min-width: 0;
+  width: 100%;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--mantine-color-ubhNeutral-0);
+  border-radius: var(--mantine-radius-sm);
+  border: 1px solid var(--mantine-color-ubhNeutral-1);
+  padding: 26px 30px 22px;
+  box-sizing: border-box;
+}
+
 .dashboard-card {
   min-width: 0;
   width: 100%;
@@ -106,7 +121,7 @@
   font-weight: var(--mantine-font-weight-bold);
 }
 
-.dashboard-notification-filters {
+.notification-filters {
   display: flex;
   gap: 7px;
   flex-wrap: wrap;
