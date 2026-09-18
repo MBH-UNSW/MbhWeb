@@ -203,7 +203,7 @@ export default function DashboardPage() {
 
       <div className="dashboard-card">
         <Header4>Notifications</Header4>
-        <div className="dashboard-notification-filters">
+        <div className="notification-filters">
           {notificationFilters.map(({ value, label }) => (
             <Button
               variant={notificationFilter === value ? 'default' : 'outlined'}
