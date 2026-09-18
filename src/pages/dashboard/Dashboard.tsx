@@ -162,10 +162,10 @@ export default function DashboardPage() {
         </Header3>
         <Header5>You have {totalPatients} patients under your care.</Header5>
       </div>
-      <div className="card-container">
-        <div className={`card ${urgentCareStatus}`}>
-          <div className="card-header">
-            <HeartPulse className="card-icon" strokeWidth={1.9} />
+      <div className="dashboard-card-container">
+        <div className={`dashboard-card ${urgentCareStatus}`}>
+          <div className="dashboard-card-header">
+            <HeartPulse className="dashboard-card-icon" strokeWidth={1.9} />
             <Header2>{needUrgentCare}</Header2>
             <Header6>
               <span>Require Urgent Care</span>
@@ -175,9 +175,9 @@ export default function DashboardPage() {
             Review Patients
           </Button>
         </div>
-        <div className={`card ${pendingTasksStatus}`}>
-          <div className="card-header">
-            <ListChecks className="card-icon" strokeWidth={2} />
+        <div className={`dashboard-card ${pendingTasksStatus}`}>
+          <div className="dashboard-card-header">
+            <ListChecks className="dashboard-card-icon" strokeWidth={2} />
             <Header2>{numUncompletedTasks}</Header2>
             <Header6>
               <span>Tasks to Complete</span>
@@ -187,9 +187,9 @@ export default function DashboardPage() {
             View Tasks
           </Button>
         </div>
-        <div className={`card ${goodConditionStatus}`}>
-          <div className="card-header">
-            <HeartHandshake className="card-icon" strokeWidth={1.9} />
+        <div className={`dashboard-card ${goodConditionStatus}`}>
+          <div className="dashboard-card-header">
+            <HeartHandshake className="dashboard-card-icon" strokeWidth={1.9} />
             <Header2>{inGoodCondition}</Header2>
             <Header6>
               <span>In Good Condition</span>
@@ -201,9 +201,9 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="card">
+      <div className="dashboard-card">
         <Header4>Notifications</Header4>
-        <div className="notification-filters">
+        <div className="dashboard-notification-filters">
           {notificationFilters.map(({ value, label }) => (
             <Button
               variant={notificationFilter === value ? 'default' : 'outlined'}
@@ -216,11 +216,11 @@ export default function DashboardPage() {
         </div>
         <div className="scroll-container">
           {filteredNotifications.map(notification => (
-            <div className="patient-card" key={notification.id}>
+            <div className="dashboard-patient-card" key={notification.id}>
               <Header6>
                 {notification.patientName} | ID: {notification.patientId}
               </Header6>
-              <div className="patient-card-info">
+              <div className="dashboard-patient-card-info">
                 <Body1>{notification.message}</Body1>
                 <Body2>{notification.time}</Body2>
               </div>
