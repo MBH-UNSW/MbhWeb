@@ -5,7 +5,9 @@ import { Body1, Body2 } from '../../components/typography/Body';
 import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
 import { SearchBar } from '../../components/searchBar/SearchBar';
+
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { LayoutGrid, List as ListIcon, Plus, ChevronRight } from 'lucide-react';
 
@@ -13,9 +15,10 @@ import { LayoutGrid, List as ListIcon, Plus, ChevronRight } from 'lucide-react';
 // import { PatientCard } from '../components/patientCard/PatientCard';
 
 
-type PatientStatus = 'Stable' | 'Unstable';
+type PatientStatus = 'Stable' | 'Warning' | 'Unstable';
 type StatusFilter = 'all' | PatientStatus;
 type ViewMode = 'grid' | 'list';
+type ButtonVariant = 'default' | 'outlined' | 'text';
 
 interface Patient {
   id: number;
@@ -26,6 +29,7 @@ interface Patient {
 
 const statusFilters: { value: PatientStatus; label: string }[] = [
   { value: 'Unstable', label: 'Unstable' },
+  { value: 'Warning', label: 'Warning' },
   { value: 'Stable', label: 'Stable' },
 ];
 
@@ -33,22 +37,26 @@ const statusFilters: { value: PatientStatus; label: string }[] = [
 function getStatusClass(status: PatientStatus) {
   if (status === 'Unstable') {
     return 'critical';
+  } else if (status === 'Warning') {
+    return 'warning';
   } else {
     return 'good';
   }
 }
 
 export default function PatientsPage() {
+  const navigate = useNavigate();
+
   // some mock bs.. (backend tba)
   const patients: Patient[] = [
     { id: 1, name: 'Emaan Khurram', patientId: 'M104933', status: 'Unstable' },
     { id: 2, name: 'Hana Trinh', patientId: 'M937927', status: 'Unstable' },
     { id: 3, name: 'Raisa Zafar Khan', patientId: 'M104223', status: 'Stable' },
-    { id: 4, name: 'Dev Kanchhal', patientId: 'M104000', status: 'Stable' },
+    { id: 4, name: 'Dev Kanchhal', patientId: 'M104000', status: 'Warning' },
     { id: 5, name: 'Oliver Xu', patientId: 'M504948', status: 'Stable' },
     { id: 6, name: 'Sasha Solichin', patientId: 'M402933', status: 'Stable' },
     { id: 7, name: 'Agnes Tjokrosetio', patientId: 'M1149571', status: 'Unstable' },
-    { id: 8, name: 'Lipda Chantayasakorn', patientId: 'M926484', status: 'Stable' },
+    { id: 8, name: 'Lipda Chantayasakorn', patientId: 'M926484', status: 'Warning' },
     { id: 9, name: 'Hannah Choi', patientId: 'M353213', status: 'Stable' },
   ];
 
@@ -65,15 +73,22 @@ export default function PatientsPage() {
   });
 
   const patientCardOnClick = (patient: Patient) => {
-    // Handle navigating to patient detail page. NOT SET YET!
-    console.log(patient);
-  }
+    navigate(`/patients/${patient.patientId}`);
+  };
+
+  const toggleStatusFilter = (value: PatientStatus) => {
+    if (statusFilter === value) {
+      setStatusFilter('all');
+    } else {
+      setStatusFilter(value);
+    }
+  };
 
   let patientDisplay;
 
   if (view === 'grid') {
     patientDisplay = (
-      <div className="patient-grid">
+      <div className='patient-grid'>
         {filteredPatients.map(patient => (
           <div
             className={`card patient-tile ${getStatusClass(patient.status)}`}
@@ -85,7 +100,7 @@ export default function PatientsPage() {
               <Body2>{patient.patientId}</Body2>
             </div>
 
-            <div className="patient-tile-footer">
+            <div className='patient-tile-footer'>
               <Body2 bold>{patient.status}</Body2>
               <ChevronRight size={18} strokeWidth={2.5} />
             </div>
@@ -95,19 +110,19 @@ export default function PatientsPage() {
     );
   } else {
     patientDisplay = (
-      <div className="scroll-container">
+      <div className='scroll-container'>
         {filteredPatients.map(patient => (
           <div
             className={`patient-card ${getStatusClass(patient.status)}`}
             key={patient.id}
             onClick={() => patientCardOnClick(patient)}
           >
-            <div className="patient-card-info">
+            <div className='patient-card-info'>
               <Header6>
                 {patient.name} | ID: {patient.patientId}
               </Header6>
 
-              <div className="patient-card-status">
+              <div className='patient-card-status'>
                 <Body2 bold>{patient.status}</Body2>
                 <ChevronRight size={18} strokeWidth={2.5} />
               </div>
@@ -141,7 +156,7 @@ export default function PatientsPage() {
       </div>
 
       <div className='patients-controls'>
-        <SearchBar 
+        <SearchBar
           placeholder='Search Patients'
           value={search}
           onChange={e => setSearch(e.target.value)}

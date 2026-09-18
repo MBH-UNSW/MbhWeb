@@ -35,6 +35,11 @@
   border: 1px solid var(--success-border);
 }
 
+.warning {
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+}
+
 .critical {
   background: var(--error-bg);
   border: 1px solid var(--error-border);

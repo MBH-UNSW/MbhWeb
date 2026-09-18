@@ -1,0 +1,163 @@
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.patient-id-accent {
+  color: var(--mantine-color-ubhRed-7);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.detail-tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sensor-card {
+  max-height: none;
+  border: none;
+}
+
+.sensor-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sensor-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-wrapper {
+  width: 100%;
+}
+
+.expanded-chart {
+  margin-top: 10px;
+}
+
+.general-info-card {
+  max-height: none;
+  gap: 20px;
+  border: none;
+}
+
+.general-info-body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+ 
+.general-info-identity {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+ 
+.general-info-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--mantine-color-ubhNeutral-3);
+  flex-shrink: 0;
+}
+ 
+.general-info-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.logbook-card {
+  max-height: none;
+  gap: 20px;
+  border: none;
+}
+
+.logbook-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logbook-controls > *:first-child {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.logbook-controls > button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.logbook-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.logbook-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-semibold);
+  color: var(--mantine-color-ubhNeutral-8);
+  border-bottom: 1px solid var(--mantine-color-ubhNeutral-3);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.logbook-table td {
+  padding: 12px;
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-ubhNeutral-9);
+  border-bottom: 1px solid var(--mantine-color-ubhNeutral-2);
+  vertical-align: middle;
+}
+
+.product-code {
+  display: block;
+  color: var(--mantine-color-ubhBlue-7);
+  text-decoration: none;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.product-name {
+  font-weight: var(--mantine-font-weight-semibold);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--mantine-radius-xl);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-semibold);
+}
+
+.status-pill.good {
+  background: var(--success-bg2);
+  color: var(--success-text, var(--mantine-color-ubhNeutral-9));
+}
+
+.status-pill.critical {
+  background: var(--error-bg);
+  color: var(--error-text, var(--mantine-color-ubhNeutral-9));
+}
