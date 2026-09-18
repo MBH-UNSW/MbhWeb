@@ -1,7 +1,8 @@
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, Tooltip } from '@mantine/core';
 import { type LucideIcon, X } from 'lucide-react';
 
 import classes from './IconButton.module.css';
+import { Caption } from '../typography/Body';
 
 type IconButtonVariant = 'default' | 'outlined' | 'text';
 
@@ -9,6 +10,7 @@ type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 type IconButtonProps = {
   icon?: LucideIcon;
+  tooltip?: string;
   variant?: IconButtonVariant;
   size?: IconButtonSize;
   disabled?: boolean;
@@ -17,6 +19,7 @@ type IconButtonProps = {
 
 export function IconButton({
   icon: Icon = X,
+  tooltip,
   variant = 'default',
   size = 'md',
   disabled,
@@ -48,16 +51,27 @@ export function IconButton({
   }
 
   return (
-    <ActionIcon
-      variant={mantineVariant}
-      size={buttonSize}
-      disabled={disabled}
-      onClick={onClick}
-      classNames={{
-        root: `${classes.root} ${classes[variant]}`,
-      }}
+    <Tooltip
+      label={<Caption>{tooltip}</Caption>}
+      disabled={!tooltip}
+      position="top"
+      offset={1}
+      withArrow
+      arrowSize={5}
+      arrowRadius={1}
+      classNames={{ tooltip: classes.tooltip }}
     >
-      <Icon size={iconSize} />
-    </ActionIcon>
+      <ActionIcon
+        variant={mantineVariant}
+        size={buttonSize}
+        disabled={disabled}
+        onClick={onClick}
+        classNames={{
+          root: `${classes.root} ${classes[variant]}`,
+        }}
+      >
+        <Icon size={iconSize} />
+      </ActionIcon>
+    </Tooltip>
   );
 }
