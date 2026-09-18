@@ -43,7 +43,7 @@
   gap: 10px;
   background: var(--mantine-color-ubhNeutral-0);
   border-radius: var(--mantine-radius-sm);
-  border: 1px solid var(--mantine-color-ubhNeutral-9);
+  border: 1px solid var(--mantine-color-ubhNeutral-1);
   padding: 26px 30px 22px;
   box-sizing: border-box;
 }
