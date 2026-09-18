@@ -24,6 +24,12 @@
   flex-direction: column;
 }
 
+.profile-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .profile-card h5 {
   font-weight: var(--mantine-font-weight-semibold);
 }
@@ -60,4 +66,15 @@
   .profile-card-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.edit-profile-form {
+  padding: 0px 6px;
+}
+
+.edit-profile-form-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--mantine-spacing-sm);
 }
