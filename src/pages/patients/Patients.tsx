@@ -14,7 +14,6 @@ import { LayoutGrid, List as ListIcon, Plus, ChevronRight } from 'lucide-react';
 // TODO: make a proper component class for cards.
 // import { PatientCard } from '../components/patientCard/PatientCard';
 
-
 type PatientStatus = 'Stable' | 'Warning' | 'Unstable';
 type StatusFilter = 'all' | PatientStatus;
 type ViewMode = 'grid' | 'list';
@@ -50,14 +49,14 @@ export default function PatientsPage() {
   // some mock bs.. (backend tba)
   const patients: Patient[] = [
     { id: 1, name: 'Emaan Khurram', patientId: 'M104933', status: 'Unstable' },
-    { id: 2, name: 'Hana Trinh', patientId: 'M937927', status: 'Unstable' },
-    { id: 3, name: 'Raisa Zafar Khan', patientId: 'M104223', status: 'Stable' },
-    { id: 4, name: 'Dev Kanchhal', patientId: 'M104000', status: 'Warning' },
-    { id: 5, name: 'Oliver Xu', patientId: 'M504948', status: 'Stable' },
-    { id: 6, name: 'Sasha Solichin', patientId: 'M402933', status: 'Stable' },
-    { id: 7, name: 'Agnes Tjokrosetio', patientId: 'M1149571', status: 'Unstable' },
+    { id: 2, name: 'Avish Reddy', patientId: 'M937927', status: 'Unstable' },
+    { id: 3, name: 'Asna Hassan', patientId: 'M104223', status: 'Stable' },
+    { id: 4, name: 'Ansh Rawat', patientId: 'M104000', status: 'Warning' },
+    { id: 5, name: 'Denzel Iskandar', patientId: 'M504948', status: 'Stable' },
+    { id: 6, name: 'Fareed Farooqi', patientId: 'M402933', status: 'Stable' },
+    { id: 7, name: 'Parth Shrivastava', patientId: 'M1149571', status: 'Unstable' },
     { id: 8, name: 'Lipda Chantayasakorn', patientId: 'M926484', status: 'Warning' },
-    { id: 9, name: 'Hannah Choi', patientId: 'M353213', status: 'Stable' },
+    { id: 9, name: 'Jade Kim', patientId: 'M353213', status: 'Stable' },
   ];
 
   const [view, setView] = useState<ViewMode>('grid');
@@ -68,7 +67,7 @@ export default function PatientsPage() {
     const matchesSearch = patient.name.toLowerCase().includes(search.toLowerCase());
 
     const matchesStatus = statusFilter === 'all' || patient.status === statusFilter;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -88,7 +87,7 @@ export default function PatientsPage() {
 
   if (view === 'grid') {
     patientDisplay = (
-      <div className='patient-grid'>
+      <div className="patient-grid">
         {filteredPatients.map(patient => (
           <div
             className={`card patient-tile ${getStatusClass(patient.status)}`}
@@ -100,7 +99,7 @@ export default function PatientsPage() {
               <Body2>{patient.patientId}</Body2>
             </div>
 
-            <div className='patient-tile-footer'>
+            <div className="patient-tile-footer">
               <Body2 bold>{patient.status}</Body2>
               <ChevronRight size={18} strokeWidth={2.5} />
             </div>
@@ -110,19 +109,19 @@ export default function PatientsPage() {
     );
   } else {
     patientDisplay = (
-      <div className='scroll-container'>
+      <div className="patients-list">
         {filteredPatients.map(patient => (
           <div
             className={`patient-card ${getStatusClass(patient.status)}`}
             key={patient.id}
             onClick={() => patientCardOnClick(patient)}
           >
-            <div className='patient-card-info'>
-              <Header6>
+            <div className="patient-card-info">
+              <Body1>
                 {patient.name} | ID: {patient.patientId}
-              </Header6>
+              </Body1>
 
-              <div className='patient-card-status'>
+              <div className="patient-card-status">
                 <Body2 bold>{patient.status}</Body2>
                 <ChevronRight size={18} strokeWidth={2.5} />
               </div>
@@ -134,20 +133,19 @@ export default function PatientsPage() {
   }
 
   return (
-    <div className='page'>
-      <div className='patients-header'>
-        <div className='overview-greeting'>
+    <div className="page">
+      <div className="patients-header">
+        <div className="overview-greeting">
           <Header2>Patients Overview</Header2>
-
         </div>
 
-        <div className='view-toggle'>
-          <IconButton 
+        <div className="view-toggle">
+          <IconButton
             icon={LayoutGrid}
             variant={view === 'grid' ? 'default' : 'text'}
             onClick={() => setView('grid')}
           />
-          <IconButton 
+          <IconButton
             icon={ListIcon}
             variant={view === 'list' ? 'default' : 'text'}
             onClick={() => setView('list')}
@@ -155,34 +153,32 @@ export default function PatientsPage() {
         </div>
       </div>
 
-      <div className='patients-controls'>
-        <SearchBar
-          placeholder='Search Patients'
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          onClear={() => setSearch('')}
-        />
+      <div className="patients-controls">
+        <div className="patients-controls-top">
+          <SearchBar
+            placeholder="Search Patients"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            onClear={() => setSearch('')}
+          />
 
-        <div className='notification-filters'>
+          <Button variant="default" size="sm" leftIcon={Plus}>
+            New Patient
+          </Button>
+        </div>
+
+        <div className="notification-filters">
           {statusFilters.map(({ value, label }) => (
             <Button
               key={value}
               variant={statusFilter === value ? 'default' : 'outlined'}
-              size='xs'
-              onClick={() => setStatusFilter(statusFilter === value ? 'all' : value)}
+              size="xs"
+              onClick={() => toggleStatusFilter(value)}
             >
               {label}
             </Button>
           ))}
         </div>
-
-        <Button 
-          variant='default'
-          size='sm'
-          leftIcon={Plus}
-        >
-          New Patient
-        </Button>
       </div>
 
       {patientDisplay}
