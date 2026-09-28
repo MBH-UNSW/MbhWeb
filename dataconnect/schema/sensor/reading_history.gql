@@ -1,0 +1,10 @@
+type ReadingHistory @table(key: ["historyId"]) {
+    historyId: UUID! @default(expr: "uuidV4()")
+    sensorId: UUID!
+    sensor: Sensor! @ref(fields: ["sensorId"])
+    avgValue: Float!
+    minValue: Float!
+    maxValue: Float!
+    periodStart: Timestamp!
+    periodEnd: Timestamp!
+}

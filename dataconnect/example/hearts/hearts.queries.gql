@@ -1,0 +1,31 @@
+mutation CreateHeart($patientPid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    heart_insert(data: {
+        patientPid: $patientPid
+    })
+}
+
+query GetHeart($heartId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    heart(key: {
+        heartId: $heartId
+    }) {
+        heartId
+        patientPid
+        createdAt
+        patient {
+            firstName
+            lastName
+        }
+    }
+}
+
+query ListHeartsByPatient($patientPid: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    hearts(where: {
+        patientPid: { eq: $patientPid }
+    }) {
+        heartId
+        createdAt
+    }
+}

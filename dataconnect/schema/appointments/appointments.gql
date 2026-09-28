@@ -1,0 +1,23 @@
+enum AppointmentStatus {
+    SCHEDULED
+    IN_PROGRESS
+    COMPLETED
+    CANCELLED
+}
+
+type Appointment @table {
+    id: UUID! @default(expr: "uuidV4()") 
+    
+    patientPid: UUID!
+    patient: Patient! @ref(fields: "patientPid")
+
+    clinicianPid: UUID!
+    clinician: Clinician! @ref(fields: "clinicianPid")
+    
+    appointmentReason: String! # 'Introductory', 'Monthly Check Up', etc.
+    appointmentNotes: String
+    status: AppointmentStatus! @default(value: SCHEDULED)
+    scheduledAt: Timestamp!
+    updatedAt: Timestamp
+    createdAt: Timestamp! @default(expr: "request.time")
+}

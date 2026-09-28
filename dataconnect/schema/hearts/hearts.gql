@@ -1,0 +1,8 @@
+type Heart @table(key: ["heartId"]) {
+    heartId: UUID! @default(expr: "uuidV4()")
+    
+    patientPid: UUID!
+    patient: Patient! @ref(fields: ["patientPid"])
+    
+    createdAt: Timestamp! @default(expr: "request.time")
+}

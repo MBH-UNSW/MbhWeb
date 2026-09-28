@@ -1,0 +1,9 @@
+type Alert @table(key: ["alertId"]) {
+    alertId: UUID! @default(expr: "uuidV4()")
+    sensorId: UUID!
+    sensor: Sensor! @ref(fields: ["sensorId"])
+    severity: String!
+    triggerValue: Float!
+    triggeredAt: Timestamp!
+    resolvedAt: Timestamp
+}

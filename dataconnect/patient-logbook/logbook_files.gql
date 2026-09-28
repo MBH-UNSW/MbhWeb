@@ -1,0 +1,126 @@
+# Patient-authorized operations for the Storage-to-PostgreSQL logbook flow.
+# Ownership is derived from the verified Firebase token's immutable auth.uid.
+
+mutation CreateLogbookFileMetadata(
+  $fileId: UUID!
+  $logbookEntryId: UUID!
+  $fileName: String!
+  $storagePath: String!
+  $mimeType: String!
+  $fileSizeBytes: Int!
+)
+@auth(level: USER)
+@transaction {
+  query
+  @check(
+    expr: "vars.fileSizeBytes > 0 && vars.fileSizeBytes <= 20971520"
+    message: "The file must be between 1 byte and 20 MiB."
+  )
+  @check(
+    expr: "vars.mimeType in ['application/pdf', 'image/jpeg', 'image/png']"
+    message: "Only PDF, JPEG, and PNG files are supported."
+  )
+  @check(
+    expr: "vars.storagePath == 'logbook_uploads/' + auth.uid + '/' + vars.logbookEntryId + '/' + vars.fileId"
+    message: "The Storage path must exactly match the authenticated patient, logbook entry, and file ID."
+  )
+  @redact {
+    logbookEntry(key: { id: $logbookEntryId })
+    @check(message: "The logbook entry does not exist.") {
+      patientPid
+      isDeactivated
+      @check(
+        expr: "this == false"
+        message: "Files cannot be attached to a deactivated logbook entry."
+      )
+      patient {
+        firebaseAuthUid
+        @check(
+          expr: "this == auth.uid"
+          message: "The logbook entry does not belong to the authenticated patient."
+        )
+      }
+    }
+
+  }
+
+  # Inserts deliberately reject a duplicate UUID at the database constraint.
+  # This avoids an upsert race that could overwrite another file's ownership.
+  file_insert(
+    data: {
+      id: $fileId
+      uploadedByPatientPid_expr: "response.query.logbookEntry.patientPid"
+      fileName: $fileName
+      storagePath: $storagePath
+      mimeType: $mimeType
+      fileSizeBytes: $fileSizeBytes
+    }
+  )
+
+  logbookEntryFile_insert(
+    data: {
+      logbookEntryId: $logbookEntryId
+      fileId: $fileId
+    }
+  )
+}
+
+query GetPatientLogbookFileMetadata(
+  $fileId: UUID!
+  $logbookEntryId: UUID!
+)
+@auth(level: USER) {
+  file(key: { id: $fileId })
+  @check(message: "The file does not exist.") {
+    id
+    fileName
+    storagePath
+    @check(
+      expr: "this == 'logbook_uploads/' + auth.uid + '/' + vars.logbookEntryId + '/' + vars.fileId"
+      message: "The file path does not match the authenticated patient and logbook entry."
+    )
+    mimeType
+    fileSizeBytes
+
+    uploadedByPatient
+    @redact {
+      firebaseAuthUid
+      @check(
+        expr: "this == auth.uid"
+        message: "The file does not belong to the authenticated patient."
+      )
+    }
+
+    logbookEntryFiles_on_file(
+      where: { logbookEntryId: { eq: $logbookEntryId } }
+      limit: 1
+    )
+    @check(message: "The file is not attached to this logbook entry.") {
+      logbookEntryId
+      fileId
+      logbookEntry {
+        patient
+        @redact {
+          firebaseAuthUid
+          @check(
+            expr: "this == auth.uid"
+            message: "The logbook entry does not belong to the authenticated patient."
+          )
+        }
+      }
+    }
+  }
+}
+
+query ListPatientLogbookEntries
+@auth(level: USER) {
+  patients(where: { firebaseAuthUid: { eq_expr: "auth.uid" } }) {
+    logbookEntries_on_patient(
+      where: { isDeactivated: { eq: false } }
+      orderBy: { createdAt: DESC }
+    ) {
+      id
+      createdAt
+    }
+  }
+}

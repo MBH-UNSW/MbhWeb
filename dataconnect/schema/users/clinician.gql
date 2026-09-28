@@ -1,0 +1,16 @@
+type Clinician @table(key: ["pid"]) {
+  pid: UUID! @default(expr: "uuidV4()")
+
+  email: String! @unique
+  firstName: String!
+  lastName: String!
+  dob: Date!
+  phone: String!
+  aphra: String!
+  specialty: String!
+
+  isDeactivated: Boolean! @default(value: false)
+
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}

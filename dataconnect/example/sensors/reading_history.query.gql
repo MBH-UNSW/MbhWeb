@@ -1,0 +1,54 @@
+query ListReadingHistory
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  readingHistories {
+    historyId
+    sensorId
+    avgValue
+    minValue
+    maxValue
+    periodStart
+    periodEnd
+    sensor {
+      type
+      location
+      unit
+      minThreshold
+      maxThreshold
+      status
+    }
+  }
+}
+
+query ListReadingHistoryBySensorId
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  readingHistories(where: { sensorId: { eq: "11111111-2222-3333-4444-555555555552" } }) {
+    historyId
+    sensorId
+    avgValue
+    minValue
+    maxValue
+    periodStart
+    periodEnd
+  }
+}
+
+query ListReadingHistoryForWindow
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  readingHistories(where: {
+    periodStart: { ge: "2026-05-15T13:00:00.000Z" }
+    periodEnd: { le: "2026-05-15T13:45:00.000Z" }
+  }) {
+    historyId
+    sensorId
+    avgValue
+    minValue
+    maxValue
+    periodStart
+    periodEnd
+    sensor {
+      type
+      location
+      unit
+    }
+  }
+}

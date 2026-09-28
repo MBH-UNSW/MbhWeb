@@ -1,0 +1,99 @@
+# NOTE: No update/delete mutations are provided as per the design, i.e., it does not appear
+# that it is possible to update/delete a logbook entry once it has been submitted, etc.
+
+# Logbook Entry Mutations
+mutation CreateLogbookEntry(
+    $patientPid: UUID!,
+    $inr: Float!,
+    $weight: Float!,
+    $bloodPressureSystolic: Int!,
+    $bloodPressureDiastolic: Int!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    logbookEntry_insert(data: {
+        patientPid: $patientPid,
+        inr: $inr,
+        weight: $weight,
+        bloodPressureSystolic: $bloodPressureSystolic,
+        bloodPressureDiastolic: $bloodPressureDiastolic
+    })
+}
+
+mutation CreateFile(
+    $uploadedByPatientPid: UUID!,
+    $fileName: String!,
+    $storagePath: String!,
+    $mimeType: String!,
+    $fileSizeBytes: Int!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    file_insert(data: {
+        uploadedByPatientPid: $uploadedByPatientPid,
+        fileName: $fileName,
+        storagePath: $storagePath,
+        mimeType: $mimeType,
+        fileSizeBytes: $fileSizeBytes
+    })
+}
+
+mutation AttachFileToLogbookEntry(
+    $logbookEntryId: UUID!,
+    $fileId: UUID!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    logbookEntryFile_insert(data: {
+        logbookEntry: { id: $logbookEntryId },
+        file: { id: $fileId }
+    })
+}
+
+# Logbook Queries
+query GetLogbookEntry($id: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    logbookEntry(key: { id: $id }) {
+        id,
+        patientPid,
+        inr,
+        weight,
+        bloodPressureSystolic,
+        bloodPressureDiastolic,
+        isDeactivated,
+        createdAt,
+        updatedAt
+        logbookEntryFiles_on_logbookEntry {
+            file {
+                id,
+                fileName,
+                storagePath,
+                mimeType,
+                fileSizeBytes,
+                createdAt
+            }
+        }
+    }
+}
+
+query ListLogBookEntriesByPatient($patientId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+    patient(key: { pid: $patientId }) {
+        pid,
+        logbookEntries_on_patient {
+            id,
+            patientPid,
+            inr,
+            weight,
+            bloodPressureSystolic,
+            bloodPressureDiastolic,
+            isDeactivated,
+            createdAt,
+            updatedAt
+            logbookEntryFiles_on_logbookEntry {
+                file {
+                    id,
+                    fileName,
+                    storagePath,
+                    mimeType,
+                    fileSizeBytes,
+                    createdAt
+                }
+            }
+        }
+    }
+}

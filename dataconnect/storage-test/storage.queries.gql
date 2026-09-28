@@ -1,0 +1,55 @@
+# UID-authorized operations for the Storage-to-PostgreSQL logbook flow.
+# All patient ownership is resolved from the Firebase token's auth.uid.
+
+mutation CreateLogbookFileMetadata(
+  $fileId: UUID!
+  $logbookEntryId: UUID!
+  $fileName: String!
+  $storagePath: String!
+  $mimeType: String!
+  $fileSizeBytes: Int!
+)
+@auth(level: USER)
+@transaction {
+  query
+  @check(
+    expr: "response.query.logbookEntry.patient.firebaseAuthUid == auth.uid && vars.fileSizeBytes > 0 && vars.fileSizeBytes <= 20971520 && vars.mimeType in ['application/pdf', 'image/jpeg', 'image/png'] && vars.storagePath.startsWith('logbook_uploads/' + auth.uid + '/' + vars.logbookEntryId + '/')"
+    message: "The logbook entry or file metadata is not valid for the authenticated patient."
+  )
+  @redact {
+    logbookEntry(key: { id: $logbookEntryId }) {
+      patientPid
+      patient {
+        firebaseAuthUid
+      }
+    }
+  }
+
+  file_upsert(
+    data: {
+      id: $fileId
+      uploadedByPatientPid_expr: "response.query.logbookEntry.patientPid"
+      fileName: $fileName
+      storagePath: $storagePath
+      mimeType: $mimeType
+      fileSizeBytes: $fileSizeBytes
+    }
+  )
+
+  logbookEntryFile_upsert(
+    data: {
+      logbookEntryId: $logbookEntryId
+      fileId: $fileId
+    }
+  )
+}
+
+query ListPatientLogbookEntries
+@auth(level: USER) {
+  patients(where: { firebaseAuthUid: { eq_expr: "auth.uid" } }) {
+    logbookEntries_on_patient {
+      id
+      createdAt
+    }
+  }
+}

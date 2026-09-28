@@ -1,0 +1,48 @@
+query ListAlertReadings
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  alertReadingss {
+    readingId
+    alertId
+    sensorId
+    recordedAt
+    value
+    unit
+    alert {
+      severity
+      triggerValue
+      triggeredAt
+      resolvedAt
+    }
+    sensor {
+      type
+      location
+      unit
+      minThreshold
+      maxThreshold
+    }
+  }
+}
+
+query ListAlertReadingsByAlertId
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  alertReadingss(where: { alertId: { eq: "11111111-2222-3333-4444-555555555551" } }) {
+    readingId
+    alertId
+    sensorId
+    recordedAt
+    value
+    unit
+  }
+}
+
+query ListAlertReadingsBySensorId
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  alertReadingss(where: { sensorId: { eq: "11111111-2222-3333-4444-555555555553" } }) {
+    readingId
+    alertId
+    sensorId
+    recordedAt
+    value
+    unit
+  }
+}

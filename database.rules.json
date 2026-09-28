@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "public_demo": {
+      "current": {
+        "$deviceId": {
+          ".read": "$deviceId === 'UBH_TAH001'",
+          ".write": false
+        }
+      }
+    }
+  }
+}

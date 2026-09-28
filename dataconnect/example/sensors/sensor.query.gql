@@ -1,0 +1,122 @@
+mutation CreateSensor(
+  $sensorId: UUID
+  $heartId: UUID!
+  $type: String!
+  $location: String!
+  $unit: String!
+  $minThreshold: Float!
+  $maxThreshold: Float!
+  $status: Boolean!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensor_insert(data: {
+    sensorId: $sensorId
+    heartId: $heartId
+    type: $type
+    location: $location
+    unit: $unit
+    minThreshold: $minThreshold
+    maxThreshold: $maxThreshold
+    status: $status
+  })
+}
+
+query GetSensor($sensorId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensor(key: { sensorId: $sensorId }) {
+    sensorId
+    heartId
+    type
+    location
+    unit
+    minThreshold
+    maxThreshold
+    status
+  }
+}
+
+query ListSensors
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensors {
+    sensorId
+    heartId
+    type
+    location
+    unit
+    minThreshold
+    maxThreshold
+    status
+  }
+}
+
+query ListActiveSensors($status: Boolean!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensors(where: { status: { eq: $status } }) {
+    sensorId
+    heartId
+    type
+    location
+    unit
+    minThreshold
+    maxThreshold
+    status
+  }
+}
+
+query ListSensorsByType($type: String!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensors(where: { type: { eq: $type } }) {
+    sensorId
+    heartId
+    type
+    location
+    unit
+    minThreshold
+    maxThreshold
+    status
+  }
+}
+
+mutation UpdateSensor(
+  $sensorId: UUID!
+  $heartId: UUID!
+  $type: String!
+  $location: String!
+  $unit: String!
+  $minThreshold: Float!
+  $maxThreshold: Float!
+  $status: Boolean!
+) @auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensor_update(
+    key: { sensorId: $sensorId }
+    data: {
+      heartId: $heartId
+      type: $type
+      location: $location
+      unit: $unit
+      minThreshold: $minThreshold
+      maxThreshold: $maxThreshold
+      status: $status
+    }
+  )
+}
+
+mutation DeleteSensor($sensorId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensor_delete(key: { sensorId: $sensorId })
+}
+
+query ListSensorByHeart($heartId: UUID!)
+@auth(level: USER, insecureReason: "Prototype only: role-based authorization will be added later.") {
+  sensors(where: { 
+    heartId: { eq: $heartId }
+  }) {
+    sensorId
+    heartId
+    type
+    location
+    unit
+    minThreshold
+    maxThreshold
+    status
+  }
+}

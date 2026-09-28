@@ -1,0 +1,13 @@
+type File @table {
+    id: UUID! @default(expr: "uuidV4()")
+
+    uploadedByPatientPid: UUID!
+    # Will add references below if we use pid as the main primary key and not id
+    uploadedByPatient: Patient! @ref(fields: "uploadedByPatientPid")
+    
+    fileName: String!
+    storagePath: String!
+    mimeType: String!
+    fileSizeBytes: Int!
+    createdAt: Timestamp! @default(expr: "request.time")
+}
