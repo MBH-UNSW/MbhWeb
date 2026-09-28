@@ -14,35 +14,63 @@
   border-radius: var(--mantine-radius-sm);
   border: 1px solid var(--mantine-color-ubhNeutral-9);
   flex-shrink: 0;
+  border: none;
 }
 
 .patients-controls {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 15px;
-  flex-wrap: wrap;
 }
 
-.patients-controls > *:first-child {
-  flex-grow: 1;
-  min-width: 200px;
+.patients-controls-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.patients-controls-top > *:first-child {
+  flex: 1 1 auto;
+  min-width: 160px;
+}
+
+.patients-controls-top > button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.notification-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .patients-controls {
+    flex-wrap: wrap;
+  }
+
+  .patients-controls > *:first-child {
+    flex: 1 1 100%;
+  }
 }
 
 /* Patient Status */
 /* NOTE TO ASNA: RN its green and red just for visibility and also cus im a chud at visual design */
 .good {
   background: var(--success-bg2);
-  border: 1px solid var(--success-border);
+  border: 1.5px solid var(--success-border);
 }
 
 .warning {
   background: var(--warning-bg);
-  border: 1px solid var(--warning-border);
+  border: 1.5px solid var(--warning-border);
 }
 
 .critical {
   background: var(--error-bg);
-  border: 1px solid var(--error-border);
+  border: 1.5px solid var(--error-border);
 }
 
 /* Grid formatting TODO: gotta make it a component... */
@@ -64,12 +92,46 @@
   }
 }
 
-/* Patient Card */
+.patients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Patient list view */
+.patient-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: var(--mantine-radius-md);
+  padding: 22px 30px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.patient-card-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 40px;
+}
+
+.patient-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Patient Grid view */
 .patient-tile {
   max-height: none;
   justify-content: space-between;
-  gap: 20px;
+  gap: 28px;
   cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.patient-tile:hover {
+  transform: translateY(-2px);
 }
 
 .patient-tile-footer {
@@ -83,8 +145,4 @@
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-}
-
-.patient-card {
-  cursor: pointer;
 }
