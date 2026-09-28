@@ -1,0 +1,129 @@
+.inbox-filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inbox-filters {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.conversation-table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xl);
+}
+
+.conversation-table-toolbar > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.conversation-table-toolbar > :last-child {
+  flex-shrink: 0;
+}
+
+.conversation-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  table-layout: fixed;
+  margin-top: -8px;
+}
+
+.conversation-table th,
+.conversation-table td {
+  font-size: var(--mantine-font-size-md);
+  line-height: var(--mantine-line-height-md);
+}
+
+.conversation-table thead {
+  background: var(--mantine-color-ubhNeutral-8);
+}
+
+.conversation-table thead th {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-ubhNeutral-0);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
+}
+
+.conversation-table thead th:first-child {
+  border-top-left-radius: var(--mantine-radius-lg);
+  border-bottom-left-radius: var(--mantine-radius-lg);
+}
+
+.conversation-table thead th:last-child {
+  border-top-right-radius: var(--mantine-radius-lg);
+  border-bottom-right-radius: var(--mantine-radius-lg);
+}
+
+.conversation-table tbody td {
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
+  background: var(--mantine-color-ubhNeutral-3);
+  color: var(--mantine-color-ubhNeutral-9);
+  font-weight: var(--mantine-font-weight-regular);
+}
+
+.conversation-table tbody td:first-child {
+  border-top-left-radius: var(--mantine-radius-md);
+  border-bottom-left-radius: var(--mantine-radius-md);
+}
+
+.conversation-table tbody td:last-child {
+  border-top-right-radius: var(--mantine-radius-md);
+  border-bottom-right-radius: var(--mantine-radius-md);
+}
+
+.conversation-table th:nth-child(1),
+.conversation-table td:nth-child(1) {
+  width: 25%;
+}
+
+.conversation-table th:nth-child(2),
+.conversation-table td:nth-child(2) {
+  width: 15%;
+}
+
+.conversation-table th:nth-child(3),
+.conversation-table td:nth-child(3) {
+  width: 20%;
+}
+
+.conversation-table th:nth-child(4),
+.conversation-table td:nth-child(4) {
+  width: 25%;
+  white-space: nowrap;
+}
+
+.conversation-table th:nth-child(5),
+.conversation-table td:nth-child(5) {
+  width: 15%;
+}
+
+.conversation-row {
+  cursor: pointer;
+}
+
+.conversation-row:hover td {
+  background: var(--mantine-color-ubhNeutral-4);
+}
+
+.conversation-row.archived {
+  opacity: 0.5;
+}
+
+.patient-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.unread-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--mantine-color-ubhBlue-8);
+}

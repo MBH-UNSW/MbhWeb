@@ -18,6 +18,7 @@ const tabs = {
     { link: '/patients', label: 'Patients', icon: SquareActivity },
     { link: '/appointments', label: 'Appointments', icon: Calendar },
     { link: '/profile', label: 'Profile', icon: UserRound },
+    { link: '/messages', label: 'Messages', icon: MessageSquare },
     { link: '/settings', label: 'Settings', icon: Settings },
   ],
 };
