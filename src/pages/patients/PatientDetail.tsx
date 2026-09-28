@@ -6,25 +6,38 @@ import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
 import { SearchBar } from '../../components/searchBar/SearchBar';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown } from 'lucide-react';
+import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react';
 
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
-import { Modal } from '@mantine/core';
+import { Modal, Tooltip } from '@mantine/core';
 
 type DetailTab = 'sensor' | 'logbook' | 'documents' | 'general';
 type ButtonVariant = 'default' | 'outlined' | 'text';
-type LogbookStatus = 'Available' | 'Out of Stock';
-type SortColumn = 'name' | 'price' | 'size' | 'qty' | 'date' | 'status';
+type SortColumn = 'date' | 'weight' | 'systolic' | 'diastolic' | 'map' | 'inr';
 type SortDirection = 'asc' | 'desc';
 type ExpandedChart = 'flow' | 'pressure' | null;
+type VitalsFilter = 'all' | 'warning' | 'stable';
 
 interface SensorPlot {
 	x: number;
 	y: number;
+}
+
+interface PressurePlot {
+  x: number;
+  left: number;
+  right: number;
+}
+
+interface ChartPlot {
+  x: number;
+  y?: number;
+  left?: number;
+  right?: number;
 }
 
 interface GeneralInfo {
@@ -35,15 +48,41 @@ interface GeneralInfo {
   dob: string;
 }
 
-interface LogbookEntry {
-	id: number;
-	code: string;
-	name: string;
-	price: number;
-	size: number;
-	qty: number;
-	date: string;
-	status: LogbookStatus;
+interface MedicalInfo {
+  bloodType: string;
+  height: string;
+  allergies: string;
+}
+
+interface MedicareInfo {
+  cardNumber: string;
+  irn: string;
+  expiryDate: string;
+}
+
+interface DocumentEntry {
+  id: number;
+  name: string;
+  size: string;
+  dateUploaded: string;
+}
+
+interface VitalsEntry {
+  id: number;
+  date: string;
+  weight: number;       // kg
+  systolic: number;     // mmHg
+  diastolic: number;    // mmHg
+  inr: number;
+}
+
+interface VitalsFlags {
+  map: number;
+  weightConcerning: boolean;
+  systolicConcerning: boolean;
+  diastolicConcerning: boolean;
+  mapConcerning: boolean;
+  inrConcerning: boolean;
 }
 
 const tabs: { value: DetailTab; label: string }[] = [
@@ -61,12 +100,131 @@ function getTabVariant(tabValue: DetailTab, activeTab: DetailTab): ButtonVariant
 	}
 }
 
-function getEntryStatusClass(status: LogbookStatus) {
-	if (status === 'Available') {
-		return 'good';
-	} else {
-		return 'critical';
-	}
+function getMeanArterialPressure(systolic: number, diastolic: number): number {
+  // MAP = diastolic + 1/3 * (systolic - diastolic)
+  return diastolic + (systolic - diastolic) / 3;
+}
+
+function isWeightConcerning(current: number, previous: number | undefined): boolean {
+  if (previous === undefined) {
+    return false;
+  }
+  return Math.abs(current - previous) > 2;
+}
+ 
+function isSystolicConcerning(systolic: number): boolean {
+  return systolic >= 180 || systolic < 90;
+}
+ 
+function isDiastolicConcerning(diastolic: number): boolean {
+  return diastolic >= 120 || diastolic < 60;
+}
+ 
+function isMapConcerning(map: number): boolean {
+  return map < 65 || map > 100;
+}
+ 
+function isInrConcerning(inr: number): boolean {
+  return inr < 2.0 || inr > 4.0;
+}
+ 
+function getVitalClass(isConcerning: boolean): string {
+  if (isConcerning) {
+    return 'critical';
+  } else {
+    return 'good';
+  }
+}
+
+// Weight change is judged against chronological order (oldest first), not
+// however the table happens to be sorted right now.
+function getWeightFlags(entries: VitalsEntry[]): Record<number, boolean> {
+  const flags: Record<number, boolean> = {};
+ 
+  for (let i = 0; i < entries.length; i++) {
+    if (i === 0) {
+      flags[entries[i].id] = false;
+    } else {
+      flags[entries[i].id] = isWeightConcerning(entries[i].weight, entries[i - 1].weight);
+    }
+  }
+ 
+  return flags;
+}
+
+function getVitalsFlags(entry: VitalsEntry, weightFlags: Record<number, boolean>): VitalsFlags {
+  const map = getMeanArterialPressure(entry.systolic, entry.diastolic);
+ 
+  return {
+    map,
+    weightConcerning: weightFlags[entry.id],
+    systolicConcerning: isSystolicConcerning(entry.systolic),
+    diastolicConcerning: isDiastolicConcerning(entry.diastolic),
+    mapConcerning: isMapConcerning(map),
+    inrConcerning: isInrConcerning(entry.inr),
+  };
+}
+
+// A row counts as a "warning" row if any single vital on it is flagged.
+function isEntryConcerning(flags: VitalsFlags): boolean {
+  if (
+    flags.weightConcerning ||
+    flags.systolicConcerning ||
+    flags.diastolicConcerning ||
+    flags.mapConcerning ||
+    flags.inrConcerning
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+ 
+function matchesVitalsFilter(isConcerning: boolean, filter: VitalsFilter): boolean {
+  if (filter === 'warning') {
+    return isConcerning;
+  } else if (filter === 'stable') {
+    return !isConcerning;
+  } else {
+    return true;
+  }
+}
+ 
+function getNextVitalsFilter(current: VitalsFilter): VitalsFilter {
+  if (current === 'all') {
+    return 'warning';
+  } else if (current === 'warning') {
+    return 'stable';
+  } else {
+    return 'all';
+  }
+}
+
+function getFilterLabel(filter: VitalsFilter): string {
+  if (filter === 'warning') {
+    return 'Critical';
+  } else if (filter === 'stable') {
+    return 'Stable';
+  } else {
+    return 'Filter';
+  }
+}
+ 
+function getFilterButtonVariant(filter: VitalsFilter): ButtonVariant {
+  if (filter === 'all') {
+    return 'outlined';
+  } else {
+    return 'default';
+  }
+}
+
+// TODO: Slightly buggy scroll thing for the documents tab. (kinda untested tho)
+function getScrollIndicatorClass(canScrollMore: boolean): string {
+  if (canScrollMore) {
+    return 'scrollable';
+  } else {
+    return 'scroll-inactive';
+  }
 }
 
 function getChartTitle(chart: ExpandedChart): string {
@@ -77,11 +235,20 @@ function getChartTitle(chart: ExpandedChart): string {
   }
 }
 
+// info icon --> draft idea, just gives nurses/clinicians a brief summary of what to identify at a glace.
+function getChartInfo(chart: 'flow' | 'pressure'): string {
+  if (chart === 'pressure') {
+    return "L/R pressures should remain in sync. Broading gap in L/R can signify desync or irregular pumping.";  
+  } else {
+    return 'Blood volume moved per minute. Watch for sudden drops or spikes.';
+  }
+}
+
 function getChartData(
   chart: ExpandedChart,
   flowRateData: SensorPlot[],
-  lrPressureData: SensorPlot[]
-): SensorPlot[] {
+  lrPressureData: PressurePlot[]
+): ChartPlot[] {
   if (chart === 'pressure') {
     return lrPressureData;
   } else {
@@ -89,20 +256,97 @@ function getChartData(
   }
 }
 
-function compareEntries(a: LogbookEntry, b: LogbookEntry, column: SortColumn) {
-  if (column === 'name') {
-    return a.name.localeCompare(b.name);
-  } else if (column === 'price') {
-    return a.price - b.price;
-  } else if (column === 'size') {
-    return a.size - b.size;
-  } else if (column === 'qty') {
-    return a.qty - b.qty;
-  } else if (column === 'date') {
-    return a.date.localeCompare(b.date);
+function getChartLines(chart: ExpandedChart) {
+  if (chart === 'pressure') {
+    return (
+      <>
+        <Line
+          type="monotone"
+          dataKey="left"
+          name="Left"
+          stroke="var(--mantine-color-ubhBlue-6)"
+          strokeWidth={2}
+          dot={{ r: 6, fill: 'var(--mantine-color-ubhBlue-6' }}
+        />
+        <Line
+          type="monotone"
+          dataKey="right"
+          name="Right"
+          stroke="var(--mantine-color-ubhRed-6)"
+          strokeWidth={2}
+          dot={{ r: 6, fill: 'var(--mantine-color-ubhRed-6)' }}
+        />
+      </>
+    );
   } else {
-    return a.status.localeCompare(b.status);
+    return (
+      <Line
+        type="monotone"
+        dataKey="y"
+        name="Flow Rate"
+        stroke="var(--mantine-color-ubhBlue-6)"
+        strokeWidth={2}
+        dot={{ r: 6, fill: 'var(--mantine-color-ubhBlue-6)' }}
+      />
+    );
   }
+}
+
+function compareEntries(a: VitalsEntry, b: VitalsEntry, column: SortColumn) {
+  if (column === 'date') {
+    return a.date.localeCompare(b.date);
+  } else if (column === 'weight') {
+    return a.weight - b.weight;
+  } else if (column === 'systolic') {
+    return a.systolic - b.systolic;
+  } else if (column === 'diastolic') {
+    return a.diastolic - b.diastolic;
+  } else if (column === 'map') {
+    return (
+      getMeanArterialPressure(a.systolic, a.diastolic) - getMeanArterialPressure(b.systolic, b.diastolic)
+    );
+  } else {
+    return a.inr - b.inr;
+  }
+}
+
+function buildLogbookCsv(entries: VitalsEntry[]): string {
+  const header = 'Date,Weight (kg),Systolic (mmHg),Diastolic (mmHg),MAP (mmHg),INR';
+ 
+  const rows = entries.map(entry => {
+    const map = getMeanArterialPressure(entry.systolic, entry.diastolic);
+ 
+    return [
+      `"${entry.date}"`,
+      entry.weight.toFixed(1),
+      entry.systolic,
+      entry.diastolic,
+      map.toFixed(1),
+      entry.inr.toFixed(1),
+    ].join(',');
+  });
+ 
+  return [header, ...rows].join('\n');
+}
+
+function downloadLogbookCsv(entries: VitalsEntry[]) {
+  const csv = buildLogbookCsv(entries);
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+ 
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'logbook-data.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+ 
+  URL.revokeObjectURL(url);
+}
+
+// PLACEHOLDER UNTIL I GET THE BACKEND FIREBASE CONNECTED FOR DOCUMENTS.
+function downloadDocument(doc: DocumentEntry) {
+  console.log('download document', doc.name);
 }
 
 export default function PatientDetailPage() {
@@ -114,34 +358,65 @@ export default function PatientDetailPage() {
 
 	// mock bs data points
 	const flowRateData: SensorPlot[] = [
-		{ x: 0.5, y: 5 },
-		{ x: 1.0, y: 15 },
-		{ x: 1.5, y: 40 },
-		{ x: 2.0, y: 100 },
-		{ x: 2.5, y: 160 },
-		{ x: 3.0, y: 215 },
+		{ x: 0.5, y: 58 },
+    { x: 1.0, y: 142 },
+    { x: 1.5, y: 208 },
+    { x: 2.0, y: 176 },
+    { x: 2.5, y: 96 },
+    { x: 3.0, y: 52 },
 	];
 
-	const lrPressureData: SensorPlot[] = [
-		{ x: 0.5, y: 6 },
-		{ x: 1.0, y: 18 },
-		{ x: 1.5, y: 42 },
-		{ x: 2.0, y: 105 },
-		{ x: 2.5, y: 165 },
-		{ x: 3.0, y: 218 },
-	];
+	const lrPressureData: PressurePlot[] = [
+    { x: 0.5, left: 42, right: 30 },
+    { x: 1.0, left: 118, right: 82 },
+    { x: 1.5, left: 176, right: 118 },
+    { x: 2.0, left: 150, right: 92 },
+    { x: 2.5, left: 82, right: 56 },
+    { x: 3.0, left: 46, right: 34 },
+  ];
 
-	const logbookEntries: LogbookEntry[] = [
-		{ id: 1, code: '021231', name: 'Beigi Coffe (Navy)', price: 20, size: 40, qty: 234, date: '04/17/23 at 8:25 PM', status: 'Available' },
-		{ id: 2, code: '021232', name: 'Beigi Coffe (Teal)', price: 20, size: 40, qty: 234, date: '04/17/23 at 8:25 PM', status: 'Out of Stock' },
-		{ id: 3, code: '021233', name: 'Story Honzo (Cream)', price: 20, size: 40, qty: 234, date: '04/17/23 at 8:25 PM', status: 'Available' },
-		{ id: 4, code: '021234', name: 'Kanky Kitadakate (Green)', price: 20, size: 40, qty: 234, date: '04/17/23 at 8:25 PM', status: 'Out of Stock' },
-		{ id: 5, code: '021235', name: 'Story Honzo (Black)', price: 20, size: 40, qty: 234, date: '04/17/23 at 8:25 PM', status: 'Available' },
-		{ id: 6, code: '021236', name: 'Story Honzo (Cream)', price: 20, size: 40, qty: 234, date: '04/17/23 at 8:25 PM', status: 'Out of Stock' },
-		{ id: 7, code: '021237', name: 'Beigi Coffe (Charcoal)', price: 20, size: 40, qty: 234, date: '04/17/23 at 8:25 PM', status: 'Out of Stock' },
-	];
+	const vitalsLog: VitalsEntry[] = [
+    { id: 1, date: '06/03/23 at 8:25 AM', weight: 71.5, systolic: 122, diastolic: 78, inr: 2.6 },
+    { id: 2, date: '13/03/23 at 8:10 AM', weight: 71.8, systolic: 118, diastolic: 74, inr: 2.9 },
+    { id: 3, date: '20/03/23 at 8:30 AM', weight: 74.4, systolic: 116, diastolic: 76, inr: 2.7 },
+    { id: 4, date: '27/03/23 at 8:15 AM', weight: 74.6, systolic: 188, diastolic: 122, inr: 3.1 },
+    { id: 5, date: '03/04/23 at 8:20 AM', weight: 73.9, systolic: 108, diastolic: 70, inr: 4.6 },
+    { id: 6, date: '10/04/23 at 8:25 AM', weight: 73.2, systolic: 84, diastolic: 54, inr: 1.6 },
+    { id: 7, date: '17/04/23 at 8:25 PM', weight: 72.6, systolic: 118, diastolic: 76, inr: 2.8 },
+  ];
 
-	const [logbookSearch, setLogbookSearch] = useState('');
+	const weightFlags = getWeightFlags(vitalsLog);
+
+  // some mock bs.. (backend tba)
+  const documents: DocumentEntry[] = [
+    { id: 1, name: 'Discharge Summary.pdf', size: '248 KB', dateUploaded: '20/08/26' },
+    { id: 2, name: 'Echocardiogram Report.pdf', size: '1.1 MB', dateUploaded: '17/08/26' },
+    { id: 3, name: 'Device Implant Consent Form.pdf', size: '86 KB', dateUploaded: '24/07/26' },
+    { id: 4, name: 'Medication Chart.pdf', size: '132 KB', dateUploaded: '20/07/26' },
+    { id: 5, name: 'Cardiology Referral Letter.pdf', size: '64 KB', dateUploaded: '09/07/26' },
+    { id: 6, name: 'Electrocardiogram Report.pdf', size: '64 KB', dateUploaded: '25/06/26' },
+  ];
+
+  // Document scrolling (UNTESTED!!)
+  const documentsScrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollMore, setCanScrollMore] = useState(false);
+
+  const updateScrollState = () => {
+    const el = documentsScrollRef.current;
+    if (!el) {
+      return;
+    }
+    const hasMoreBelow = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
+    setCanScrollMore(hasMoreBelow);
+  };
+
+  useEffect(() => {
+    updateScrollState();
+  }, [documents]);
+ 
+  // Sort/Filter features.
+  const [logbookSearch, setLogbookSearch] = useState('');
+  const [vitalsFilter, setVitalsFilter] = useState<VitalsFilter>('all');
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [sortColumn, setSortColumn] = useState<SortColumn | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -159,9 +434,14 @@ export default function PatientDetailPage() {
     }
   };
  
-  const searchedEntries = logbookEntries.filter(entry => {
+  const searchedEntries = vitalsLog.filter(entry => {
     const query = logbookSearch.toLowerCase();
-    return entry.name.toLowerCase().includes(query) || entry.code.includes(query);
+    const matchesSearch = entry.date.toLowerCase().includes(query);
+ 
+    const flags = getVitalsFlags(entry, weightFlags);
+    const matchesFilter = matchesVitalsFilter(isEntryConcerning(flags), vitalsFilter);
+ 
+    return matchesSearch && matchesFilter;
   });
  
   const sortedEntries = [...searchedEntries];
@@ -196,11 +476,23 @@ export default function PatientDetailPage() {
 
   // mock data for general information tab:
   const generalInfo: GeneralInfo = {
-    name: 'Janethan Doeighty',
+    name: 'Emaan Khurram',
     patientId: patientId || 'N/A',
     gender: 'Female',
     age: 67,
     dob: '16/06/1959',
+  };
+
+  const medicalInfo: MedicalInfo = {
+    bloodType: 'A+',
+    height: '165cm',
+    allergies: 'Nil',
+  };
+
+  const medicareInfo: MedicareInfo = {
+    cardNumber: '1234 56789 1',
+    irn: '1',
+    expiryDate: '28/08',
   };
  
   let tabContent;
@@ -212,12 +504,18 @@ export default function PatientDetailPage() {
           <div className='sensor-card-header'>
             <div className='sensor-card-title'>
               <Header4>Flow Rate</Header4>
-              <Info size={16} />
+              <Tooltip
+                label={getChartInfo('flow')}
+                multiline w={240} 
+                withArrow position="top"
+              >
+                <Info size={16} className="info-icon" />
+              </Tooltip>
             </div>
             <IconButton
               icon={Maximize2}
               variant='text'
-              size='sm'
+              size='md'
               onClick={() => setExpandedChart('flow')}
             />
           </div>
@@ -247,9 +545,9 @@ export default function PatientDetailPage() {
                 <Line
                   type='monotone'
                   dataKey='y'
-                  stroke='#3b3fd1'
+                  stroke='var(--mantine-color-ubhBlue-6)'
                   strokeWidth={2}
-                  dot={{ r: 5, fill: '#3b3fd1' }}
+                  dot={{ r: 5, fill: 'var(--mantine-color-ubhBlue-6)' }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -260,12 +558,18 @@ export default function PatientDetailPage() {
           <div className='sensor-card-header'>
             <div className='sensor-card-title'>
               <Header4>L &amp; R Pressure</Header4>
-              <Info size={16} />
+              <Tooltip
+                label={getChartInfo('pressure')}
+                multiline w={240} 
+                withArrow position="top"
+              >
+                <Info size={16} className="info-icon" />
+              </Tooltip>
             </div>
             <IconButton
               icon={Maximize2}
               variant='text'
-              size='sm'
+              size='md'
               onClick={() => setExpandedChart('pressure')}
             />
           </div>
@@ -292,12 +596,22 @@ export default function PatientDetailPage() {
                   fontSize={12}
                 />
 
+                <Legend position="bottom" wrapperStyle={{ paddingTop: 12, paddingLeft: 36 }} />
                 <Line
-                  type='monotone'
-                  dataKey='y'
-                  stroke='#3b3fd1'
+                  type="monotone"
+                  dataKey="left"
+                  name="Left"
+                  stroke="var(--mantine-color-ubhBlue-6)"
                   strokeWidth={2}
-                  dot={{ r: 5, fill: '#3b3fd1' }}
+                  dot={{ r: 5, fill: 'var(--mantine-color-ubhBlue-6)' }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="right"
+                  name="Right"
+                  stroke="var(--mantine-color-ubhRed-6)" 
+                  strokeWidth={2} 
+                  dot={{ r: 5, fill: 'var(--mantine-color-ubhRed-6)' }} 
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -306,112 +620,234 @@ export default function PatientDetailPage() {
       </div>
     );
   } else if (activeTab === 'logbook') {
+    let emptyStateRow = null;
+    if (sortedEntries.length === 0) {
+      emptyStateRow = (
+        <tr>
+          <td colSpan={7}>
+            <Body1>No entries match this search and filter.</Body1>
+          </td>
+        </tr>
+      );
+    }
+ 
     tabContent = (
-      <div className='card logbook-card'>
-        <div className='logbook-controls'>
+      <div className="card logbook-card">
+        <div className="logbook-controls">
           <SearchBar
-            placeholder='Search'
+            placeholder="Search by date"
             value={logbookSearch}
             onChange={e => setLogbookSearch(e.target.value)}
             onClear={() => setLogbookSearch('')}
           />
-
-          {/* buttons onClick not set yet TODO.. */}
-          <Button variant='outlined' size='sm' leftIcon={Filter} onClick={() => console.log('open filters')}>
-            Filter
+ 
+          <Button
+            variant={getFilterButtonVariant(vitalsFilter)}
+            size="sm"
+            leftIcon={Filter}
+            onClick={() => setVitalsFilter(getNextVitalsFilter(vitalsFilter))}
+          >
+            {getFilterLabel(vitalsFilter)}
           </Button>
  
-          <Button variant='outlined' size='sm' leftIcon={Download} onClick={() => console.log('download logbook')}>
+          <Button
+            variant="outlined"
+            size="sm"
+            leftIcon={Download}
+            onClick={() => downloadLogbookCsv(sortedEntries)}
+          >
             Download
           </Button>
         </div>
  
-        <table className='logbook-table'>
+        <table className="logbook-table">
           <thead>
             <tr>
               <th>
-                <input type='checkbox' checked={allSelected} onChange={toggleSelectAll} />
-              </th>
-              <th onClick={() => handleSort('name')}>
-                Product <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('price')}>
-                Price <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('size')}>
-                Size <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('qty')}>
-                QTY <ArrowUpDown size={14} />
+                <input type="checkbox" checked={allSelected} onChange={toggleSelectAll} />
               </th>
               <th onClick={() => handleSort('date')}>
                 Date <ArrowUpDown size={14} />
               </th>
-              <th onClick={() => handleSort('status')}>
-                Status <ArrowUpDown size={14} />
+              <th onClick={() => handleSort('weight')}>
+                Weight <ArrowUpDown size={14} />
+              </th>
+              <th onClick={() => handleSort('systolic')}>
+                Systolic <ArrowUpDown size={14} />
+              </th>
+              <th onClick={() => handleSort('diastolic')}>
+                Diastolic <ArrowUpDown size={14} />
+              </th>
+              <th onClick={() => handleSort('map')}>
+                MAP <ArrowUpDown size={14} />
+              </th>
+              <th onClick={() => handleSort('inr')}>
+                INR <ArrowUpDown size={14} />
               </th>
             </tr>
           </thead>
  
           <tbody>
-            {sortedEntries.map(entry => (
-              <tr key={entry.id}>
-                <td>
-                  <input
-                    type='checkbox'
-                    checked={selectedIds.includes(entry.id)}
-                    onChange={() => toggleRowSelected(entry.id)}
-                  />
-                </td>
-                <td>
-                  <a className='product-code' href='#' onClick={e => e.preventDefault()}>
-                    {entry.code}
-                  </a>
-                  <div className='product-name'>{entry.name}</div>
-                </td>
-                <td>${entry.price.toFixed(2)}</td>
-                <td>{entry.size}</td>
-                <td>{entry.qty}</td>
-                <td>{entry.date}</td>
-                <td>
-                  <span className={`status-pill ${getEntryStatusClass(entry.status)}`}>{entry.status}</span>
-                </td>
-              </tr>
-            ))}
+            {sortedEntries.map(entry => {
+              const { map, weightConcerning, systolicConcerning, diastolicConcerning, mapConcerning, inrConcerning } =
+                getVitalsFlags(entry, weightFlags);
+ 
+              return (
+                <tr key={entry.id}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.includes(entry.id)}
+                      onChange={() => toggleRowSelected(entry.id)}
+                    />
+                  </td>
+                  <td>{entry.date}</td>
+                  <td>
+                    <span className={`status-pill ${getVitalClass(weightConcerning)}`}>
+                      {entry.weight.toFixed(1)} kg
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`status-pill ${getVitalClass(systolicConcerning)}`}>
+                      {entry.systolic} mmHg
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`status-pill ${getVitalClass(diastolicConcerning)}`}>
+                      {entry.diastolic} mmHg
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`status-pill ${getVitalClass(mapConcerning)}`}>
+                      {map.toFixed(1)} mmHg
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`status-pill ${getVitalClass(inrConcerning)}`}>
+                      {entry.inr.toFixed(1)}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
+ 
+            {emptyStateRow}
           </tbody>
         </table>
       </div>
     );
   } else if (activeTab === 'documents') {
     tabContent = (
-      <div className='card'>
-        <Body1>Documents coming soon.</Body1>
+      <div className="card documents-card">
+        <div
+          className={`documents-scroll ${getScrollIndicatorClass(canScrollMore)}`}
+          onScroll={updateScrollState}
+        >
+          <table className="documents-table">
+            <thead>
+              <tr>
+                <th>File Name</th>
+                <th>Size</th>
+                <th>Date Uploaded</th>
+                <th></th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              {documents.map(doc => (
+                <tr key={doc.id}>
+                  <td>
+                    <div className="document-name-cell">
+                      <FileText size={16} />
+                      {doc.name}
+                    </div>
+                  </td>
+                  <td>{doc.size}</td>
+                  <td>{doc.dateUploaded}</td>
+                  <td>
+                    <IconButton
+                      icon={Download}
+                      variant="text"
+                      size="sm"
+                      onClick={() => downloadDocument(doc)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   } else {
     tabContent = (
-      <div className='card general-info-card'>
-        <Header4>Personal Information</Header4>
+      <div className="card general-info-card">
+        <div className="info-section-heading">
+          <Header4>Personal Information</Header4>
+          <div className="info-divider" />
+        </div>
  
-        <div className='general-info-body'>
-          <div className='general-info-identity'>
-            <div className='general-info-avatar' />
+        <div className="general-info-body">
+          <div className="general-info-identity">
+            <div className="general-info-avatar" />
             <div>
-              <Header6>{generalInfo.name}</Header6>
-              <Body2>Patient ID: {generalInfo.patientId}</Body2>
+              <Header3>{generalInfo.name}</Header3>
+              <Body1>
+                <strong>Patient ID:</strong> {generalInfo.patientId}
+              </Body1>
             </div>
           </div>
  
-          <div className='general-info-fields'>
-            <Body2>
+          <div className="general-info-fields">
+            <Body1>
               <strong>Gender:</strong> {generalInfo.gender}
-            </Body2>
-            <Body2>
+            </Body1>
+            <Body1>
               <strong>Age:</strong> {generalInfo.age}
-            </Body2>
-            <Body2>
+            </Body1>
+            <Body1>
               <strong>DOB:</strong> {generalInfo.dob}
-            </Body2>
+            </Body1>
+          </div>
+        </div>
+ 
+        <div className="general-info-sections">
+          <div className="info-section">
+            <div className="info-section-heading">
+              <Header4>Medical</Header4>
+              <div className="info-divider" />
+            </div>
+ 
+            <div className="general-info-fields">
+              <Body1>
+                <strong>Blood Type:</strong> {medicalInfo.bloodType}
+              </Body1>
+              <Body1>
+                <strong>Height:</strong> {medicalInfo.height}
+              </Body1>
+              <Body1>
+                <strong>Allergies:</strong> {medicalInfo.allergies}
+              </Body1>
+            </div>
+          </div>
+ 
+          <div className="info-section">
+            <div className="info-section-heading">
+              <Header4>Medicare</Header4>
+              <div className="info-divider" />
+            </div>
+ 
+            <div className="general-info-fields">
+              <Body1>
+                <strong>Medicare Card Number:</strong> {medicareInfo.cardNumber}
+              </Body1>
+              <Body1>
+                <strong>Medicare Card IRN:</strong> {medicareInfo.irn}
+              </Body1>
+              <Body1>
+                <strong>Medicare Card Expiry Date:</strong> {medicareInfo.expiryDate}
+              </Body1>
+            </div>
           </div>
         </div>
       </div>
@@ -450,6 +886,7 @@ export default function PatientDetailPage() {
         onClose={() => setExpandedChart(null)}
         title={<Header3 bold>{getChartTitle(expandedChart)}</Header3>}
         size='xl'
+        padding='xl'
       >
         <div className='chart-wrapper expanded-chart'>
           <ResponsiveContainer width='100%' height={500}>
@@ -460,7 +897,8 @@ export default function PatientDetailPage() {
               <CartesianGrid stroke='var(--mantine-color-ubhNeutral-3)' strokeDasharray='3 3' />
               <XAxis dataKey='x' stroke='var(--mantine-color-ubhNeutral-8)' fontSize={12} />
               <YAxis stroke='var(--mantine-color-ubhNeutral-8)' fontSize={12} />
-              <Line type='monotone' dataKey='y' stroke='#3b3fd1' strokeWidth={2} dot={{ r: 6, fill: '#3b3fd1' }} />
+              <Legend position="bottom" wrapperStyle={{ paddingTop: 16, paddingLeft: 48 }} />
+              {getChartLines(expandedChart)}
             </LineChart>
           </ResponsiveContainer>
         </div>
