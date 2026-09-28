@@ -1,6 +1,6 @@
 import '../Page.css';
 import './PatientDetail.css';
-import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
+import { Header2, Header3, Header4 } from '../../components/typography/Header';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
@@ -9,9 +9,16 @@ import { SearchBar } from '../../components/searchBar/SearchBar';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react';
-
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react'
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 import { Modal, Tooltip } from '@mantine/core';
 
@@ -23,8 +30,8 @@ type ExpandedChart = 'flow' | 'pressure' | null;
 type VitalsFilter = 'all' | 'warning' | 'stable';
 
 interface SensorPlot {
-	x: number;
-	y: number;
+  x: number;
+  y: number;
 }
 
 interface PressurePlot {
@@ -70,9 +77,9 @@ interface DocumentEntry {
 interface VitalsEntry {
   id: number;
   date: string;
-  weight: number;       // kg
-  systolic: number;     // mmHg
-  diastolic: number;    // mmHg
+  weight: number; // kg
+  systolic: number; // mmHg
+  diastolic: number; // mmHg
   inr: number;
 }
 
@@ -86,18 +93,18 @@ interface VitalsFlags {
 }
 
 const tabs: { value: DetailTab; label: string }[] = [
-	{ value: 'sensor', label: 'Live Sensor Data' },
-	{ value: 'logbook', label: 'Logbook Data' },
-	{ value: 'documents', label: 'Documents' },
-	{ value: 'general', label: 'General Information' },
+  { value: 'sensor', label: 'Live Sensor Data' },
+  { value: 'logbook', label: 'Logbook Data' },
+  { value: 'documents', label: 'Documents' },
+  { value: 'general', label: 'General Information' },
 ];
 
 function getTabVariant(tabValue: DetailTab, activeTab: DetailTab): ButtonVariant {
-	if (activeTab === tabValue) {
-		return 'default';
-	} else {
-		return 'outlined';
-	}
+  if (activeTab === tabValue) {
+    return 'default';
+  } else {
+    return 'outlined';
+  }
 }
 
 function getMeanArterialPressure(systolic: number, diastolic: number): number {
@@ -111,23 +118,23 @@ function isWeightConcerning(current: number, previous: number | undefined): bool
   }
   return Math.abs(current - previous) > 2;
 }
- 
+
 function isSystolicConcerning(systolic: number): boolean {
   return systolic >= 180 || systolic < 90;
 }
- 
+
 function isDiastolicConcerning(diastolic: number): boolean {
   return diastolic >= 120 || diastolic < 60;
 }
- 
+
 function isMapConcerning(map: number): boolean {
   return map < 65 || map > 100;
 }
- 
+
 function isInrConcerning(inr: number): boolean {
   return inr < 2.0 || inr > 4.0;
 }
- 
+
 function getVitalClass(isConcerning: boolean): string {
   if (isConcerning) {
     return 'critical';
@@ -140,7 +147,7 @@ function getVitalClass(isConcerning: boolean): string {
 // however the table happens to be sorted right now.
 function getWeightFlags(entries: VitalsEntry[]): Record<number, boolean> {
   const flags: Record<number, boolean> = {};
- 
+
   for (let i = 0; i < entries.length; i++) {
     if (i === 0) {
       flags[entries[i].id] = false;
@@ -148,13 +155,13 @@ function getWeightFlags(entries: VitalsEntry[]): Record<number, boolean> {
       flags[entries[i].id] = isWeightConcerning(entries[i].weight, entries[i - 1].weight);
     }
   }
- 
+
   return flags;
 }
 
 function getVitalsFlags(entry: VitalsEntry, weightFlags: Record<number, boolean>): VitalsFlags {
   const map = getMeanArterialPressure(entry.systolic, entry.diastolic);
- 
+
   return {
     map,
     weightConcerning: weightFlags[entry.id],
@@ -179,7 +186,7 @@ function isEntryConcerning(flags: VitalsFlags): boolean {
     return false;
   }
 }
- 
+
 function matchesVitalsFilter(isConcerning: boolean, filter: VitalsFilter): boolean {
   if (filter === 'warning') {
     return isConcerning;
@@ -189,7 +196,7 @@ function matchesVitalsFilter(isConcerning: boolean, filter: VitalsFilter): boole
     return true;
   }
 }
- 
+
 function getNextVitalsFilter(current: VitalsFilter): VitalsFilter {
   if (current === 'all') {
     return 'warning';
@@ -209,7 +216,7 @@ function getFilterLabel(filter: VitalsFilter): string {
     return 'Filter';
   }
 }
- 
+
 function getFilterButtonVariant(filter: VitalsFilter): ButtonVariant {
   if (filter === 'all') {
     return 'outlined';
@@ -238,7 +245,7 @@ function getChartTitle(chart: ExpandedChart): string {
 // info icon --> draft idea, just gives nurses/clinicians a brief summary of what to identify at a glace.
 function getChartInfo(chart: 'flow' | 'pressure'): string {
   if (chart === 'pressure') {
-    return "L/R pressures should remain in sync. Broading gap in L/R can signify desync or irregular pumping.";  
+    return 'L/R pressures should remain in sync. Broading gap in L/R can signify desync or irregular pumping.';
   } else {
     return 'Blood volume moved per minute. Watch for sudden drops or spikes.';
   }
@@ -247,7 +254,7 @@ function getChartInfo(chart: 'flow' | 'pressure'): string {
 function getChartData(
   chart: ExpandedChart,
   flowRateData: SensorPlot[],
-  lrPressureData: PressurePlot[]
+  lrPressureData: PressurePlot[],
 ): ChartPlot[] {
   if (chart === 'pressure') {
     return lrPressureData;
@@ -303,7 +310,8 @@ function compareEntries(a: VitalsEntry, b: VitalsEntry, column: SortColumn) {
     return a.diastolic - b.diastolic;
   } else if (column === 'map') {
     return (
-      getMeanArterialPressure(a.systolic, a.diastolic) - getMeanArterialPressure(b.systolic, b.diastolic)
+      getMeanArterialPressure(a.systolic, a.diastolic) -
+      getMeanArterialPressure(b.systolic, b.diastolic)
     );
   } else {
     return a.inr - b.inr;
@@ -312,10 +320,10 @@ function compareEntries(a: VitalsEntry, b: VitalsEntry, column: SortColumn) {
 
 function buildLogbookCsv(entries: VitalsEntry[]): string {
   const header = 'Date,Weight (kg),Systolic (mmHg),Diastolic (mmHg),MAP (mmHg),INR';
- 
+
   const rows = entries.map(entry => {
     const map = getMeanArterialPressure(entry.systolic, entry.diastolic);
- 
+
     return [
       `"${entry.date}"`,
       entry.weight.toFixed(1),
@@ -325,7 +333,7 @@ function buildLogbookCsv(entries: VitalsEntry[]): string {
       entry.inr.toFixed(1),
     ].join(',');
   });
- 
+
   return [header, ...rows].join('\n');
 }
 
@@ -333,14 +341,14 @@ function downloadLogbookCsv(entries: VitalsEntry[]) {
   const csv = buildLogbookCsv(entries);
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
- 
+
   const link = document.createElement('a');
   link.href = url;
   link.download = 'logbook-data.csv';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
- 
+
   URL.revokeObjectURL(url);
 }
 
@@ -350,23 +358,23 @@ function downloadDocument(doc: DocumentEntry) {
 }
 
 export default function PatientDetailPage() {
-	const navigate = useNavigate();
-	const { patientId } = useParams<{ patientId: string }>();
+  const navigate = useNavigate();
+  const { patientId } = useParams<{ patientId: string }>();
 
-	const [activeTab, setActiveTab] = useState<DetailTab>('sensor');
+  const [activeTab, setActiveTab] = useState<DetailTab>('sensor');
   const [expandedChart, setExpandedChart] = useState<ExpandedChart>(null);
 
-	// mock bs data points
-	const flowRateData: SensorPlot[] = [
-		{ x: 0.5, y: 58 },
+  // mock bs data points
+  const flowRateData: SensorPlot[] = [
+    { x: 0.5, y: 58 },
     { x: 1.0, y: 142 },
     { x: 1.5, y: 208 },
     { x: 2.0, y: 176 },
     { x: 2.5, y: 96 },
     { x: 3.0, y: 52 },
-	];
+  ];
 
-	const lrPressureData: PressurePlot[] = [
+  const lrPressureData: PressurePlot[] = [
     { x: 0.5, left: 42, right: 30 },
     { x: 1.0, left: 118, right: 82 },
     { x: 1.5, left: 176, right: 118 },
@@ -375,7 +383,7 @@ export default function PatientDetailPage() {
     { x: 3.0, left: 46, right: 34 },
   ];
 
-	const vitalsLog: VitalsEntry[] = [
+  const vitalsLog: VitalsEntry[] = [
     { id: 1, date: '06/03/23 at 8:25 AM', weight: 71.5, systolic: 122, diastolic: 78, inr: 2.6 },
     { id: 2, date: '13/03/23 at 8:10 AM', weight: 71.8, systolic: 118, diastolic: 74, inr: 2.9 },
     { id: 3, date: '20/03/23 at 8:30 AM', weight: 74.4, systolic: 116, diastolic: 76, inr: 2.7 },
@@ -385,7 +393,7 @@ export default function PatientDetailPage() {
     { id: 7, date: '17/04/23 at 8:25 PM', weight: 72.6, systolic: 118, diastolic: 76, inr: 2.8 },
   ];
 
-	const weightFlags = getWeightFlags(vitalsLog);
+  const weightFlags = getWeightFlags(vitalsLog);
 
   // some mock bs.. (backend tba)
   const documents: DocumentEntry[] = [
@@ -413,14 +421,14 @@ export default function PatientDetailPage() {
   useEffect(() => {
     updateScrollState();
   }, [documents]);
- 
+
   // Sort/Filter features.
   const [logbookSearch, setLogbookSearch] = useState('');
   const [vitalsFilter, setVitalsFilter] = useState<VitalsFilter>('all');
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [sortColumn, setSortColumn] = useState<SortColumn | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
- 
+
   const handleSort = (column: SortColumn) => {
     if (sortColumn === column) {
       if (sortDirection === 'asc') {
@@ -433,17 +441,17 @@ export default function PatientDetailPage() {
       setSortDirection('asc');
     }
   };
- 
+
   const searchedEntries = vitalsLog.filter(entry => {
     const query = logbookSearch.toLowerCase();
     const matchesSearch = entry.date.toLowerCase().includes(query);
- 
+
     const flags = getVitalsFlags(entry, weightFlags);
     const matchesFilter = matchesVitalsFilter(isEntryConcerning(flags), vitalsFilter);
- 
+
     return matchesSearch && matchesFilter;
   });
- 
+
   const sortedEntries = [...searchedEntries];
   if (sortColumn) {
     sortedEntries.sort((a, b) => {
@@ -455,9 +463,9 @@ export default function PatientDetailPage() {
       }
     });
   }
- 
+
   const allSelected = selectedIds.length > 0 && selectedIds.length === sortedEntries.length;
- 
+
   const toggleSelectAll = () => {
     if (allSelected) {
       setSelectedIds([]);
@@ -465,7 +473,7 @@ export default function PatientDetailPage() {
       setSelectedIds(sortedEntries.map(entry => entry.id));
     }
   };
- 
+
   const toggleRowSelected = (id: number) => {
     if (selectedIds.includes(id)) {
       setSelectedIds(selectedIds.filter(selectedId => selectedId !== id));
@@ -494,58 +502,41 @@ export default function PatientDetailPage() {
     irn: '1',
     expiryDate: '28/08',
   };
- 
+
   let tabContent;
- 
+
   if (activeTab === 'sensor') {
     tabContent = (
-      <div className='sensor-grid'>
-        <div className='card sensor-card'>
-          <div className='sensor-card-header'>
-            <div className='sensor-card-title'>
+      <div className="sensor-grid">
+        <div className="card sensor-card">
+          <div className="sensor-card-header">
+            <div className="sensor-card-title">
               <Header4>Flow Rate</Header4>
-              <Tooltip
-                label={getChartInfo('flow')}
-                multiline w={240} 
-                withArrow position="top"
-              >
+              <Tooltip label={getChartInfo('flow')} multiline w={240} withArrow position="top">
                 <Info size={16} className="info-icon" />
               </Tooltip>
             </div>
             <IconButton
               icon={Maximize2}
-              variant='text'
-              size='md'
+              variant="text"
+              size="md"
               onClick={() => setExpandedChart('flow')}
             />
           </div>
- 
-          <div className='chart-wrapper'>
-            <ResponsiveContainer width='100%' height={300}>
-              <LineChart
-                data={flowRateData}
-                margin={{ top: 10, right: 40, left: 0, bottom: 0}}
-              >
-                <CartesianGrid
-                  stroke='var(--mantine-color-ubhNeutral-3)'
-                  strokeDasharray='3 3'
-                />
 
-                <XAxis
-                  dataKey='x'
-                  stroke='var(--mantine-color-ubhNeutral-8)'
-                  fontSize={12}
-                />
+          <div className="chart-wrapper">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={flowRateData} margin={{ top: 10, right: 40, left: 0, bottom: 0 }}>
+                <CartesianGrid stroke="var(--mantine-color-ubhNeutral-3)" strokeDasharray="3 3" />
 
-                <YAxis
-                  stroke='var(--mantine-color-ubhNeutral-8)'
-                  fontSize={12}
-                />
+                <XAxis dataKey="x" stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
+
+                <YAxis stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
 
                 <Line
-                  type='monotone'
-                  dataKey='y'
-                  stroke='var(--mantine-color-ubhBlue-6)'
+                  type="monotone"
+                  dataKey="y"
+                  stroke="var(--mantine-color-ubhBlue-6)"
                   strokeWidth={2}
                   dot={{ r: 5, fill: 'var(--mantine-color-ubhBlue-6)' }}
                 />
@@ -553,48 +544,31 @@ export default function PatientDetailPage() {
             </ResponsiveContainer>
           </div>
         </div>
- 
-        <div className='card sensor-card'>
-          <div className='sensor-card-header'>
-            <div className='sensor-card-title'>
+
+        <div className="card sensor-card">
+          <div className="sensor-card-header">
+            <div className="sensor-card-title">
               <Header4>L &amp; R Pressure</Header4>
-              <Tooltip
-                label={getChartInfo('pressure')}
-                multiline w={240} 
-                withArrow position="top"
-              >
+              <Tooltip label={getChartInfo('pressure')} multiline w={240} withArrow position="top">
                 <Info size={16} className="info-icon" />
               </Tooltip>
             </div>
             <IconButton
               icon={Maximize2}
-              variant='text'
-              size='md'
+              variant="text"
+              size="md"
               onClick={() => setExpandedChart('pressure')}
             />
           </div>
- 
-          <div className='chart-wrapper'>
-            <ResponsiveContainer width='100%' height={300}>
-              <LineChart
-                data={lrPressureData}
-                margin={{ top: 10, right: 40, left: 0, bottom: 0}}
-              >
-                <CartesianGrid
-                  stroke='var(--mantine-color-ubhNeutral-3)'
-                  strokeDasharray='3 3'
-                />
 
-                <XAxis
-                  dataKey='x'
-                  stroke='var(--mantine-color-ubhNeutral-8)'
-                  fontSize={12}
-                />
+          <div className="chart-wrapper">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={lrPressureData} margin={{ top: 10, right: 40, left: 0, bottom: 0 }}>
+                <CartesianGrid stroke="var(--mantine-color-ubhNeutral-3)" strokeDasharray="3 3" />
 
-                <YAxis
-                  stroke='var(--mantine-color-ubhNeutral-8)'
-                  fontSize={12}
-                />
+                <XAxis dataKey="x" stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
+
+                <YAxis stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
 
                 <Legend position="bottom" wrapperStyle={{ paddingTop: 12, paddingLeft: 36 }} />
                 <Line
@@ -609,9 +583,9 @@ export default function PatientDetailPage() {
                   type="monotone"
                   dataKey="right"
                   name="Right"
-                  stroke="var(--mantine-color-ubhRed-6)" 
-                  strokeWidth={2} 
-                  dot={{ r: 5, fill: 'var(--mantine-color-ubhRed-6)' }} 
+                  stroke="var(--mantine-color-ubhRed-6)"
+                  strokeWidth={2}
+                  dot={{ r: 5, fill: 'var(--mantine-color-ubhRed-6)' }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -630,7 +604,7 @@ export default function PatientDetailPage() {
         </tr>
       );
     }
- 
+
     tabContent = (
       <div className="card logbook-card">
         <div className="logbook-controls">
@@ -640,7 +614,7 @@ export default function PatientDetailPage() {
             onChange={e => setLogbookSearch(e.target.value)}
             onClear={() => setLogbookSearch('')}
           />
- 
+
           <Button
             variant={getFilterButtonVariant(vitalsFilter)}
             size="sm"
@@ -649,7 +623,7 @@ export default function PatientDetailPage() {
           >
             {getFilterLabel(vitalsFilter)}
           </Button>
- 
+
           <Button
             variant="outlined"
             size="sm"
@@ -659,7 +633,7 @@ export default function PatientDetailPage() {
             Download
           </Button>
         </div>
- 
+
         <table className="logbook-table">
           <thead>
             <tr>
@@ -686,12 +660,18 @@ export default function PatientDetailPage() {
               </th>
             </tr>
           </thead>
- 
+
           <tbody>
             {sortedEntries.map(entry => {
-              const { map, weightConcerning, systolicConcerning, diastolicConcerning, mapConcerning, inrConcerning } =
-                getVitalsFlags(entry, weightFlags);
- 
+              const {
+                map,
+                weightConcerning,
+                systolicConcerning,
+                diastolicConcerning,
+                mapConcerning,
+                inrConcerning,
+              } = getVitalsFlags(entry, weightFlags);
+
               return (
                 <tr key={entry.id}>
                   <td>
@@ -730,7 +710,7 @@ export default function PatientDetailPage() {
                 </tr>
               );
             })}
- 
+
             {emptyStateRow}
           </tbody>
         </table>
@@ -752,7 +732,7 @@ export default function PatientDetailPage() {
                 <th></th>
               </tr>
             </thead>
-  
+
             <tbody>
               {documents.map(doc => (
                 <tr key={doc.id}>
@@ -786,7 +766,7 @@ export default function PatientDetailPage() {
           <Header4>Personal Information</Header4>
           <div className="info-divider" />
         </div>
- 
+
         <div className="general-info-body">
           <div className="general-info-identity">
             <div className="general-info-avatar" />
@@ -797,7 +777,7 @@ export default function PatientDetailPage() {
               </Body1>
             </div>
           </div>
- 
+
           <div className="general-info-fields">
             <Body1>
               <strong>Gender:</strong> {generalInfo.gender}
@@ -810,14 +790,14 @@ export default function PatientDetailPage() {
             </Body1>
           </div>
         </div>
- 
+
         <div className="general-info-sections">
           <div className="info-section">
             <div className="info-section-heading">
               <Header4>Medical</Header4>
               <div className="info-divider" />
             </div>
- 
+
             <div className="general-info-fields">
               <Body1>
                 <strong>Blood Type:</strong> {medicalInfo.bloodType}
@@ -830,13 +810,13 @@ export default function PatientDetailPage() {
               </Body1>
             </div>
           </div>
- 
+
           <div className="info-section">
             <div className="info-section-heading">
               <Header4>Medicare</Header4>
               <div className="info-divider" />
             </div>
- 
+
             <div className="general-info-fields">
               <Body1>
                 <strong>Medicare Card Number:</strong> {medicareInfo.cardNumber}
@@ -854,49 +834,45 @@ export default function PatientDetailPage() {
     );
   }
 
-	return (
-		<div className='page'>
-			<div className='detail-header'>
-				<IconButton
-					icon={ArrowLeft}
-					variant='text'
-					onClick={() => navigate('/patients')}
-				/>
-				<Header3>
-					Patient ID: <span className='patient-id-accent'>{patientId}</span>
-				</Header3>
-			</div>
+  return (
+    <div className="page">
+      <div className="detail-header">
+        <IconButton icon={ArrowLeft} variant="text" onClick={() => navigate('/patients')} />
+        <Header3>
+          Patient ID: <span className="patient-id-accent">{patientId}</span>
+        </Header3>
+      </div>
 
-			<div className='detail-tabs'>
-				{tabs.map(tab => (
-					<Button
-						key={tab.value}
-						variant={getTabVariant(tab.value, activeTab)}
-						onClick={() => setActiveTab(tab.value)}
-					>
-						{tab.label}
-					</Button>
-				))}
-			</div>
+      <div className="detail-tabs">
+        {tabs.map(tab => (
+          <Button
+            key={tab.value}
+            variant={getTabVariant(tab.value, activeTab)}
+            onClick={() => setActiveTab(tab.value)}
+          >
+            {tab.label}
+          </Button>
+        ))}
+      </div>
 
-			{tabContent}
+      {tabContent}
 
       <Modal
         opened={expandedChart !== null}
         onClose={() => setExpandedChart(null)}
         title={<Header3 bold>{getChartTitle(expandedChart)}</Header3>}
-        size='xl'
-        padding='xl'
+        size="xl"
+        padding="xl"
       >
-        <div className='chart-wrapper expanded-chart'>
-          <ResponsiveContainer width='100%' height={500}>
+        <div className="chart-wrapper expanded-chart">
+          <ResponsiveContainer width="100%" height={500}>
             <LineChart
               data={getChartData(expandedChart, flowRateData, lrPressureData)}
               margin={{ top: 10, right: 40, left: 0, bottom: 0 }}
             >
-              <CartesianGrid stroke='var(--mantine-color-ubhNeutral-3)' strokeDasharray='3 3' />
-              <XAxis dataKey='x' stroke='var(--mantine-color-ubhNeutral-8)' fontSize={12} />
-              <YAxis stroke='var(--mantine-color-ubhNeutral-8)' fontSize={12} />
+              <CartesianGrid stroke="var(--mantine-color-ubhNeutral-3)" strokeDasharray="3 3" />
+              <XAxis dataKey="x" stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
+              <YAxis stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
               <Legend position="bottom" wrapperStyle={{ paddingTop: 16, paddingLeft: 48 }} />
               {getChartLines(expandedChart)}
             </LineChart>
@@ -904,5 +880,5 @@ export default function PatientDetailPage() {
         </div>
       </Modal>
     </div>
-	);
+  );
 }

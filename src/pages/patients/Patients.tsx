@@ -14,7 +14,6 @@ import { LayoutGrid, List as ListIcon, Plus, ChevronRight } from 'lucide-react';
 // TODO: make a proper component class for cards.
 // import { PatientCard } from '../components/patientCard/PatientCard';
 
-
 type PatientStatus = 'Stable' | 'Warning' | 'Unstable';
 type StatusFilter = 'all' | PatientStatus;
 type ViewMode = 'grid' | 'list';
@@ -68,7 +67,7 @@ export default function PatientsPage() {
     const matchesSearch = patient.name.toLowerCase().includes(search.toLowerCase());
 
     const matchesStatus = statusFilter === 'all' || patient.status === statusFilter;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -88,7 +87,7 @@ export default function PatientsPage() {
 
   if (view === 'grid') {
     patientDisplay = (
-      <div className='patient-grid'>
+      <div className="patient-grid">
         {filteredPatients.map(patient => (
           <div
             className={`card patient-tile ${getStatusClass(patient.status)}`}
@@ -100,7 +99,7 @@ export default function PatientsPage() {
               <Body2>{patient.patientId}</Body2>
             </div>
 
-            <div className='patient-tile-footer'>
+            <div className="patient-tile-footer">
               <Body2 bold>{patient.status}</Body2>
               <ChevronRight size={18} strokeWidth={2.5} />
             </div>
@@ -110,19 +109,19 @@ export default function PatientsPage() {
     );
   } else {
     patientDisplay = (
-      <div className='patients-list'>
+      <div className="patients-list">
         {filteredPatients.map(patient => (
           <div
             className={`patient-card ${getStatusClass(patient.status)}`}
             key={patient.id}
             onClick={() => patientCardOnClick(patient)}
           >
-            <div className='patient-card-info'>
+            <div className="patient-card-info">
               <Body1>
                 {patient.name} | ID: {patient.patientId}
               </Body1>
 
-              <div className='patient-card-status'>
+              <div className="patient-card-status">
                 <Body2 bold>{patient.status}</Body2>
                 <ChevronRight size={18} strokeWidth={2.5} />
               </div>
@@ -134,20 +133,19 @@ export default function PatientsPage() {
   }
 
   return (
-    <div className='page'>
-      <div className='patients-header'>
-        <div className='overview-greeting'>
+    <div className="page">
+      <div className="patients-header">
+        <div className="overview-greeting">
           <Header2>Patients Overview</Header2>
-
         </div>
 
-        <div className='view-toggle'>
-          <IconButton 
+        <div className="view-toggle">
+          <IconButton
             icon={LayoutGrid}
             variant={view === 'grid' ? 'default' : 'text'}
             onClick={() => setView('grid')}
           />
-          <IconButton 
+          <IconButton
             icon={ListIcon}
             variant={view === 'list' ? 'default' : 'text'}
             onClick={() => setView('list')}
