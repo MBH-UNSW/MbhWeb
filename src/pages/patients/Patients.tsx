@@ -1,6 +1,6 @@
 import '../Page.css';
 import './Patients.css';
-import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
+import { Header2, Header6 } from '../../components/typography/Header';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
@@ -11,20 +11,18 @@ import { useNavigate } from 'react-router-dom';
 
 import { LayoutGrid, List as ListIcon, Plus, ChevronRight } from 'lucide-react';
 
+import {
+  type PatientStatus,
+  type PatientSummary,
+} from '../../api/patientApi';
+
+import { usePatients } from '../../hooks/usePatient'
+
 // TODO: make a proper component class for cards.
 // import { PatientCard } from '../components/patientCard/PatientCard';
 
-type PatientStatus = 'Stable' | 'Warning' | 'Unstable';
 type StatusFilter = 'all' | PatientStatus;
 type ViewMode = 'grid' | 'list';
-type ButtonVariant = 'default' | 'outlined' | 'text';
-
-interface Patient {
-  id: number;
-  name: string;
-  patientId: string;
-  status: PatientStatus;
-}
 
 const statusFilters: { value: PatientStatus; label: string }[] = [
   { value: 'Unstable', label: 'Unstable' },
@@ -45,19 +43,21 @@ function getStatusClass(status: PatientStatus) {
 
 export default function PatientsPage() {
   const navigate = useNavigate();
+  
+  const { patients, isLoading, error } = usePatients();
 
-  // some mock bs.. (backend tba)
-  const patients: Patient[] = [
-    { id: 1, name: 'Emaan Khurram', patientId: 'M104933', status: 'Unstable' },
-    { id: 2, name: 'Avish Reddy', patientId: 'M937927', status: 'Unstable' },
-    { id: 3, name: 'Asna Hassan', patientId: 'M104223', status: 'Stable' },
-    { id: 4, name: 'Ansh Rawat', patientId: 'M104000', status: 'Warning' },
-    { id: 5, name: 'Denzel Iskandar', patientId: 'M504948', status: 'Stable' },
-    { id: 6, name: 'Fareed Farooqi', patientId: 'M402933', status: 'Stable' },
-    { id: 7, name: 'Parth Shrivastava', patientId: 'M1149571', status: 'Unstable' },
-    { id: 8, name: 'Lipda Chantayasakorn', patientId: 'M926484', status: 'Warning' },
-    { id: 9, name: 'Jade Kim', patientId: 'M353213', status: 'Stable' },
-  ];
+  // // some mock bs.. (backend tba)
+  // const patients: Patient[] = [
+  //   { id: 1, name: 'Emaan Khurram', patientId: 'M104933', status: 'Unstable' },
+  //   { id: 2, name: 'Avish Reddy', patientId: 'M937927', status: 'Unstable' },
+  //   { id: 3, name: 'Asna Hassan', patientId: 'M104223', status: 'Stable' },
+  //   { id: 4, name: 'Ansh Rawat', patientId: 'M104000', status: 'Warning' },
+  //   { id: 5, name: 'Denzel Iskandar', patientId: 'M504948', status: 'Stable' },
+  //   { id: 6, name: 'Fareed Farooqi', patientId: 'M402933', status: 'Stable' },
+  //   { id: 7, name: 'Parth Shrivastava', patientId: 'M1149571', status: 'Unstable' },
+  //   { id: 8, name: 'Lipda Chantayasakorn', patientId: 'M926484', status: 'Warning' },
+  //   { id: 9, name: 'Jade Kim', patientId: 'M353213', status: 'Unstable' },
+  // ];
 
   const [view, setView] = useState<ViewMode>('grid');
   const [search, setSearch] = useState('');
@@ -71,8 +71,8 @@ export default function PatientsPage() {
     return matchesSearch && matchesStatus;
   });
 
-  const patientCardOnClick = (patient: Patient) => {
-    navigate(`/patients/${patient.patientId}`);
+  const patientCardOnClick = (patient: PatientSummary) => {
+    navigate(`/patients/${patient.pid}`);
   };
 
   const toggleStatusFilter = (value: PatientStatus) => {
@@ -91,12 +91,12 @@ export default function PatientsPage() {
         {filteredPatients.map(patient => (
           <div
             className={`card patient-tile ${getStatusClass(patient.status)}`}
-            key={patient.id}
+            key={patient.pid}
             onClick={() => patientCardOnClick(patient)}
           >
             <div>
               <Header6>{patient.name}</Header6>
-              <Body2>{patient.patientId}</Body2>
+              <Body2>{patient.displayId}</Body2>
             </div>
 
             <div className="patient-tile-footer">
@@ -113,12 +113,12 @@ export default function PatientsPage() {
         {filteredPatients.map(patient => (
           <div
             className={`patient-card ${getStatusClass(patient.status)}`}
-            key={patient.id}
+            key={patient.pid}
             onClick={() => patientCardOnClick(patient)}
           >
             <div className="patient-card-info">
               <Body1>
-                {patient.name} | ID: {patient.patientId}
+                {patient.name} | ID: {patient.displayId}
               </Body1>
 
               <div className="patient-card-status">

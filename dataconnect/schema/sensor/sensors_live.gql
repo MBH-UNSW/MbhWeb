@@ -1,7 +1,0 @@
-type SensorLive @table(key: ["sensorId"]) {
-    sensorId: UUID!
-    sensor: Sensor! @ref(fields: ["sensorId"])
-    value: Float!
-    unit: String!
-    recordedAt: Timestamp!
-}
