@@ -5,7 +5,12 @@ import { HeartPulse, ListChecks, HeartHandshake } from 'lucide-react';
 import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
 import { Button } from '../../components/buttons/Button';
 import { Body1, Body2 } from '../../components/typography/Body';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  promptForNotifications,
+  subscribeToLogbookPushNotifications,
+  type OneSignalNotification,
+} from '../../services/oneSignal';
 
 type TimePeriod = 'morning' | 'afternoon' | 'evening' | 'night';
 type Status = 'good' | 'warning' | 'critical';
@@ -13,12 +18,33 @@ type Status = 'good' | 'warning' | 'critical';
 type NotificationCategory = 'critical' | 'checkup' | 'task' | 'update';
 type NotificationFilter = 'all' | NotificationCategory;
 interface Notification {
-  id: number;
+  id: string;
   category: NotificationCategory;
   patientName: string;
   patientId: string;
   message: string;
   time: string;
+}
+
+function formatNotificationTime(date: Date) {
+  return new Intl.DateTimeFormat('en-AU', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date);
+}
+
+function toDashboardNotification(notification: OneSignalNotification): Notification {
+  return {
+    id: `onesignal-${notification.receivedAt.getTime()}`,
+    category: 'update',
+    patientName: notification.patientName || 'Patient',
+    patientId: notification.patientId || 'Unknown',
+    message: notification.message,
+    time: formatNotificationTime(notification.receivedAt),
+  };
 }
 
 const notificationFilters: { value: NotificationFilter; label: string }[] = [
@@ -90,9 +116,9 @@ export default function DashboardPage() {
   const goodConditionStatus = getStatus(inGoodCondition, totalPatients, 'high');
   const pendingTasksStatus = getTaskStatus(numUncompletedTasks, numOverdueTasks);
 
-  const notifications: Notification[] = [
+  const defaultNotifications: Notification[] = [
     {
-      id: 1,
+      id: 'checkup-1',
       category: 'checkup',
       patientName: 'Bob Smith',
       patientId: '75311093',
@@ -100,7 +126,7 @@ export default function DashboardPage() {
       time: '10:00 am · 1 Sep 2026',
     },
     {
-      id: 2,
+      id: 'update-2',
       category: 'update',
       patientName: 'Jane Doe',
       patientId: '88733825',
@@ -108,7 +134,7 @@ export default function DashboardPage() {
       time: '5:15 pm · 30 Aug 2026',
     },
     {
-      id: 3,
+      id: 'critical-3',
       category: 'critical',
       patientName: 'John Doe',
       patientId: '67999018',
@@ -116,7 +142,7 @@ export default function DashboardPage() {
       time: '12:35 pm · 26 Aug 2026',
     },
     {
-      id: 4,
+      id: 'critical-4',
       category: 'critical',
       patientName: 'John Doe',
       patientId: '67999018',
@@ -124,7 +150,7 @@ export default function DashboardPage() {
       time: '12:30 pm · 26 Aug 2026',
     },
     {
-      id: 5,
+      id: 'critical-5',
       category: 'critical',
       patientName: 'Jane Doe',
       patientId: '88733825',
@@ -132,7 +158,7 @@ export default function DashboardPage() {
       time: '2:03 am · 20 Aug 2026',
     },
     {
-      id: 6,
+      id: 'critical-6',
       category: 'critical',
       patientName: 'David Bowie',
       patientId: '19470801',
@@ -140,7 +166,7 @@ export default function DashboardPage() {
       time: '7:49 pm · 18 Aug 2026',
     },
     {
-      id: 7,
+      id: 'task-7',
       category: 'task',
       patientName: 'Marc Bolan',
       patientId: '19473009',
@@ -149,10 +175,25 @@ export default function DashboardPage() {
     },
   ];
 
+  const [liveNotifications, setLiveNotifications] = useState<Notification[]>([]);
   const [notificationFilter, setNotificationFilter] = useState<NotificationFilter>('all');
+  const notifications = [...liveNotifications, ...defaultNotifications];
   const filteredNotifications = notifications.filter(
     notification => notificationFilter === 'all' || notification.category === notificationFilter,
   );
+
+  useEffect(() => {
+    void promptForNotifications().catch(error => {
+      console.error('OneSignal setup failed', error);
+    });
+
+    return subscribeToLogbookPushNotifications(notification => {
+      setLiveNotifications(currentNotifications => [
+        toDashboardNotification(notification),
+        ...currentNotifications,
+      ]);
+    });
+  }, []);
 
   return (
     <div className="page">
@@ -206,6 +247,7 @@ export default function DashboardPage() {
         <div className="notification-filters">
           {notificationFilters.map(({ value, label }) => (
             <Button
+              key={value}
               variant={notificationFilter === value ? 'default' : 'outlined'}
               size="xs"
               onClick={() => setNotificationFilter(value)}
