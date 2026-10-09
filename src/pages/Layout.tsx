@@ -7,7 +7,7 @@ export function Layout() {
     <div style={{ minHeight: '100vh' }}>
       <SideBar />
 
-      <main style={{ marginLeft: '320px', boxSizing: 'border-box', minHeight: '100vh' }}>
+      <main style={{ marginLeft: '290px', boxSizing: 'border-box', minHeight: '100vh' }}>
         <Outlet />
       </main>
     </div>

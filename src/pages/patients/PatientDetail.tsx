@@ -22,6 +22,8 @@ import {
 
 import { Modal, Tooltip } from '@mantine/core';
 
+import { usePatient } from '../../hooks/usePatient';
+
 type DetailTab = 'sensor' | 'logbook' | 'documents' | 'general';
 type ButtonVariant = 'default' | 'outlined' | 'text';
 type SortColumn = 'date' | 'weight' | 'systolic' | 'diastolic' | 'map' | 'inr';
@@ -110,6 +112,27 @@ function getTabVariant(tabValue: DetailTab, activeTab: DetailTab): ButtonVariant
 function getMeanArterialPressure(systolic: number, diastolic: number): number {
   // MAP = diastolic + 1/3 * (systolic - diastolic)
   return diastolic + (systolic - diastolic) / 3;
+}
+
+function calculateAge(dob: string): number {
+  const birthDate = new Date(dob);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) {
+    age -= 1;
+  }
+
+  return age;
+}
+
+function formatDob(dob: string): string {
+  const date = new Date(dob);
+  return date.toLocaleDateString('en-AU', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
 
 function isWeightConcerning(current: number, previous: number | undefined): boolean {
@@ -482,26 +505,7 @@ export default function PatientDetailPage() {
     }
   };
 
-  // mock data for general information tab:
-  const generalInfo: GeneralInfo = {
-    name: 'Emaan Khurram',
-    patientId: patientId || 'N/A',
-    gender: 'Female',
-    age: 67,
-    dob: '16/06/1959',
-  };
-
-  const medicalInfo: MedicalInfo = {
-    bloodType: 'A+',
-    height: '165cm',
-    allergies: 'Nil',
-  };
-
-  const medicareInfo: MedicareInfo = {
-    cardNumber: '1234 56789 1',
-    irn: '1',
-    expiryDate: '28/08',
-  };
+  const { patient, isLoading: infoLoading, error: infoError } = usePatient(patientId);
 
   let tabContent;
 
@@ -760,78 +764,88 @@ export default function PatientDetailPage() {
       </div>
     );
   } else {
-    tabContent = (
-      <div className="card general-info-card">
-        <div className="info-section-heading">
-          <Header4>Personal Information</Header4>
-          <div className="info-divider" />
+    if (infoLoading) {
+      tabContent = (
+        <div className="card general-info-card">
+          <Body1>Loading patient information...</Body1>
         </div>
-
-        <div className="general-info-body">
-          <div className="general-info-identity">
-            <div className="general-info-avatar" />
-            <div>
-              <Header3>{generalInfo.name}</Header3>
-              <Body1>
-                <strong>Patient ID:</strong> {generalInfo.patientId}
-              </Body1>
-            </div>
-          </div>
-
-          <div className="general-info-fields">
-            <Body1>
-              <strong>Gender:</strong> {generalInfo.gender}
-            </Body1>
-            <Body1>
-              <strong>Age:</strong> {generalInfo.age}
-            </Body1>
-            <Body1>
-              <strong>DOB:</strong> {generalInfo.dob}
-            </Body1>
-          </div>
+      );
+    } else if (infoError || !patient) {
+      tabContent = (
+        <div className="card general-info-card">
+          <Body1>{infoError || 'Patient information is unavailable.'}</Body1>
         </div>
-
-        <div className="general-info-sections">
-          <div className="info-section">
-            <div className="info-section-heading">
-              <Header4>Medical</Header4>
-              <div className="info-divider" />
+      );
+    } else {
+      tabContent = (
+        <div className="card general-info-card">
+          <div className="info-section-heading">
+            <Header4>Personal Information</Header4>
+            <div className="info-divider" />
+          </div>
+ 
+          <div className="general-info-body">
+            <div className="general-info-identity">
+              <div className="general-info-avatar" />
+              <div>
+                <Header3>
+                  {patient.firstName} {patient.lastName}
+                </Header3>
+                <Body1>
+                  <strong>Patient ID:</strong> {patient.pid}
+                </Body1>
+              </div>
             </div>
-
+ 
             <div className="general-info-fields">
               <Body1>
-                <strong>Blood Type:</strong> {medicalInfo.bloodType}
+                <strong>DOB:</strong> {formatDob(patient.dob)}
               </Body1>
               <Body1>
-                <strong>Height:</strong> {medicalInfo.height}
-              </Body1>
-              <Body1>
-                <strong>Allergies:</strong> {medicalInfo.allergies}
+                <strong>Age:</strong> {calculateAge(patient.dob)}
               </Body1>
             </div>
           </div>
-
-          <div className="info-section">
-            <div className="info-section-heading">
-              <Header4>Medicare</Header4>
-              <div className="info-divider" />
+ 
+          <div className="general-info-sections">
+            <div className="info-section">
+              <div className="info-section-heading">
+                <Header4>Medical</Header4>
+                <div className="info-divider" />
+              </div>
+ 
+              <div className="general-info-fields">
+                <Body1>
+                  <strong>Blood Type:</strong> {patient.bloodType}
+                </Body1>
+                <Body1>
+                  <strong>Diagnosis:</strong> {patient.diagnosis}
+                </Body1>
+              </div>
             </div>
-
-            <div className="general-info-fields">
-              <Body1>
-                <strong>Medicare Card Number:</strong> {medicareInfo.cardNumber}
-              </Body1>
-              <Body1>
-                <strong>Medicare Card IRN:</strong> {medicareInfo.irn}
-              </Body1>
-              <Body1>
-                <strong>Medicare Card Expiry Date:</strong> {medicareInfo.expiryDate}
-              </Body1>
+ 
+            <div className="info-section">
+              <div className="info-section-heading">
+                <Header4>Contact</Header4>
+                <div className="info-divider" />
+              </div>
+ 
+              <div className="general-info-fields">
+                <Body1>
+                  <strong>Phone:</strong> {patient.phone}
+                </Body1>
+                <Body1>
+                  <strong>Email:</strong> {patient.email}
+                </Body1>
+                <Body1>
+                  <strong>Address:</strong> {patient.address}
+                </Body1>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
   return (
