@@ -23,9 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
-.env.*
-!.env.example
-**/*firebase-adminsdk*.json
-/.firebase/
-/dataconnect/.dataconnect/
-/src/dataconnect-generated/
+
+# firebase
+.firebase/
