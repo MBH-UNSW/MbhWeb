@@ -14,8 +14,11 @@ This README will guide you through the process of using the generated JavaScript
   - [*GetAllAppointmentsByClinician*](#getallappointmentsbyclinician)
   - [*GetHeart*](#getheart)
   - [*ListHeartsByPatient*](#listheartsbypatient)
-  - [*GetLogbookEntry*](#getlogbookentry)
-  - [*ListLogBookEntriesByPatient*](#listlogbookentriesbypatient)
+  - [*GetMyLogbookEntry*](#getmylogbookentry)
+  - [*ListMyLogbookEntries*](#listmylogbookentries)
+  - [*GetPatientLatestLogbook*](#getpatientlatestlogbook)
+  - [*ListPatientLogbookHistory*](#listpatientlogbookhistory)
+  - [*ListMissingDailyLogbooks*](#listmissingdailylogbooks)
   - [*GetPatientLogbookFileMetadata*](#getpatientlogbookfilemetadata)
   - [*ListPatientLogbookEntries*](#listpatientlogbookentries)
   - [*GeneratePatientSummaryReport*](#generatepatientsummaryreport)
@@ -41,6 +44,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*ListClinicians*](#listclinicians)
   - [*GetPatient*](#getpatient)
   - [*ListPatients*](#listpatients)
+  - [*GetMyPatient*](#getmypatient)
   - [*PatientCountByStatus*](#patientcountbystatus)
   - [*ListPatientsByStatus*](#listpatientsbystatus)
   - [*ListPatientsByStatuses*](#listpatientsbystatuses)
@@ -49,9 +53,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*EditAppointment*](#editappointment)
   - [*CancelAppointment*](#cancelappointment)
   - [*CreateHeart*](#createheart)
-  - [*CreateLogbookEntry*](#createlogbookentry)
-  - [*CreateFile*](#createfile)
-  - [*AttachFileToLogbookEntry*](#attachfiletologbookentry)
+  - [*CreateMyDailyLogbook*](#createmydailylogbook)
   - [*CreateLogbookFileMetadata*](#createlogbookfilemetadata)
   - [*CreateSensor*](#createsensor)
   - [*UpdateSensor*](#updatesensor)
@@ -62,6 +64,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*UpdateClinician*](#updateclinician)
   - [*DeactivateClinician*](#deactivateclinician)
   - [*CreatePatient*](#createpatient)
+  - [*CreatePatientForStaff*](#createpatientforstaff)
   - [*UpdatePatient*](#updatepatient)
   - [*UpdatePatientStatus*](#updatepatientstatus)
   - [*DeletePatient*](#deletepatient)
@@ -854,49 +857,49 @@ executeQuery(ref).then((response) => {
 });
 ```
 
-## GetLogbookEntry
-You can execute the `GetLogbookEntry` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+## GetMyLogbookEntry
+You can execute the `GetMyLogbookEntry` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
 ```typescript
-getLogbookEntry(vars: GetLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetLogbookEntryData, GetLogbookEntryVariables>;
+getMyLogbookEntry(vars: GetMyLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
 
-interface GetLogbookEntryRef {
+interface GetMyLogbookEntryRef {
   ...
   /* Allow users to create refs without passing in DataConnect */
-  (vars: GetLogbookEntryVariables): QueryRef<GetLogbookEntryData, GetLogbookEntryVariables>;
+  (vars: GetMyLogbookEntryVariables): QueryRef<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
 }
-export const getLogbookEntryRef: GetLogbookEntryRef;
+export const getMyLogbookEntryRef: GetMyLogbookEntryRef;
 ```
 You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
 ```typescript
-getLogbookEntry(dc: DataConnect, vars: GetLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetLogbookEntryData, GetLogbookEntryVariables>;
+getMyLogbookEntry(dc: DataConnect, vars: GetMyLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
 
-interface GetLogbookEntryRef {
+interface GetMyLogbookEntryRef {
   ...
-  (dc: DataConnect, vars: GetLogbookEntryVariables): QueryRef<GetLogbookEntryData, GetLogbookEntryVariables>;
+  (dc: DataConnect, vars: GetMyLogbookEntryVariables): QueryRef<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
 }
-export const getLogbookEntryRef: GetLogbookEntryRef;
+export const getMyLogbookEntryRef: GetMyLogbookEntryRef;
 ```
 
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getLogbookEntryRef:
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getMyLogbookEntryRef:
 ```typescript
-const name = getLogbookEntryRef.operationName;
+const name = getMyLogbookEntryRef.operationName;
 console.log(name);
 ```
 
 ### Variables
-The `GetLogbookEntry` query requires an argument of type `GetLogbookEntryVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+The `GetMyLogbookEntry` query requires an argument of type `GetMyLogbookEntryVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 
 ```typescript
-export interface GetLogbookEntryVariables {
-  id: UUIDString;
+export interface GetMyLogbookEntryVariables {
+  dayStart: TimestampString;
 }
 ```
 ### Return Type
-Recall that executing the `GetLogbookEntry` query returns a `QueryPromise` that resolves to an object with a `data` property.
+Recall that executing the `GetMyLogbookEntry` query returns a `QueryPromise` that resolves to an object with a `data` property.
 
-The `data` property is an object of type `GetLogbookEntryData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+The `data` property is an object of type `GetMyLogbookEntryData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
-export interface GetLogbookEntryData {
+export interface GetMyLogbookEntryData {
   logbookEntry?: {
     id: UUIDString;
     patientPid: UUIDString;
@@ -904,7 +907,7 @@ export interface GetLogbookEntryData {
     weight: number;
     bloodPressureSystolic: number;
     bloodPressureDiastolic: number;
-    isDeactivated: boolean;
+    notes?: string | null;
     createdAt: TimestampString;
     updatedAt?: TimestampString | null;
     logbookEntryFiles_on_logbookEntry: ({
@@ -920,55 +923,55 @@ export interface GetLogbookEntryData {
   } & LogbookEntry_Key;
 }
 ```
-### Using `GetLogbookEntry`'s action shortcut function
+### Using `GetMyLogbookEntry`'s action shortcut function
 
 ```typescript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, getLogbookEntry, GetLogbookEntryVariables } from '@mbh/dataconnect';
+import { connectorConfig, getMyLogbookEntry, GetMyLogbookEntryVariables } from '@mbh/dataconnect';
 
-// The `GetLogbookEntry` query requires an argument of type `GetLogbookEntryVariables`:
-const getLogbookEntryVars: GetLogbookEntryVariables = {
-  id: ..., 
+// The `GetMyLogbookEntry` query requires an argument of type `GetMyLogbookEntryVariables`:
+const getMyLogbookEntryVars: GetMyLogbookEntryVariables = {
+  dayStart: ..., 
 };
 
-// Call the `getLogbookEntry()` function to execute the query.
+// Call the `getMyLogbookEntry()` function to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await getLogbookEntry(getLogbookEntryVars);
+const { data } = await getMyLogbookEntry(getMyLogbookEntryVars);
 // Variables can be defined inline as well.
-const { data } = await getLogbookEntry({ id: ..., });
+const { data } = await getMyLogbookEntry({ dayStart: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
-const { data } = await getLogbookEntry(dataConnect, getLogbookEntryVars);
+const { data } = await getMyLogbookEntry(dataConnect, getMyLogbookEntryVars);
 
 console.log(data.logbookEntry);
 
 // Or, you can use the `Promise` API.
-getLogbookEntry(getLogbookEntryVars).then((response) => {
+getMyLogbookEntry(getMyLogbookEntryVars).then((response) => {
   const data = response.data;
   console.log(data.logbookEntry);
 });
 ```
 
-### Using `GetLogbookEntry`'s `QueryRef` function
+### Using `GetMyLogbookEntry`'s `QueryRef` function
 
 ```typescript
 import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, getLogbookEntryRef, GetLogbookEntryVariables } from '@mbh/dataconnect';
+import { connectorConfig, getMyLogbookEntryRef, GetMyLogbookEntryVariables } from '@mbh/dataconnect';
 
-// The `GetLogbookEntry` query requires an argument of type `GetLogbookEntryVariables`:
-const getLogbookEntryVars: GetLogbookEntryVariables = {
-  id: ..., 
+// The `GetMyLogbookEntry` query requires an argument of type `GetMyLogbookEntryVariables`:
+const getMyLogbookEntryVars: GetMyLogbookEntryVariables = {
+  dayStart: ..., 
 };
 
-// Call the `getLogbookEntryRef()` function to get a reference to the query.
-const ref = getLogbookEntryRef(getLogbookEntryVars);
+// Call the `getMyLogbookEntryRef()` function to get a reference to the query.
+const ref = getMyLogbookEntryRef(getMyLogbookEntryVars);
 // Variables can be defined inline as well.
-const ref = getLogbookEntryRef({ id: ..., });
+const ref = getMyLogbookEntryRef({ dayStart: ..., });
 
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
-const ref = getLogbookEntryRef(dataConnect, getLogbookEntryVars);
+const ref = getMyLogbookEntryRef(dataConnect, getMyLogbookEntryVars);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
@@ -983,135 +986,529 @@ executeQuery(ref).then((response) => {
 });
 ```
 
-## ListLogBookEntriesByPatient
-You can execute the `ListLogBookEntriesByPatient` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+## ListMyLogbookEntries
+You can execute the `ListMyLogbookEntries` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
 ```typescript
-listLogBookEntriesByPatient(vars: ListLogBookEntriesByPatientVariables, options?: ExecuteQueryOptions): QueryPromise<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
+listMyLogbookEntries(vars: ListMyLogbookEntriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
 
-interface ListLogBookEntriesByPatientRef {
+interface ListMyLogbookEntriesRef {
   ...
   /* Allow users to create refs without passing in DataConnect */
-  (vars: ListLogBookEntriesByPatientVariables): QueryRef<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
+  (vars: ListMyLogbookEntriesVariables): QueryRef<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
 }
-export const listLogBookEntriesByPatientRef: ListLogBookEntriesByPatientRef;
+export const listMyLogbookEntriesRef: ListMyLogbookEntriesRef;
 ```
 You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
 ```typescript
-listLogBookEntriesByPatient(dc: DataConnect, vars: ListLogBookEntriesByPatientVariables, options?: ExecuteQueryOptions): QueryPromise<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
+listMyLogbookEntries(dc: DataConnect, vars: ListMyLogbookEntriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
 
-interface ListLogBookEntriesByPatientRef {
+interface ListMyLogbookEntriesRef {
   ...
-  (dc: DataConnect, vars: ListLogBookEntriesByPatientVariables): QueryRef<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
+  (dc: DataConnect, vars: ListMyLogbookEntriesVariables): QueryRef<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
 }
-export const listLogBookEntriesByPatientRef: ListLogBookEntriesByPatientRef;
+export const listMyLogbookEntriesRef: ListMyLogbookEntriesRef;
 ```
 
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listLogBookEntriesByPatientRef:
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listMyLogbookEntriesRef:
 ```typescript
-const name = listLogBookEntriesByPatientRef.operationName;
+const name = listMyLogbookEntriesRef.operationName;
 console.log(name);
 ```
 
 ### Variables
-The `ListLogBookEntriesByPatient` query requires an argument of type `ListLogBookEntriesByPatientVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+The `ListMyLogbookEntries` query requires an argument of type `ListMyLogbookEntriesVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 
 ```typescript
-export interface ListLogBookEntriesByPatientVariables {
-  patientId: UUIDString;
+export interface ListMyLogbookEntriesVariables {
+  startTime: TimestampString;
+  endTime: TimestampString;
+  limit: number;
+  offset: number;
 }
 ```
 ### Return Type
-Recall that executing the `ListLogBookEntriesByPatient` query returns a `QueryPromise` that resolves to an object with a `data` property.
+Recall that executing the `ListMyLogbookEntries` query returns a `QueryPromise` that resolves to an object with a `data` property.
 
-The `data` property is an object of type `ListLogBookEntriesByPatientData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+The `data` property is an object of type `ListMyLogbookEntriesData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
-export interface ListLogBookEntriesByPatientData {
-  patient?: {
-    pid: UUIDString;
-    logbookEntries_on_patient: ({
-      id: UUIDString;
-      patientPid: UUIDString;
-      inr: number;
-      weight: number;
-      bloodPressureSystolic: number;
-      bloodPressureDiastolic: number;
-      isDeactivated: boolean;
-      createdAt: TimestampString;
-      updatedAt?: TimestampString | null;
-      logbookEntryFiles_on_logbookEntry: ({
-        file: {
-          id: UUIDString;
-          fileName: string;
-          storagePath: string;
-          mimeType: string;
-          fileSizeBytes: number;
-          createdAt: TimestampString;
-        } & File_Key;
-      })[];
-    } & LogbookEntry_Key)[];
-  } & Patient_Key;
+export interface ListMyLogbookEntriesData {
+  logbookEntries: ({
+    id: UUIDString;
+    patientPid: UUIDString;
+    inr: number;
+    weight: number;
+    bloodPressureSystolic: number;
+    bloodPressureDiastolic: number;
+    notes?: string | null;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+    logbookEntryFiles_on_logbookEntry: ({
+      file: {
+        id: UUIDString;
+        fileName: string;
+        storagePath: string;
+        mimeType: string;
+        fileSizeBytes: number;
+        createdAt: TimestampString;
+      } & File_Key;
+    })[];
+  } & LogbookEntry_Key)[];
 }
 ```
-### Using `ListLogBookEntriesByPatient`'s action shortcut function
+### Using `ListMyLogbookEntries`'s action shortcut function
 
 ```typescript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, listLogBookEntriesByPatient, ListLogBookEntriesByPatientVariables } from '@mbh/dataconnect';
+import { connectorConfig, listMyLogbookEntries, ListMyLogbookEntriesVariables } from '@mbh/dataconnect';
 
-// The `ListLogBookEntriesByPatient` query requires an argument of type `ListLogBookEntriesByPatientVariables`:
-const listLogBookEntriesByPatientVars: ListLogBookEntriesByPatientVariables = {
-  patientId: ..., 
+// The `ListMyLogbookEntries` query requires an argument of type `ListMyLogbookEntriesVariables`:
+const listMyLogbookEntriesVars: ListMyLogbookEntriesVariables = {
+  startTime: ..., 
+  endTime: ..., 
+  limit: ..., 
+  offset: ..., 
 };
 
-// Call the `listLogBookEntriesByPatient()` function to execute the query.
+// Call the `listMyLogbookEntries()` function to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await listLogBookEntriesByPatient(listLogBookEntriesByPatientVars);
+const { data } = await listMyLogbookEntries(listMyLogbookEntriesVars);
 // Variables can be defined inline as well.
-const { data } = await listLogBookEntriesByPatient({ patientId: ..., });
+const { data } = await listMyLogbookEntries({ startTime: ..., endTime: ..., limit: ..., offset: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
-const { data } = await listLogBookEntriesByPatient(dataConnect, listLogBookEntriesByPatientVars);
+const { data } = await listMyLogbookEntries(dataConnect, listMyLogbookEntriesVars);
 
-console.log(data.patient);
+console.log(data.logbookEntries);
 
 // Or, you can use the `Promise` API.
-listLogBookEntriesByPatient(listLogBookEntriesByPatientVars).then((response) => {
+listMyLogbookEntries(listMyLogbookEntriesVars).then((response) => {
   const data = response.data;
-  console.log(data.patient);
+  console.log(data.logbookEntries);
 });
 ```
 
-### Using `ListLogBookEntriesByPatient`'s `QueryRef` function
+### Using `ListMyLogbookEntries`'s `QueryRef` function
 
 ```typescript
 import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, listLogBookEntriesByPatientRef, ListLogBookEntriesByPatientVariables } from '@mbh/dataconnect';
+import { connectorConfig, listMyLogbookEntriesRef, ListMyLogbookEntriesVariables } from '@mbh/dataconnect';
 
-// The `ListLogBookEntriesByPatient` query requires an argument of type `ListLogBookEntriesByPatientVariables`:
-const listLogBookEntriesByPatientVars: ListLogBookEntriesByPatientVariables = {
-  patientId: ..., 
+// The `ListMyLogbookEntries` query requires an argument of type `ListMyLogbookEntriesVariables`:
+const listMyLogbookEntriesVars: ListMyLogbookEntriesVariables = {
+  startTime: ..., 
+  endTime: ..., 
+  limit: ..., 
+  offset: ..., 
 };
 
-// Call the `listLogBookEntriesByPatientRef()` function to get a reference to the query.
-const ref = listLogBookEntriesByPatientRef(listLogBookEntriesByPatientVars);
+// Call the `listMyLogbookEntriesRef()` function to get a reference to the query.
+const ref = listMyLogbookEntriesRef(listMyLogbookEntriesVars);
 // Variables can be defined inline as well.
-const ref = listLogBookEntriesByPatientRef({ patientId: ..., });
+const ref = listMyLogbookEntriesRef({ startTime: ..., endTime: ..., limit: ..., offset: ..., });
 
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
-const ref = listLogBookEntriesByPatientRef(dataConnect, listLogBookEntriesByPatientVars);
+const ref = listMyLogbookEntriesRef(dataConnect, listMyLogbookEntriesVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.logbookEntries);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.logbookEntries);
+});
+```
+
+## GetPatientLatestLogbook
+You can execute the `GetPatientLatestLogbook` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+getPatientLatestLogbook(vars: GetPatientLatestLogbookVariables, options?: ExecuteQueryOptions): QueryPromise<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
+
+interface GetPatientLatestLogbookRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetPatientLatestLogbookVariables): QueryRef<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
+}
+export const getPatientLatestLogbookRef: GetPatientLatestLogbookRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+getPatientLatestLogbook(dc: DataConnect, vars: GetPatientLatestLogbookVariables, options?: ExecuteQueryOptions): QueryPromise<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
+
+interface GetPatientLatestLogbookRef {
+  ...
+  (dc: DataConnect, vars: GetPatientLatestLogbookVariables): QueryRef<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
+}
+export const getPatientLatestLogbookRef: GetPatientLatestLogbookRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getPatientLatestLogbookRef:
+```typescript
+const name = getPatientLatestLogbookRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `GetPatientLatestLogbook` query requires an argument of type `GetPatientLatestLogbookVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetPatientLatestLogbookVariables {
+  patientPid: UUIDString;
+}
+```
+### Return Type
+Recall that executing the `GetPatientLatestLogbook` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `GetPatientLatestLogbookData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface GetPatientLatestLogbookData {
+  patient?: {
+    pid: UUIDString;
+    firstName: string;
+    lastName: string;
+  } & Patient_Key;
+  latestEntry?: {
+    id: UUIDString;
+    inr: number;
+    weight: number;
+    bloodPressureSystolic: number;
+    bloodPressureDiastolic: number;
+    notes?: string | null;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+  } & LogbookEntry_Key;
+}
+```
+### Using `GetPatientLatestLogbook`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, getPatientLatestLogbook, GetPatientLatestLogbookVariables } from '@mbh/dataconnect';
+
+// The `GetPatientLatestLogbook` query requires an argument of type `GetPatientLatestLogbookVariables`:
+const getPatientLatestLogbookVars: GetPatientLatestLogbookVariables = {
+  patientPid: ..., 
+};
+
+// Call the `getPatientLatestLogbook()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await getPatientLatestLogbook(getPatientLatestLogbookVars);
+// Variables can be defined inline as well.
+const { data } = await getPatientLatestLogbook({ patientPid: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await getPatientLatestLogbook(dataConnect, getPatientLatestLogbookVars);
+
+console.log(data.patient);
+console.log(data.latestEntry);
+
+// Or, you can use the `Promise` API.
+getPatientLatestLogbook(getPatientLatestLogbookVars).then((response) => {
+  const data = response.data;
+  console.log(data.patient);
+  console.log(data.latestEntry);
+});
+```
+
+### Using `GetPatientLatestLogbook`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, getPatientLatestLogbookRef, GetPatientLatestLogbookVariables } from '@mbh/dataconnect';
+
+// The `GetPatientLatestLogbook` query requires an argument of type `GetPatientLatestLogbookVariables`:
+const getPatientLatestLogbookVars: GetPatientLatestLogbookVariables = {
+  patientPid: ..., 
+};
+
+// Call the `getPatientLatestLogbookRef()` function to get a reference to the query.
+const ref = getPatientLatestLogbookRef(getPatientLatestLogbookVars);
+// Variables can be defined inline as well.
+const ref = getPatientLatestLogbookRef({ patientPid: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = getPatientLatestLogbookRef(dataConnect, getPatientLatestLogbookVars);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await executeQuery(ref);
 
 console.log(data.patient);
+console.log(data.latestEntry);
 
 // Or, you can use the `Promise` API.
 executeQuery(ref).then((response) => {
   const data = response.data;
   console.log(data.patient);
+  console.log(data.latestEntry);
+});
+```
+
+## ListPatientLogbookHistory
+You can execute the `ListPatientLogbookHistory` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+listPatientLogbookHistory(vars: ListPatientLogbookHistoryVariables, options?: ExecuteQueryOptions): QueryPromise<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
+
+interface ListPatientLogbookHistoryRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListPatientLogbookHistoryVariables): QueryRef<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
+}
+export const listPatientLogbookHistoryRef: ListPatientLogbookHistoryRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listPatientLogbookHistory(dc: DataConnect, vars: ListPatientLogbookHistoryVariables, options?: ExecuteQueryOptions): QueryPromise<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
+
+interface ListPatientLogbookHistoryRef {
+  ...
+  (dc: DataConnect, vars: ListPatientLogbookHistoryVariables): QueryRef<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
+}
+export const listPatientLogbookHistoryRef: ListPatientLogbookHistoryRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listPatientLogbookHistoryRef:
+```typescript
+const name = listPatientLogbookHistoryRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `ListPatientLogbookHistory` query requires an argument of type `ListPatientLogbookHistoryVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface ListPatientLogbookHistoryVariables {
+  patientPid: UUIDString;
+  startTime: TimestampString;
+  endTime: TimestampString;
+  limit: number;
+  offset: number;
+}
+```
+### Return Type
+Recall that executing the `ListPatientLogbookHistory` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListPatientLogbookHistoryData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListPatientLogbookHistoryData {
+  logbookEntries: ({
+    id: UUIDString;
+    patientPid: UUIDString;
+    inr: number;
+    weight: number;
+    bloodPressureSystolic: number;
+    bloodPressureDiastolic: number;
+    notes?: string | null;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+    logbookEntryFiles_on_logbookEntry: ({
+      file: {
+        id: UUIDString;
+        fileName: string;
+        storagePath: string;
+        mimeType: string;
+        fileSizeBytes: number;
+        createdAt: TimestampString;
+      } & File_Key;
+    })[];
+  } & LogbookEntry_Key)[];
+}
+```
+### Using `ListPatientLogbookHistory`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listPatientLogbookHistory, ListPatientLogbookHistoryVariables } from '@mbh/dataconnect';
+
+// The `ListPatientLogbookHistory` query requires an argument of type `ListPatientLogbookHistoryVariables`:
+const listPatientLogbookHistoryVars: ListPatientLogbookHistoryVariables = {
+  patientPid: ..., 
+  startTime: ..., 
+  endTime: ..., 
+  limit: ..., 
+  offset: ..., 
+};
+
+// Call the `listPatientLogbookHistory()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listPatientLogbookHistory(listPatientLogbookHistoryVars);
+// Variables can be defined inline as well.
+const { data } = await listPatientLogbookHistory({ patientPid: ..., startTime: ..., endTime: ..., limit: ..., offset: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listPatientLogbookHistory(dataConnect, listPatientLogbookHistoryVars);
+
+console.log(data.logbookEntries);
+
+// Or, you can use the `Promise` API.
+listPatientLogbookHistory(listPatientLogbookHistoryVars).then((response) => {
+  const data = response.data;
+  console.log(data.logbookEntries);
+});
+```
+
+### Using `ListPatientLogbookHistory`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listPatientLogbookHistoryRef, ListPatientLogbookHistoryVariables } from '@mbh/dataconnect';
+
+// The `ListPatientLogbookHistory` query requires an argument of type `ListPatientLogbookHistoryVariables`:
+const listPatientLogbookHistoryVars: ListPatientLogbookHistoryVariables = {
+  patientPid: ..., 
+  startTime: ..., 
+  endTime: ..., 
+  limit: ..., 
+  offset: ..., 
+};
+
+// Call the `listPatientLogbookHistoryRef()` function to get a reference to the query.
+const ref = listPatientLogbookHistoryRef(listPatientLogbookHistoryVars);
+// Variables can be defined inline as well.
+const ref = listPatientLogbookHistoryRef({ patientPid: ..., startTime: ..., endTime: ..., limit: ..., offset: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listPatientLogbookHistoryRef(dataConnect, listPatientLogbookHistoryVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.logbookEntries);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.logbookEntries);
+});
+```
+
+## ListMissingDailyLogbooks
+You can execute the `ListMissingDailyLogbooks` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+listMissingDailyLogbooks(vars: ListMissingDailyLogbooksVariables, options?: ExecuteQueryOptions): QueryPromise<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
+
+interface ListMissingDailyLogbooksRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListMissingDailyLogbooksVariables): QueryRef<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
+}
+export const listMissingDailyLogbooksRef: ListMissingDailyLogbooksRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listMissingDailyLogbooks(dc: DataConnect, vars: ListMissingDailyLogbooksVariables, options?: ExecuteQueryOptions): QueryPromise<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
+
+interface ListMissingDailyLogbooksRef {
+  ...
+  (dc: DataConnect, vars: ListMissingDailyLogbooksVariables): QueryRef<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
+}
+export const listMissingDailyLogbooksRef: ListMissingDailyLogbooksRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listMissingDailyLogbooksRef:
+```typescript
+const name = listMissingDailyLogbooksRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `ListMissingDailyLogbooks` query requires an argument of type `ListMissingDailyLogbooksVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface ListMissingDailyLogbooksVariables {
+  limit: number;
+  offset: number;
+}
+```
+### Return Type
+Recall that executing the `ListMissingDailyLogbooks` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListMissingDailyLogbooksData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListMissingDailyLogbooksData {
+  patients: ({
+    pid: UUIDString;
+    firstName: string;
+    lastName: string;
+    logbookEntries_on_patient: ({
+      id: UUIDString;
+      createdAt: TimestampString;
+    } & LogbookEntry_Key)[];
+  } & Patient_Key)[];
+}
+```
+### Using `ListMissingDailyLogbooks`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listMissingDailyLogbooks, ListMissingDailyLogbooksVariables } from '@mbh/dataconnect';
+
+// The `ListMissingDailyLogbooks` query requires an argument of type `ListMissingDailyLogbooksVariables`:
+const listMissingDailyLogbooksVars: ListMissingDailyLogbooksVariables = {
+  limit: ..., 
+  offset: ..., 
+};
+
+// Call the `listMissingDailyLogbooks()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listMissingDailyLogbooks(listMissingDailyLogbooksVars);
+// Variables can be defined inline as well.
+const { data } = await listMissingDailyLogbooks({ limit: ..., offset: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listMissingDailyLogbooks(dataConnect, listMissingDailyLogbooksVars);
+
+console.log(data.patients);
+
+// Or, you can use the `Promise` API.
+listMissingDailyLogbooks(listMissingDailyLogbooksVars).then((response) => {
+  const data = response.data;
+  console.log(data.patients);
+});
+```
+
+### Using `ListMissingDailyLogbooks`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listMissingDailyLogbooksRef, ListMissingDailyLogbooksVariables } from '@mbh/dataconnect';
+
+// The `ListMissingDailyLogbooks` query requires an argument of type `ListMissingDailyLogbooksVariables`:
+const listMissingDailyLogbooksVars: ListMissingDailyLogbooksVariables = {
+  limit: ..., 
+  offset: ..., 
+};
+
+// Call the `listMissingDailyLogbooksRef()` function to get a reference to the query.
+const ref = listMissingDailyLogbooksRef(listMissingDailyLogbooksVars);
+// Variables can be defined inline as well.
+const ref = listMissingDailyLogbooksRef({ limit: ..., offset: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listMissingDailyLogbooksRef(dataConnect, listMissingDailyLogbooksVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.patients);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.patients);
 });
 ```
 
@@ -1165,6 +1562,12 @@ export interface GetPatientLogbookFileMetadataData {
     storagePath: string;
     mimeType: string;
     fileSizeBytes: number;
+    logbookEntryFiles_on_file: ({
+      logbookEntryId: UUIDString;
+      fileId: UUIDString;
+      logbookEntry: {
+      };
+    } & LogbookEntryFile_Key)[];
   } & File_Key;
 }
 ```
@@ -1448,7 +1851,7 @@ export interface GeneratePatientSummaryReportData {
             triggerValue: number;
             triggeredAt: TimestampString;
             resolvedAt?: TimestampString | null;
-            alertReadingss_on_alert: ({
+            alertReadings_on_alert: ({
               readingId: UUIDString;
               recordedAt: TimestampString;
               value: number;
@@ -1973,7 +2376,7 @@ Recall that executing the `ListAlertReadings` query returns a `QueryPromise` tha
 The `data` property is an object of type `ListAlertReadingsData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
 export interface ListAlertReadingsData {
-  alertReadingss: ({
+  alertReadings: ({
     readingId: UUIDString;
     alertId: UUIDString;
     sensorId: UUIDString;
@@ -2011,12 +2414,12 @@ const { data } = await listAlertReadings();
 const dataConnect = getDataConnect(connectorConfig);
 const { data } = await listAlertReadings(dataConnect);
 
-console.log(data.alertReadingss);
+console.log(data.alertReadings);
 
 // Or, you can use the `Promise` API.
 listAlertReadings().then((response) => {
   const data = response.data;
-  console.log(data.alertReadingss);
+  console.log(data.alertReadings);
 });
 ```
 
@@ -2038,12 +2441,12 @@ const ref = listAlertReadingsRef(dataConnect);
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await executeQuery(ref);
 
-console.log(data.alertReadingss);
+console.log(data.alertReadings);
 
 // Or, you can use the `Promise` API.
 executeQuery(ref).then((response) => {
   const data = response.data;
-  console.log(data.alertReadingss);
+  console.log(data.alertReadings);
 });
 ```
 
@@ -2084,7 +2487,7 @@ Recall that executing the `ListAlertReadingsByAlertId` query returns a `QueryPro
 The `data` property is an object of type `ListAlertReadingsByAlertIdData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
 export interface ListAlertReadingsByAlertIdData {
-  alertReadingss: ({
+  alertReadings: ({
     readingId: UUIDString;
     alertId: UUIDString;
     sensorId: UUIDString;
@@ -2109,12 +2512,12 @@ const { data } = await listAlertReadingsByAlertId();
 const dataConnect = getDataConnect(connectorConfig);
 const { data } = await listAlertReadingsByAlertId(dataConnect);
 
-console.log(data.alertReadingss);
+console.log(data.alertReadings);
 
 // Or, you can use the `Promise` API.
 listAlertReadingsByAlertId().then((response) => {
   const data = response.data;
-  console.log(data.alertReadingss);
+  console.log(data.alertReadings);
 });
 ```
 
@@ -2136,12 +2539,12 @@ const ref = listAlertReadingsByAlertIdRef(dataConnect);
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await executeQuery(ref);
 
-console.log(data.alertReadingss);
+console.log(data.alertReadings);
 
 // Or, you can use the `Promise` API.
 executeQuery(ref).then((response) => {
   const data = response.data;
-  console.log(data.alertReadingss);
+  console.log(data.alertReadings);
 });
 ```
 
@@ -2182,7 +2585,7 @@ Recall that executing the `ListAlertReadingsBySensorId` query returns a `QueryPr
 The `data` property is an object of type `ListAlertReadingsBySensorIdData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
 export interface ListAlertReadingsBySensorIdData {
-  alertReadingss: ({
+  alertReadings: ({
     readingId: UUIDString;
     alertId: UUIDString;
     sensorId: UUIDString;
@@ -2207,12 +2610,12 @@ const { data } = await listAlertReadingsBySensorId();
 const dataConnect = getDataConnect(connectorConfig);
 const { data } = await listAlertReadingsBySensorId(dataConnect);
 
-console.log(data.alertReadingss);
+console.log(data.alertReadings);
 
 // Or, you can use the `Promise` API.
 listAlertReadingsBySensorId().then((response) => {
   const data = response.data;
-  console.log(data.alertReadingss);
+  console.log(data.alertReadings);
 });
 ```
 
@@ -2234,12 +2637,12 @@ const ref = listAlertReadingsBySensorIdRef(dataConnect);
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await executeQuery(ref);
 
-console.log(data.alertReadingss);
+console.log(data.alertReadings);
 
 // Or, you can use the `Promise` API.
 executeQuery(ref).then((response) => {
   const data = response.data;
-  console.log(data.alertReadingss);
+  console.log(data.alertReadings);
 });
 ```
 
@@ -3735,6 +4138,7 @@ The `data` property is an object of type `GetPatientData`, which is defined in [
 export interface GetPatientData {
   patient?: {
     pid: UUIDString;
+    firebaseUid?: string | null;
     email: string;
     firstName: string;
     lastName: string;
@@ -3851,6 +4255,7 @@ The `data` property is an object of type `ListPatientsData`, which is defined in
 export interface ListPatientsData {
   patients: ({
     pid: UUIDString;
+    firebaseUid?: string | null;
     email: string;
     firstName: string;
     lastName: string;
@@ -3902,6 +4307,111 @@ const ref = listPatientsRef();
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
 const ref = listPatientsRef(dataConnect);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.patients);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.patients);
+});
+```
+
+## GetMyPatient
+You can execute the `GetMyPatient` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+getMyPatient(options?: ExecuteQueryOptions): QueryPromise<GetMyPatientData, undefined>;
+
+interface GetMyPatientRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<GetMyPatientData, undefined>;
+}
+export const getMyPatientRef: GetMyPatientRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+getMyPatient(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetMyPatientData, undefined>;
+
+interface GetMyPatientRef {
+  ...
+  (dc: DataConnect): QueryRef<GetMyPatientData, undefined>;
+}
+export const getMyPatientRef: GetMyPatientRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getMyPatientRef:
+```typescript
+const name = getMyPatientRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `GetMyPatient` query has no variables.
+### Return Type
+Recall that executing the `GetMyPatient` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `GetMyPatientData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface GetMyPatientData {
+  patients: ({
+    pid: UUIDString;
+    firebaseUid?: string | null;
+    email: string;
+    firstName: string;
+    lastName: string;
+    dob: DateString;
+    phone: string;
+    bloodType: string;
+    diagnosis: string;
+    status: Status;
+    address: string;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+  } & Patient_Key)[];
+}
+```
+### Using `GetMyPatient`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, getMyPatient } from '@mbh/dataconnect';
+
+
+// Call the `getMyPatient()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await getMyPatient();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await getMyPatient(dataConnect);
+
+console.log(data.patients);
+
+// Or, you can use the `Promise` API.
+getMyPatient().then((response) => {
+  const data = response.data;
+  console.log(data.patients);
+});
+```
+
+### Using `GetMyPatient`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, getMyPatientRef } from '@mbh/dataconnect';
+
+
+// Call the `getMyPatientRef()` function to get a reference to the query.
+const ref = getMyPatientRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = getMyPatientRef(dataConnect);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
@@ -4726,113 +5236,113 @@ executeMutation(ref).then((response) => {
 });
 ```
 
-## CreateLogbookEntry
-You can execute the `CreateLogbookEntry` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+## CreateMyDailyLogbook
+You can execute the `CreateMyDailyLogbook` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
 ```typescript
-createLogbookEntry(vars: CreateLogbookEntryVariables): MutationPromise<CreateLogbookEntryData, CreateLogbookEntryVariables>;
+createMyDailyLogbook(vars: CreateMyDailyLogbookVariables): MutationPromise<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
 
-interface CreateLogbookEntryRef {
+interface CreateMyDailyLogbookRef {
   ...
   /* Allow users to create refs without passing in DataConnect */
-  (vars: CreateLogbookEntryVariables): MutationRef<CreateLogbookEntryData, CreateLogbookEntryVariables>;
+  (vars: CreateMyDailyLogbookVariables): MutationRef<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
 }
-export const createLogbookEntryRef: CreateLogbookEntryRef;
+export const createMyDailyLogbookRef: CreateMyDailyLogbookRef;
 ```
 You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
 ```typescript
-createLogbookEntry(dc: DataConnect, vars: CreateLogbookEntryVariables): MutationPromise<CreateLogbookEntryData, CreateLogbookEntryVariables>;
+createMyDailyLogbook(dc: DataConnect, vars: CreateMyDailyLogbookVariables): MutationPromise<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
 
-interface CreateLogbookEntryRef {
+interface CreateMyDailyLogbookRef {
   ...
-  (dc: DataConnect, vars: CreateLogbookEntryVariables): MutationRef<CreateLogbookEntryData, CreateLogbookEntryVariables>;
+  (dc: DataConnect, vars: CreateMyDailyLogbookVariables): MutationRef<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
 }
-export const createLogbookEntryRef: CreateLogbookEntryRef;
+export const createMyDailyLogbookRef: CreateMyDailyLogbookRef;
 ```
 
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the createLogbookEntryRef:
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the createMyDailyLogbookRef:
 ```typescript
-const name = createLogbookEntryRef.operationName;
+const name = createMyDailyLogbookRef.operationName;
 console.log(name);
 ```
 
 ### Variables
-The `CreateLogbookEntry` mutation requires an argument of type `CreateLogbookEntryVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+The `CreateMyDailyLogbook` mutation requires an argument of type `CreateMyDailyLogbookVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 
 ```typescript
-export interface CreateLogbookEntryVariables {
-  patientPid: UUIDString;
+export interface CreateMyDailyLogbookVariables {
   inr: number;
   weight: number;
   bloodPressureSystolic: number;
   bloodPressureDiastolic: number;
+  notes?: string | null;
 }
 ```
 ### Return Type
-Recall that executing the `CreateLogbookEntry` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+Recall that executing the `CreateMyDailyLogbook` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
 
-The `data` property is an object of type `CreateLogbookEntryData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+The `data` property is an object of type `CreateMyDailyLogbookData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
-export interface CreateLogbookEntryData {
+export interface CreateMyDailyLogbookData {
   logbookEntry_insert: LogbookEntry_Key;
 }
 ```
-### Using `CreateLogbookEntry`'s action shortcut function
+### Using `CreateMyDailyLogbook`'s action shortcut function
 
 ```typescript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, createLogbookEntry, CreateLogbookEntryVariables } from '@mbh/dataconnect';
+import { connectorConfig, createMyDailyLogbook, CreateMyDailyLogbookVariables } from '@mbh/dataconnect';
 
-// The `CreateLogbookEntry` mutation requires an argument of type `CreateLogbookEntryVariables`:
-const createLogbookEntryVars: CreateLogbookEntryVariables = {
-  patientPid: ..., 
+// The `CreateMyDailyLogbook` mutation requires an argument of type `CreateMyDailyLogbookVariables`:
+const createMyDailyLogbookVars: CreateMyDailyLogbookVariables = {
   inr: ..., 
   weight: ..., 
   bloodPressureSystolic: ..., 
   bloodPressureDiastolic: ..., 
+  notes: ..., // optional
 };
 
-// Call the `createLogbookEntry()` function to execute the mutation.
+// Call the `createMyDailyLogbook()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await createLogbookEntry(createLogbookEntryVars);
+const { data } = await createMyDailyLogbook(createMyDailyLogbookVars);
 // Variables can be defined inline as well.
-const { data } = await createLogbookEntry({ patientPid: ..., inr: ..., weight: ..., bloodPressureSystolic: ..., bloodPressureDiastolic: ..., });
+const { data } = await createMyDailyLogbook({ inr: ..., weight: ..., bloodPressureSystolic: ..., bloodPressureDiastolic: ..., notes: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
-const { data } = await createLogbookEntry(dataConnect, createLogbookEntryVars);
+const { data } = await createMyDailyLogbook(dataConnect, createMyDailyLogbookVars);
 
 console.log(data.logbookEntry_insert);
 
 // Or, you can use the `Promise` API.
-createLogbookEntry(createLogbookEntryVars).then((response) => {
+createMyDailyLogbook(createMyDailyLogbookVars).then((response) => {
   const data = response.data;
   console.log(data.logbookEntry_insert);
 });
 ```
 
-### Using `CreateLogbookEntry`'s `MutationRef` function
+### Using `CreateMyDailyLogbook`'s `MutationRef` function
 
 ```typescript
 import { getDataConnect, executeMutation } from 'firebase/data-connect';
-import { connectorConfig, createLogbookEntryRef, CreateLogbookEntryVariables } from '@mbh/dataconnect';
+import { connectorConfig, createMyDailyLogbookRef, CreateMyDailyLogbookVariables } from '@mbh/dataconnect';
 
-// The `CreateLogbookEntry` mutation requires an argument of type `CreateLogbookEntryVariables`:
-const createLogbookEntryVars: CreateLogbookEntryVariables = {
-  patientPid: ..., 
+// The `CreateMyDailyLogbook` mutation requires an argument of type `CreateMyDailyLogbookVariables`:
+const createMyDailyLogbookVars: CreateMyDailyLogbookVariables = {
   inr: ..., 
   weight: ..., 
   bloodPressureSystolic: ..., 
   bloodPressureDiastolic: ..., 
+  notes: ..., // optional
 };
 
-// Call the `createLogbookEntryRef()` function to get a reference to the mutation.
-const ref = createLogbookEntryRef(createLogbookEntryVars);
+// Call the `createMyDailyLogbookRef()` function to get a reference to the mutation.
+const ref = createMyDailyLogbookRef(createMyDailyLogbookVars);
 // Variables can be defined inline as well.
-const ref = createLogbookEntryRef({ patientPid: ..., inr: ..., weight: ..., bloodPressureSystolic: ..., bloodPressureDiastolic: ..., });
+const ref = createMyDailyLogbookRef({ inr: ..., weight: ..., bloodPressureSystolic: ..., bloodPressureDiastolic: ..., notes: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);
-const ref = createLogbookEntryRef(dataConnect, createLogbookEntryVars);
+const ref = createMyDailyLogbookRef(dataConnect, createMyDailyLogbookVars);
 
 // Call `executeMutation()` on the reference to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
@@ -4844,239 +5354,6 @@ console.log(data.logbookEntry_insert);
 executeMutation(ref).then((response) => {
   const data = response.data;
   console.log(data.logbookEntry_insert);
-});
-```
-
-## CreateFile
-You can execute the `CreateFile` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
-```typescript
-createFile(vars: CreateFileVariables): MutationPromise<CreateFileData, CreateFileVariables>;
-
-interface CreateFileRef {
-  ...
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: CreateFileVariables): MutationRef<CreateFileData, CreateFileVariables>;
-}
-export const createFileRef: CreateFileRef;
-```
-You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
-```typescript
-createFile(dc: DataConnect, vars: CreateFileVariables): MutationPromise<CreateFileData, CreateFileVariables>;
-
-interface CreateFileRef {
-  ...
-  (dc: DataConnect, vars: CreateFileVariables): MutationRef<CreateFileData, CreateFileVariables>;
-}
-export const createFileRef: CreateFileRef;
-```
-
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the createFileRef:
-```typescript
-const name = createFileRef.operationName;
-console.log(name);
-```
-
-### Variables
-The `CreateFile` mutation requires an argument of type `CreateFileVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
-
-```typescript
-export interface CreateFileVariables {
-  uploadedByPatientPid: UUIDString;
-  fileName: string;
-  storagePath: string;
-  mimeType: string;
-  fileSizeBytes: number;
-}
-```
-### Return Type
-Recall that executing the `CreateFile` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
-
-The `data` property is an object of type `CreateFileData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
-```typescript
-export interface CreateFileData {
-  file_insert: File_Key;
-}
-```
-### Using `CreateFile`'s action shortcut function
-
-```typescript
-import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, createFile, CreateFileVariables } from '@mbh/dataconnect';
-
-// The `CreateFile` mutation requires an argument of type `CreateFileVariables`:
-const createFileVars: CreateFileVariables = {
-  uploadedByPatientPid: ..., 
-  fileName: ..., 
-  storagePath: ..., 
-  mimeType: ..., 
-  fileSizeBytes: ..., 
-};
-
-// Call the `createFile()` function to execute the mutation.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await createFile(createFileVars);
-// Variables can be defined inline as well.
-const { data } = await createFile({ uploadedByPatientPid: ..., fileName: ..., storagePath: ..., mimeType: ..., fileSizeBytes: ..., });
-
-// You can also pass in a `DataConnect` instance to the action shortcut function.
-const dataConnect = getDataConnect(connectorConfig);
-const { data } = await createFile(dataConnect, createFileVars);
-
-console.log(data.file_insert);
-
-// Or, you can use the `Promise` API.
-createFile(createFileVars).then((response) => {
-  const data = response.data;
-  console.log(data.file_insert);
-});
-```
-
-### Using `CreateFile`'s `MutationRef` function
-
-```typescript
-import { getDataConnect, executeMutation } from 'firebase/data-connect';
-import { connectorConfig, createFileRef, CreateFileVariables } from '@mbh/dataconnect';
-
-// The `CreateFile` mutation requires an argument of type `CreateFileVariables`:
-const createFileVars: CreateFileVariables = {
-  uploadedByPatientPid: ..., 
-  fileName: ..., 
-  storagePath: ..., 
-  mimeType: ..., 
-  fileSizeBytes: ..., 
-};
-
-// Call the `createFileRef()` function to get a reference to the mutation.
-const ref = createFileRef(createFileVars);
-// Variables can be defined inline as well.
-const ref = createFileRef({ uploadedByPatientPid: ..., fileName: ..., storagePath: ..., mimeType: ..., fileSizeBytes: ..., });
-
-// You can also pass in a `DataConnect` instance to the `MutationRef` function.
-const dataConnect = getDataConnect(connectorConfig);
-const ref = createFileRef(dataConnect, createFileVars);
-
-// Call `executeMutation()` on the reference to execute the mutation.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await executeMutation(ref);
-
-console.log(data.file_insert);
-
-// Or, you can use the `Promise` API.
-executeMutation(ref).then((response) => {
-  const data = response.data;
-  console.log(data.file_insert);
-});
-```
-
-## AttachFileToLogbookEntry
-You can execute the `AttachFileToLogbookEntry` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
-```typescript
-attachFileToLogbookEntry(vars: AttachFileToLogbookEntryVariables): MutationPromise<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
-
-interface AttachFileToLogbookEntryRef {
-  ...
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: AttachFileToLogbookEntryVariables): MutationRef<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
-}
-export const attachFileToLogbookEntryRef: AttachFileToLogbookEntryRef;
-```
-You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
-```typescript
-attachFileToLogbookEntry(dc: DataConnect, vars: AttachFileToLogbookEntryVariables): MutationPromise<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
-
-interface AttachFileToLogbookEntryRef {
-  ...
-  (dc: DataConnect, vars: AttachFileToLogbookEntryVariables): MutationRef<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
-}
-export const attachFileToLogbookEntryRef: AttachFileToLogbookEntryRef;
-```
-
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the attachFileToLogbookEntryRef:
-```typescript
-const name = attachFileToLogbookEntryRef.operationName;
-console.log(name);
-```
-
-### Variables
-The `AttachFileToLogbookEntry` mutation requires an argument of type `AttachFileToLogbookEntryVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
-
-```typescript
-export interface AttachFileToLogbookEntryVariables {
-  logbookEntryId: UUIDString;
-  fileId: UUIDString;
-}
-```
-### Return Type
-Recall that executing the `AttachFileToLogbookEntry` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
-
-The `data` property is an object of type `AttachFileToLogbookEntryData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
-```typescript
-export interface AttachFileToLogbookEntryData {
-  logbookEntryFile_insert: LogbookEntryFile_Key;
-}
-```
-### Using `AttachFileToLogbookEntry`'s action shortcut function
-
-```typescript
-import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, attachFileToLogbookEntry, AttachFileToLogbookEntryVariables } from '@mbh/dataconnect';
-
-// The `AttachFileToLogbookEntry` mutation requires an argument of type `AttachFileToLogbookEntryVariables`:
-const attachFileToLogbookEntryVars: AttachFileToLogbookEntryVariables = {
-  logbookEntryId: ..., 
-  fileId: ..., 
-};
-
-// Call the `attachFileToLogbookEntry()` function to execute the mutation.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await attachFileToLogbookEntry(attachFileToLogbookEntryVars);
-// Variables can be defined inline as well.
-const { data } = await attachFileToLogbookEntry({ logbookEntryId: ..., fileId: ..., });
-
-// You can also pass in a `DataConnect` instance to the action shortcut function.
-const dataConnect = getDataConnect(connectorConfig);
-const { data } = await attachFileToLogbookEntry(dataConnect, attachFileToLogbookEntryVars);
-
-console.log(data.logbookEntryFile_insert);
-
-// Or, you can use the `Promise` API.
-attachFileToLogbookEntry(attachFileToLogbookEntryVars).then((response) => {
-  const data = response.data;
-  console.log(data.logbookEntryFile_insert);
-});
-```
-
-### Using `AttachFileToLogbookEntry`'s `MutationRef` function
-
-```typescript
-import { getDataConnect, executeMutation } from 'firebase/data-connect';
-import { connectorConfig, attachFileToLogbookEntryRef, AttachFileToLogbookEntryVariables } from '@mbh/dataconnect';
-
-// The `AttachFileToLogbookEntry` mutation requires an argument of type `AttachFileToLogbookEntryVariables`:
-const attachFileToLogbookEntryVars: AttachFileToLogbookEntryVariables = {
-  logbookEntryId: ..., 
-  fileId: ..., 
-};
-
-// Call the `attachFileToLogbookEntryRef()` function to get a reference to the mutation.
-const ref = attachFileToLogbookEntryRef(attachFileToLogbookEntryVars);
-// Variables can be defined inline as well.
-const ref = attachFileToLogbookEntryRef({ logbookEntryId: ..., fileId: ..., });
-
-// You can also pass in a `DataConnect` instance to the `MutationRef` function.
-const dataConnect = getDataConnect(connectorConfig);
-const ref = attachFileToLogbookEntryRef(dataConnect, attachFileToLogbookEntryVars);
-
-// Call `executeMutation()` on the reference to execute the mutation.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await executeMutation(ref);
-
-console.log(data.logbookEntryFile_insert);
-
-// Or, you can use the `Promise` API.
-executeMutation(ref).then((response) => {
-  const data = response.data;
-  console.log(data.logbookEntryFile_insert);
 });
 ```
 
@@ -6290,6 +6567,139 @@ const ref = createPatientRef({ email: ..., firstName: ..., lastName: ..., dob: .
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);
 const ref = createPatientRef(dataConnect, createPatientVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.patient_insert);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.patient_insert);
+});
+```
+
+## CreatePatientForStaff
+You can execute the `CreatePatientForStaff` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect/index.d.ts](./index.d.ts):
+```typescript
+createPatientForStaff(vars: CreatePatientForStaffVariables): MutationPromise<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+
+interface CreatePatientForStaffRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: CreatePatientForStaffVariables): MutationRef<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+}
+export const createPatientForStaffRef: CreatePatientForStaffRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+createPatientForStaff(dc: DataConnect, vars: CreatePatientForStaffVariables): MutationPromise<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+
+interface CreatePatientForStaffRef {
+  ...
+  (dc: DataConnect, vars: CreatePatientForStaffVariables): MutationRef<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+}
+export const createPatientForStaffRef: CreatePatientForStaffRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the createPatientForStaffRef:
+```typescript
+const name = createPatientForStaffRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `CreatePatientForStaff` mutation requires an argument of type `CreatePatientForStaffVariables`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface CreatePatientForStaffVariables {
+  email: string;
+  firstName: string;
+  lastName: string;
+  dob: DateString;
+  phone: string;
+  bloodType: string;
+  diagnosis: string;
+  address: string;
+  firebaseUid: string;
+}
+```
+### Return Type
+Recall that executing the `CreatePatientForStaff` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `CreatePatientForStaffData`, which is defined in [dataconnect/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface CreatePatientForStaffData {
+  patient_insert: Patient_Key;
+}
+```
+### Using `CreatePatientForStaff`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, createPatientForStaff, CreatePatientForStaffVariables } from '@mbh/dataconnect';
+
+// The `CreatePatientForStaff` mutation requires an argument of type `CreatePatientForStaffVariables`:
+const createPatientForStaffVars: CreatePatientForStaffVariables = {
+  email: ..., 
+  firstName: ..., 
+  lastName: ..., 
+  dob: ..., 
+  phone: ..., 
+  bloodType: ..., 
+  diagnosis: ..., 
+  address: ..., 
+  firebaseUid: ..., 
+};
+
+// Call the `createPatientForStaff()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await createPatientForStaff(createPatientForStaffVars);
+// Variables can be defined inline as well.
+const { data } = await createPatientForStaff({ email: ..., firstName: ..., lastName: ..., dob: ..., phone: ..., bloodType: ..., diagnosis: ..., address: ..., firebaseUid: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await createPatientForStaff(dataConnect, createPatientForStaffVars);
+
+console.log(data.patient_insert);
+
+// Or, you can use the `Promise` API.
+createPatientForStaff(createPatientForStaffVars).then((response) => {
+  const data = response.data;
+  console.log(data.patient_insert);
+});
+```
+
+### Using `CreatePatientForStaff`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, createPatientForStaffRef, CreatePatientForStaffVariables } from '@mbh/dataconnect';
+
+// The `CreatePatientForStaff` mutation requires an argument of type `CreatePatientForStaffVariables`:
+const createPatientForStaffVars: CreatePatientForStaffVariables = {
+  email: ..., 
+  firstName: ..., 
+  lastName: ..., 
+  dob: ..., 
+  phone: ..., 
+  bloodType: ..., 
+  diagnosis: ..., 
+  address: ..., 
+  firebaseUid: ..., 
+};
+
+// Call the `createPatientForStaffRef()` function to get a reference to the mutation.
+const ref = createPatientForStaffRef(createPatientForStaffVars);
+// Variables can be defined inline as well.
+const ref = createPatientForStaffRef({ email: ..., firstName: ..., lastName: ..., dob: ..., phone: ..., bloodType: ..., diagnosis: ..., address: ..., firebaseUid: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = createPatientForStaffRef(dataConnect, createPatientForStaffVars);
 
 // Call `executeMutation()` on the reference to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.

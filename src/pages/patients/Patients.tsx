@@ -18,6 +18,8 @@ import {
 
 import { usePatients } from '../../hooks/usePatient'
 
+import { auth } from '../../firebase/client'
+
 // TODO: make a proper component class for cards.
 // import { PatientCard } from '../components/patientCard/PatientCard';
 
@@ -45,6 +47,8 @@ export default function PatientsPage() {
   const navigate = useNavigate();
   
   const { patients, isLoading, error } = usePatients();
+
+  console.log('Current user:', auth.currentUser);
 
   // // some mock bs.. (backend tba)
   // const patients: Patient[] = [
