@@ -1,8 +1,11 @@
 import OneSignal from 'react-onesignal';
+import type { StaffRole } from '../auth/access';
 
 const oneSignalAppId = import.meta.env.VITE_ONESIGNAL_APP_ID;
 
 let initPromise: Promise<void> | null = null;
+let identityQueue: Promise<void> = Promise.resolve();
+let desiredIdentity: { uid: string; role: StaffRole } | null = null;
 
 export interface OneSignalNotification {
   title: string;
@@ -26,20 +29,6 @@ interface PushNotificationPayload {
 
 interface ForegroundNotificationEvent {
   notification?: PushNotificationPayload;
-}
-
-function getClinicianExternalId() {
-  const session = localStorage.getItem('session');
-  if (!session) {
-    return 'clinician-browser';
-  }
-
-  try {
-    const parsedSession = JSON.parse(session) as { uid?: string; email?: string };
-    return parsedSession.uid || parsedSession.email || 'clinician-browser';
-  } catch {
-    return session || 'clinician-browser';
-  }
 }
 
 function toLogbookNotification(event: unknown): OneSignalNotification | null {
@@ -69,17 +58,37 @@ export function initOneSignal() {
     appId: oneSignalAppId,
     allowLocalhostAsSecureOrigin: true,
     serviceWorkerPath: '/OneSignalSDKWorker.js',
-  }).then(async () => {
-    await OneSignal.login(getClinicianExternalId());
-    OneSignal.User.addTag('role', 'clinician');
-    OneSignal.User.addTag('logbook_updates', 'enabled');
+  }).catch(error => {
+    initPromise = null;
+    throw error;
   });
 
   return initPromise;
 }
 
+export function syncNotificationIdentity(identity: { uid: string; role: StaffRole } | null) {
+  desiredIdentity = identity;
+  if (!oneSignalAppId) return Promise.resolve();
+  identityQueue = identityQueue.catch(() => undefined).then(async () => {
+    await initOneSignal();
+    if (identity !== desiredIdentity) return;
+    if (identity) {
+      await OneSignal.login(identity.uid);
+      OneSignal.User.addTag('role', identity.role);
+      OneSignal.User.addTag('logbook_updates', 'enabled');
+    } else {
+      await OneSignal.logout();
+      OneSignal.User.removeTag('role');
+      OneSignal.User.removeTag('logbook_updates');
+    }
+  });
+  return identityQueue;
+}
+
 export async function promptForNotifications() {
   await initOneSignal();
+  await identityQueue;
+  if (!desiredIdentity) return;
 
   if (OneSignal.Notifications.permissionNative === 'default') {
     await OneSignal.Slidedown.promptPush();
@@ -93,7 +102,7 @@ export function subscribeToLogbookPushNotifications(
 
   const handler = (event: unknown) => {
     const logbookNotification = toLogbookNotification(event);
-    if (logbookNotification) {
+    if (desiredIdentity && logbookNotification) {
       onNotification(logbookNotification);
     }
   };
@@ -102,7 +111,7 @@ export function subscribeToLogbookPushNotifications(
     if (isSubscribed) {
       OneSignal.Notifications.addEventListener('foregroundWillDisplay', handler);
     }
-  });
+  }).catch(error => console.error('Unable to subscribe to notifications.', error));
 
   return () => {
     isSubscribed = false;

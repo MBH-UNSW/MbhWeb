@@ -10,15 +10,17 @@
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,md,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,md,json}\"",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc -b"
   },
   "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated",
     "@mantine/core": "^9.1.0",
     "@mantine/hooks": "^9.1.0",
     "firebase": "^12.19.0",
     "lucide-react": "^1.16.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-onesignal": "^3.5.3",
     "react-router-dom": "^7.15.1",
     "recharts": "^3.10.1"
   },
