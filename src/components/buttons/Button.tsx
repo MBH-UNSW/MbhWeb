@@ -11,6 +11,7 @@ type ButtonProps = {
   children: React.ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
+  type?: 'button' | 'submit' | 'reset';
   leftIcon?: LucideIcon;
   rightIcon?: LucideIcon;
   disabled?: boolean;
@@ -22,6 +23,7 @@ export function Button({
   children,
   variant = 'default',
   size = 'md',
+  type = 'button',
   leftIcon: LeftIcon,
   rightIcon: RightIcon,
   disabled,
@@ -50,6 +52,7 @@ export function Button({
 
   return (
     <MantineButton
+      type={type}
       variant={mantineVariant}
       size={size}
       disabled={disabled}

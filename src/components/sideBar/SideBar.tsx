@@ -10,6 +10,9 @@ import {
   LogOut,
 } from 'lucide-react';
 import { /*Logo,*/ FullLogo } from '../icons/Logo';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/client';
+import { syncNotificationIdentity } from '../../services/oneSignal';
 
 const tabs = {
   nurse: [{ link: '/messages', label: 'Messages', icon: MessageSquare }],
@@ -25,9 +28,10 @@ const tabs = {
 export function SideBar() {
   const location = useLocation();
   const navigate = useNavigate();
-  function handleLogout() {
-    localStorage.removeItem('session');
-    navigate('/');
+  async function handleLogout() {
+    await signOut(auth);
+    void syncNotificationIdentity(null).catch(console.error);
+    navigate('/login');
   }
 
   const links = tabs.general.map(item => {

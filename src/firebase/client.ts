@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getFunctions } from 'firebase/functions';
+import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -21,3 +21,7 @@ export const firestore = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
 
 export const functions = getFunctions(firebaseApp, 'australia-southeast1');
+
+if (import.meta.env.DEV && import.meta.env.VITE_USE_FUNCTIONS_EMULATOR === 'true') {
+  connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+}
