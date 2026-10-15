@@ -1,6 +1,6 @@
 import '../Page.css';
 import './Appointments.css'
-import { Header2, Header3, Header4, Header6  } from '../../components/typography/Header';
+import { Header2, Header5, Header4, Header6  } from '../../components/typography/Header';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
@@ -35,11 +35,11 @@ const BOOKING_STATUS: AppointmentStatus[] = ['Scheduled', 'In Progress', 'Comple
 
 // Mock Patients. Future ref: remove these and call database functions later.
 const MOCK_PATIENTS: PatientSummary[] = [
-  { pid: 'mock-1', displayId: 'M100001', name: 'John Doe', status: 'Stable' },
-  { pid: 'mock-2', displayId: 'M100002', name: 'Jane Doe', status: 'Warning' },
-  { pid: 'mock-3', displayId: 'M100003', name: 'Mac Donald', status: 'Unstable' },
-  { pid: 'mock-4', displayId: 'M100004', name: 'Kernal SanDell', status: 'Stable' },
-  { pid: 'mock-5', displayId: 'M100005', name: 'Hungree Jackson', status: 'Warning' },
+  { pid: 'M100001', displayId: 'M100001', name: 'John Doe', status: 'Stable' },
+  { pid: 'M100002', displayId: 'M100002', name: 'Jane Doe', status: 'Warning' },
+  { pid: 'M100003', displayId: 'M100003', name: 'Mac Donald', status: 'Unstable' },
+  { pid: 'M100004', displayId: 'M100004', name: 'Tre Top', status: 'Stable' },
+  { pid: 'M100005', displayId: 'M100005', name: 'Hungre Jack', status: 'Warning' },
 ];
 
 
@@ -183,28 +183,28 @@ function buildMockAppointments(patients: PatientSummary[]): Appointment[] {
 export default function AppointmentsPage() {
   const navigate = useNavigate();
   const patients = MOCK_PATIENTS;
-
+ 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-
+ 
   useEffect(() => {
     if (patients.length > 0 && appointments.length === 0) {
       setAppointments(buildMockAppointments(patients));
     }
   }, [patients, appointments.length]);
-
+ 
   const [selectedDate, setSelectedDate] = useState(getDate());
-
+ 
   const weekStrip = buildWeekStrip(getDate());
   const scheduleForSelectedDate = sortAppointments(
     appointments.filter(appointment => appointment.date === selectedDate),
   );
-
+ 
   const [detailsAppointmentId, setDetailsAppointmentId] = useState<number | null>(null);
   const sortedAppointments = sortAppointments(appointments);
   const currentDetailsAppointment = sortedAppointments.find(
     appointment => appointment.id === detailsAppointmentId,
   );
-
+ 
   const updateAppointment = (id: number, changes: Partial<Appointment>) => {
     setAppointments(appointments.map(appointment => {
       if (appointment.id === id) {
@@ -214,50 +214,50 @@ export default function AppointmentsPage() {
       }
     }));
   };
-
+ 
   const showAdjacentAppointment = (direction: 1 | -1) => {
     if (!currentDetailsAppointment) {
       return;
     }
-
+ 
     const currentIndex = sortedAppointments.findIndex(
       appointment => appointment.id === currentDetailsAppointment.id,
     );
     const nextIndex = (currentIndex + direction + sortedAppointments.length) % sortedAppointments.length;
     setDetailsAppointmentId(sortedAppointments[nextIndex].id);
   };
-
+ 
   // PLACEHOLDER UNTIL THERE'S A REAL REPORTING BACKEND.
   const generateSummaryReport = (appointment: Appointment) => {
     console.log('generate summary report', appointment.patientName, appointment.id);
   };
-
+ 
   const [isNewAppointmentOpen, setIsNewAppointmentOpen] = useState(false);
   const [newDate, setNewDate] = useState('');
   const [newReason, setNewReason] = useState<string | null>('Introductory');
   const [newPatientPid, setNewPatientPid] = useState<string | null>(null);
-
+ 
   const patientOptions = patients.map(patient => ({ value: patient.pid, label: patient.name }));
-
+ 
   const closeNewAppointmentModal = () => {
     setIsNewAppointmentOpen(false);
     setNewDate('');
     setNewReason('Introductory');
     setNewPatientPid(null);
   };
-
+ 
   const createAppointment = () => {
     if (!newDate || !newReason || !newPatientPid) {
       return;
     }
-
+ 
     const patient = patients.find(p => p.pid === newPatientPid);
     if (!patient) {
       return;
     }
-
+ 
     const nextId = appointments.length > 0 ? Math.max(...appointments.map(a => a.id)) + 1 : 1;
-
+ 
     setAppointments([
       ...appointments,
       {
@@ -271,20 +271,20 @@ export default function AppointmentsPage() {
         status: 'Scheduled',
       },
     ]);
-
+ 
     closeNewAppointmentModal();
   };
-
+ 
   return (
-    <div className="page">
+    <div className="page appointments-page">
       <div className="appointments-header">
         <Header2>Appointments</Header2>
       </div>
-
+ 
       <div className="appointments-layout">
         <div className="appointments-main">
           <div className="card today-summary-card">
-            <Header4>Today&apos;s Appointments</Header4>
+            <Header5>Today&apos;s Appointments</Header5>
             <div className="today-summary-actions">
               <Button
                 variant="outlined"
@@ -298,21 +298,26 @@ export default function AppointmentsPage() {
               >
                 View Next Appointment Details
               </Button>
-              <Button variant="default" size="sm" leftIcon={Plus} onClick={() => setIsNewAppointmentOpen(true)}>
+              <Button
+                variant="default"
+                size="sm"
+                leftIcon={Plus}
+                onClick={() => setIsNewAppointmentOpen(true)}
+              >
                 New Appointment
               </Button>
             </div>
           </div>
-
+ 
           <div className="card calendar-card">
-            <Calendar value={selectedDate} onChange={setSelectedDate} />
+            <Calendar value={selectedDate} onChange={setSelectedDate} size="lg" />
           </div>
         </div>
-
+ 
         <div className="card schedule-panel">
           <Body2>Today&apos;s Schedule</Body2>
           <Header4>{formatFullDate(selectedDate)}</Header4>
-
+ 
           <div className="day-picker">
             {weekStrip.map(dateKey => (
               <button
@@ -327,18 +332,18 @@ export default function AppointmentsPage() {
               </button>
             ))}
           </div>
-
+ 
           <div className="timeline">
             {scheduleForSelectedDate.length === 0 && (
               <Body2>No appointments scheduled for this day.</Body2>
             )}
-
+ 
             {scheduleForSelectedDate.map(appointment => (
               <div className="timeline-row" key={appointment.id}>
                 <div className="timeline-time">
                   <Body2>{appointment.time}</Body2>
                 </div>
-
+ 
                 <div className={getTimelineCardClass(appointment)}>
                   <div className="timeline-card-info">
                     <Body1 bold>
@@ -347,7 +352,7 @@ export default function AppointmentsPage() {
                     </Body1>
                     {appointment.patientPid && <Body2>{appointment.reason}</Body2>}
                   </div>
-
+ 
                   <div className="timeline-actions">
                     {appointment.patientPid && (
                       <IconButton
@@ -370,19 +375,13 @@ export default function AppointmentsPage() {
           </div>
         </div>
       </div>
-
+ 
       <Modal
         opened={currentDetailsAppointment !== undefined}
         onClose={() => setDetailsAppointmentId(null)}
         size="lg"
         padding="xl"
-        title={
-          <div className="details-modal-title">
-            <IconButton icon={ArrowLeft} variant="text" size="sm" onClick={() => showAdjacentAppointment(-1)} />
-            <Header4 bold>Appointment Details</Header4>
-            <IconButton icon={ArrowRight} variant="text" size="sm" onClick={() => showAdjacentAppointment(1)} />
-          </div>
-        }
+        title={<Header4 bold>Appointment Details</Header4>}
       >
         {currentDetailsAppointment && (
           <div className="details-modal-body">
@@ -400,11 +399,11 @@ export default function AppointmentsPage() {
                 </Button>
               )}
             </div>
-
+ 
             <Body1>
               <strong>Reason:</strong> {currentDetailsAppointment.reason}
             </Body1>
-
+ 
             <div className="details-modal-row">
               <Body1>
                 <strong>Time:</strong> {currentDetailsAppointment.time}
@@ -413,20 +412,20 @@ export default function AppointmentsPage() {
                 <strong>Date:</strong> {formatFullDate(currentDetailsAppointment.date)}
               </Body1>
             </div>
-
+ 
             <div className="info-divider" />
-
+ 
             <Header6>Appointment Notes</Header6>
             <Textarea
               value={currentDetailsAppointment.notes}
               onChange={e => updateAppointment(currentDetailsAppointment.id, { notes: e.target.value })}
               minRows={3}
             />
-
+ 
             <Button variant="default" onClick={() => generateSummaryReport(currentDetailsAppointment)}>
               Generate Summary Report
             </Button>
-
+ 
             <Header6>Appointment Status</Header6>
             <Select
               data={BOOKING_STATUS}
@@ -437,15 +436,30 @@ export default function AppointmentsPage() {
                 }
               }}
             />
-
+ 
             <div className="info-divider" />
             <span className={getStatusPillClass(currentDetailsAppointment.status)}>
               {currentDetailsAppointment.status}
             </span>
+ 
+            <div className="details-modal-nav">
+              <IconButton
+                icon={ArrowLeft}
+                variant="text"
+                size="lg"
+                onClick={() => showAdjacentAppointment(-1)}
+              />
+              <IconButton
+                icon={ArrowRight}
+                variant="text"
+                size="lg"
+                onClick={() => showAdjacentAppointment(1)}
+              />
+            </div>
           </div>
         )}
       </Modal>
-
+ 
       <Modal
         opened={isNewAppointmentOpen}
         onClose={closeNewAppointmentModal}
@@ -460,14 +474,14 @@ export default function AppointmentsPage() {
             value={newDate}
             onChange={e => setNewDate(e.target.value)}
           />
-
+ 
           <Select
             label="Appointment Reason"
             data={BOOKING_REASON}
             value={newReason}
             onChange={setNewReason}
           />
-
+ 
           <Select
             label="Patient"
             data={patientOptions}
@@ -475,7 +489,7 @@ export default function AppointmentsPage() {
             onChange={setNewPatientPid}
             searchable
           />
-
+ 
           <Button variant="default" onClick={createAppointment}>
             Create Appointment
           </Button>

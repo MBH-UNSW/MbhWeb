@@ -1,6 +1,6 @@
 /* FYI: If you need to change the width of this component, layout.tsx must also be updated. */
 .sideBar {
-	width: 280px;
+  width: var(--sidebar-width);
 	height: 100vh;
 	position: fixed;
 	top: 0;
@@ -9,16 +9,24 @@
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	padding: var(--mantine-spacing-lg) var(--mantine-spacing-md);
+	padding: clamp(18px, 2.4vw, var(--mantine-spacing-lg)) clamp(10px, 1.6vw, var(--mantine-spacing-md));
 	background-color: var(--mantine-color-ubhNeutral-0);
 	border-radius: 0 var(--mantine-radius-xl) var(--mantine-radius-xl) 0;
 }
 
 .header {
-	display: flex;
+  display: flex;
+  /* flex-direction: column; */
 	align-items: center;
 	gap: var(--mantine-spacing-md);
-	padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+	padding: clamp(6px, 1vw, var(--mantine-spacing-xs)) clamp(10px, 1.6vw, var(--mantine-spacing-md)) clamp(10px, 1.6vw, var(--mantine-spacing-md));
+}
+
+.header svg,
+.header img {
+	width: var(--sidebar-logo-width);
+	height: auto;
+	max-width: 100%;
 }
 
 .title {
@@ -35,6 +43,7 @@
 }
 
 .sideBarMain {
+  padding-top: var(--mantine-spacing-sm);
 	display: flex;
 	flex-direction: column;
 	gap: var(--mantine-spacing-md);
@@ -42,11 +51,11 @@
 
 .link {
 	width: 100%;
-	height: 70px;
+	height: clamp(60px, 6vw, 70px);
 	display: flex;
 	align-items: center;
 	gap: var(--mantine-spacing-lg);
-	padding: var(--mantine-spacing-md) var(--mantine-spacing-xl);
+	padding: clamp(10px, 1.6vw, var(--mantine-spacing-md)) clamp(14px, 2vw, var(--mantine-spacing-xl));
 	border: none;
 	border-radius: var(--mantine-radius-xl);
 	background-color: var(--mantine-color-ubhNeutral-0);
@@ -85,10 +94,11 @@
 
 .logout {
   margin-top: auto;
+  height: clamp(60px, 6vw, 70px);
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-lg);
-  padding: var(--mantine-spacing-md) var(--mantine-spacing-xl);
+  padding: clamp(10px, 1.6vw, var(--mantine-spacing-md)) clamp(14px, 2vw, var(--mantine-spacing-xl));
   border: none;
   border-radius: var(--mantine-radius-lg);
   background-color: transparent;

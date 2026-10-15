@@ -5,53 +5,96 @@
   gap: var(--mantine-spacing-md);
 }
 
+.page.appointments-page {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .appointments-layout {
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: var(--mantine-spacing-lg);
-  align-items: start;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 1100px) {
-  .appointments-layout {
-    grid-template-columns: 1fr;
+  .appointments-main {
+    margin-right: 0;
   }
 }
 
 .appointments-main {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
   gap: var(--mantine-spacing-md);
+  margin-right: var(--schedule-panel-width);
 }
 
 .today-summary-card {
-  max-height: 180px;
-  align-items: center;
-  gap: var(--mantine-spacing-sm);
+  flex-shrink: 0;
+  display: flex;
+  /* align-items: center; */
+  gap: var(--mantine-spacing-md);
+}
+
+.today-summary-card button {
+  height: 48px;
 }
 
 .today-summary-actions {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--mantine-spacing-sm);
+  justify-content: space-between;
+  width: 100%;
 }
 
 .calendar-card {
-  max-height: none;
+  flex-shrink: 0;
   align-self: center;
+  width: 100%;
+  max-width: min(640px, 60vh);
+  padding-top: clamp(16px, 3vw, 30px);
   gap: var(--mantine-spacing-md);
   box-shadow: 0 12px 6px rgba(0, 0, 0, 0.08);
 }
 
+/* .schedule-panel p {
+  color: var(--mantine-color-ubhNeutral-7);
+} */
+
+.schedule-panel h4 {
+  margin-top: -10px;
+}
+
 .schedule-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--schedule-panel-width);
+  height: 100vh;
   max-height: none;
-  height: 100%;
   gap: var(--mantine-spacing-md);
+  border-radius: 0;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  overflow-y: auto;
+}
+
+@media (max-width: 1100px) {
+  .schedule-panel {
+    position: static;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    margin-top: 0;
+  }
 }
 
 .day-picker {
   padding-top: var(--mantine-spacing-sm);
+  padding-bottom: var(--mantine-spacing-sm);
   display: flex;
   gap: var(--mantine-spacing-xs);
   overflow-x: auto;
@@ -104,7 +147,7 @@
   padding-top: var(--mantine-spacing-md);
   display: flex;
   flex-direction: column;
-  gap: var(--mantine-spacing-md);
+  gap: var(--mantine-spacing-lg);
 }
 
 .timeline-row {
@@ -116,13 +159,14 @@
 
 .timeline-time {
   flex-shrink: 0;
-  width: 60px;
-  padding-top: 10px;
+  width: 65px;
+  padding-top: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-xs);
   color: var(--mantine-color-ubhNeutral-7);
 }
 
 .timeline-card {
+  max-height: 80px;
   flex: 1;
   min-width: 0;
   display: flex;
@@ -191,16 +235,20 @@
   color: var(--mantine-color-ubhNeutral-9);
 }
 
-.details-modal-title {
+.details-modal-nav {
   display: flex;
   align-items: center;
-  gap: var(--mantine-spacing-sm);
+  justify-content: space-between;
+  /* gap: var(--mantine-spacing-lg); */
+  margin-top: var(--mantine-spacing-xs);
+  padding-top: var(--mantine-spacing-md);
+  border-top: 1px solid var(--mantine-color-ubhNeutral-2);
 }
 
 .details-modal-body {
   display: flex;
   flex-direction: column;
-  gap: var(--mantine-spacing-sm);
+  gap: var(--mantine-spacing-md);
 }
 
 .details-modal-row {
