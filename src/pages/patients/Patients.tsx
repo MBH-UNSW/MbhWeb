@@ -6,6 +6,8 @@ import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
 import { SearchBar } from '../../components/searchBar/SearchBar';
 
+import { Loader } from '@mantine/core';
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -85,7 +87,13 @@ export default function PatientsPage() {
 
   let patientDisplay;
 
-  if (view === 'grid') {
+  if (isLoading) {
+    patientDisplay = <Loader />;
+  } else if (error) {
+    patientDisplay = <Body1>{error}</Body1>;
+  } else if (filteredPatients.length === 0) {
+    patientDisplay = <Body1>No patients matching filter.</Body1>
+  } else if (view === 'grid') {
     patientDisplay = (
       <div className="patient-grid">
         {filteredPatients.map(patient => (
