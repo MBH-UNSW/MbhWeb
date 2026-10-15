@@ -27,6 +27,7 @@ import { LoadingBar } from '../components/loadingBar/LoadingBar';
 import { Avatar } from '../components/avatar/Avatar';
 import { NumberedPagination } from '../components/pagination/Pagination';
 import { Passcode } from '../components/passcode/Passcode';
+import { Calendar } from '../components/calendar/Calendar';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,6 +37,7 @@ export default function AllComponents() {
   const [toggleChecked, setToggleChecked] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const [passcode, setPasscode] = useState('');
+  const [calendarDate, setCalendarDate] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -536,6 +538,10 @@ export default function AllComponents() {
         <Passcode value="1111" error />
         <Body1>Success:</Body1>
         <Passcode value="1111" success />
+      </section>
+      <SectionHeader>Calendar</SectionHeader>
+      <section>
+        <Calendar value={calendarDate} onChange={setCalendarDate} />
       </section>
     </div>
   );
