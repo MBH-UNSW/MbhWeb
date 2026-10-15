@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Navigate, Routes, Route } from 'react-router-dom';
 import { Layout } from './pages/Layout';
 import AllComponents from './pages/AllComponents';
 import TestPage from './pages/BackendTest';
@@ -17,11 +17,12 @@ function App() {
     <>
       <PageTitle />
       <Routes>
-        <Route path="/" element={<AllComponents />} />
-        <Route path="/test" element={<TestPage />} />
         <Route path="/login" element={<LoginPage />} />
 
         <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/components" element={<AllComponents />} />
+          <Route path="/test" element={<TestPage />} />
           <Route element={<Layout />}>
             <Route path="/home" element={<DashboardPage />} />
             <Route path="/patients" element={<PatientsPage />} />
