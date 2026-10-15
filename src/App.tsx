@@ -8,7 +8,7 @@ import PatientsPage from './pages/patients/Patients';
 import PatientDetail from './pages/patients/PatientDetail';
 import AppointmentsPage from './pages/appointments/Appointments';
 import ProfilePage from './pages/profile/Profile';
-import SettingsPage from './pages/Settings';
+import SettingsPage from './pages/settings/Settings';
 import { PageTitle } from './components/pageTitle/PageTitle';
 import { ProtectedRoute } from './pages/ProtectedRoute';
 

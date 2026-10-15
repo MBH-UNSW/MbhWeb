@@ -3,7 +3,7 @@ import './Profile.css';
 import { useState } from 'react';
 import { Modal } from '@mantine/core';
 import { UserPen } from 'lucide-react';
-import { Header3, Header5, Header6 } from '../../components/typography/Header';
+import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
 import { Body2 } from '../../components/typography/Body';
 import { Avatar } from '../../components/avatar/Avatar';
 import { IconButton } from '../../components/buttons/IconButton';
@@ -58,15 +58,15 @@ export default function ProfilePage() {
 
   return (
     <div className="page">
-      <Header3>Profile</Header3>
+      <Header2>Profile</Header2>
       <div className="profile-card">
         <div className="profile-picture-details">
           <Avatar type="blank" size="display" />
           <div className="profile-details">
             <div className="profile-name">
-              <Header5>
+              <Header4>
                 {title && `${title} `} {name}
-              </Header5>
+              </Header4>
               <IconButton
                 icon={UserPen}
                 tooltip="Edit Profile"
