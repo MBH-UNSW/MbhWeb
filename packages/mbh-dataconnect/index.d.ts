@@ -33,18 +33,14 @@ export interface Alert_Key {
   __typename?: 'Alert_Key';
 }
 
+export interface AnomalyResult_Key {
+  resultId: UUIDString;
+  __typename?: 'AnomalyResult_Key';
+}
+
 export interface Appointment_Key {
   id: UUIDString;
   __typename?: 'Appointment_Key';
-}
-
-export interface AttachFileToLogbookEntryData {
-  logbookEntryFile_insert: LogbookEntryFile_Key;
-}
-
-export interface AttachFileToLogbookEntryVariables {
-  logbookEntryId: UUIDString;
-  fileId: UUIDString;
 }
 
 export interface CancelAppointmentData {
@@ -85,36 +81,12 @@ export interface CreateClinicianVariables {
   specialty: string;
 }
 
-export interface CreateFileData {
-  file_insert: File_Key;
-}
-
-export interface CreateFileVariables {
-  uploadedByPatientPid: UUIDString;
-  fileName: string;
-  storagePath: string;
-  mimeType: string;
-  fileSizeBytes: number;
-}
-
 export interface CreateHeartData {
   heart_insert: Heart_Key;
 }
 
 export interface CreateHeartVariables {
   patientPid: UUIDString;
-}
-
-export interface CreateLogbookEntryData {
-  logbookEntry_insert: LogbookEntry_Key;
-}
-
-export interface CreateLogbookEntryVariables {
-  patientPid: UUIDString;
-  inr: number;
-  weight: number;
-  bloodPressureSystolic: number;
-  bloodPressureDiastolic: number;
 }
 
 export interface CreateLogbookFileMetadataData {
@@ -131,8 +103,36 @@ export interface CreateLogbookFileMetadataVariables {
   fileSizeBytes: number;
 }
 
+export interface CreateMyDailyLogbookData {
+  logbookEntry_insert: LogbookEntry_Key;
+}
+
+export interface CreateMyDailyLogbookVariables {
+  inr: number;
+  weight: number;
+  bloodPressureSystolic: number;
+  bloodPressureDiastolic: number;
+  notes?: string | null;
+}
+
 export interface CreatePatientData {
   patient_insert: Patient_Key;
+}
+
+export interface CreatePatientForStaffData {
+  patient_insert: Patient_Key;
+}
+
+export interface CreatePatientForStaffVariables {
+  email: string;
+  firstName: string;
+  lastName: string;
+  dob: DateString;
+  phone: string;
+  bloodType: string;
+  diagnosis: string;
+  address: string;
+  firebaseUid: string;
 }
 
 export interface CreatePatientVariables {
@@ -285,7 +285,7 @@ export interface GeneratePatientSummaryReportData {
             triggerValue: number;
             triggeredAt: TimestampString;
             resolvedAt?: TimestampString | null;
-            alertReadingss_on_alert: ({
+            alertReadings_on_alert: ({
               readingId: UUIDString;
               recordedAt: TimestampString;
               value: number;
@@ -450,7 +450,7 @@ export interface GetHeartVariables {
   heartId: UUIDString;
 }
 
-export interface GetLogbookEntryData {
+export interface GetMyLogbookEntryData {
   logbookEntry?: {
     id: UUIDString;
     patientPid: UUIDString;
@@ -458,7 +458,7 @@ export interface GetLogbookEntryData {
     weight: number;
     bloodPressureSystolic: number;
     bloodPressureDiastolic: number;
-    isDeactivated: boolean;
+    notes?: string | null;
     createdAt: TimestampString;
     updatedAt?: TimestampString | null;
     logbookEntryFiles_on_logbookEntry: ({
@@ -474,13 +474,32 @@ export interface GetLogbookEntryData {
   } & LogbookEntry_Key;
 }
 
-export interface GetLogbookEntryVariables {
-  id: UUIDString;
+export interface GetMyLogbookEntryVariables {
+  dayStart: TimestampString;
+}
+
+export interface GetMyPatientData {
+  patients: ({
+    pid: UUIDString;
+    firebaseUid?: string | null;
+    email: string;
+    firstName: string;
+    lastName: string;
+    dob: DateString;
+    phone: string;
+    bloodType: string;
+    diagnosis: string;
+    status: Status;
+    address: string;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+  } & Patient_Key)[];
 }
 
 export interface GetPatientData {
   patient?: {
     pid: UUIDString;
+    firebaseUid?: string | null;
     email: string;
     firstName: string;
     lastName: string;
@@ -495,6 +514,28 @@ export interface GetPatientData {
   } & Patient_Key;
 }
 
+export interface GetPatientLatestLogbookData {
+  patient?: {
+    pid: UUIDString;
+    firstName: string;
+    lastName: string;
+  } & Patient_Key;
+  latestEntry?: {
+    id: UUIDString;
+    inr: number;
+    weight: number;
+    bloodPressureSystolic: number;
+    bloodPressureDiastolic: number;
+    notes?: string | null;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+  } & LogbookEntry_Key;
+}
+
+export interface GetPatientLatestLogbookVariables {
+  patientPid: UUIDString;
+}
+
 export interface GetPatientLogbookFileMetadataData {
   file?: {
     id: UUIDString;
@@ -502,6 +543,12 @@ export interface GetPatientLogbookFileMetadataData {
     storagePath: string;
     mimeType: string;
     fileSizeBytes: number;
+    logbookEntryFiles_on_file: ({
+      logbookEntryId: UUIDString;
+      fileId: UUIDString;
+      logbookEntry: {
+      };
+    } & LogbookEntryFile_Key)[];
   } & File_Key;
 }
 
@@ -576,7 +623,7 @@ export interface ListActiveSensorsVariables {
 }
 
 export interface ListAlertReadingsByAlertIdData {
-  alertReadingss: ({
+  alertReadings: ({
     readingId: UUIDString;
     alertId: UUIDString;
     sensorId: UUIDString;
@@ -587,7 +634,7 @@ export interface ListAlertReadingsByAlertIdData {
 }
 
 export interface ListAlertReadingsBySensorIdData {
-  alertReadingss: ({
+  alertReadings: ({
     readingId: UUIDString;
     alertId: UUIDString;
     sensorId: UUIDString;
@@ -598,7 +645,7 @@ export interface ListAlertReadingsBySensorIdData {
 }
 
 export interface ListAlertReadingsData {
-  alertReadingss: ({
+  alertReadings: ({
     readingId: UUIDString;
     alertId: UUIDString;
     sensorId: UUIDString;
@@ -689,35 +736,52 @@ export interface ListHighSeverityAlertsData {
   } & Alert_Key)[];
 }
 
-export interface ListLogBookEntriesByPatientData {
-  patient?: {
+export interface ListMissingDailyLogbooksData {
+  patients: ({
     pid: UUIDString;
+    firstName: string;
+    lastName: string;
     logbookEntries_on_patient: ({
       id: UUIDString;
-      patientPid: UUIDString;
-      inr: number;
-      weight: number;
-      bloodPressureSystolic: number;
-      bloodPressureDiastolic: number;
-      isDeactivated: boolean;
       createdAt: TimestampString;
-      updatedAt?: TimestampString | null;
-      logbookEntryFiles_on_logbookEntry: ({
-        file: {
-          id: UUIDString;
-          fileName: string;
-          storagePath: string;
-          mimeType: string;
-          fileSizeBytes: number;
-          createdAt: TimestampString;
-        } & File_Key;
-      })[];
     } & LogbookEntry_Key)[];
-  } & Patient_Key;
+  } & Patient_Key)[];
 }
 
-export interface ListLogBookEntriesByPatientVariables {
-  patientId: UUIDString;
+export interface ListMissingDailyLogbooksVariables {
+  limit: number;
+  offset: number;
+}
+
+export interface ListMyLogbookEntriesData {
+  logbookEntries: ({
+    id: UUIDString;
+    patientPid: UUIDString;
+    inr: number;
+    weight: number;
+    bloodPressureSystolic: number;
+    bloodPressureDiastolic: number;
+    notes?: string | null;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+    logbookEntryFiles_on_logbookEntry: ({
+      file: {
+        id: UUIDString;
+        fileName: string;
+        storagePath: string;
+        mimeType: string;
+        fileSizeBytes: number;
+        createdAt: TimestampString;
+      } & File_Key;
+    })[];
+  } & LogbookEntry_Key)[];
+}
+
+export interface ListMyLogbookEntriesVariables {
+  startTime: TimestampString;
+  endTime: TimestampString;
+  limit: number;
+  offset: number;
 }
 
 export interface ListPatientLogbookEntriesData {
@@ -727,6 +791,38 @@ export interface ListPatientLogbookEntriesData {
       createdAt: TimestampString;
     } & LogbookEntry_Key)[];
   })[];
+}
+
+export interface ListPatientLogbookHistoryData {
+  logbookEntries: ({
+    id: UUIDString;
+    patientPid: UUIDString;
+    inr: number;
+    weight: number;
+    bloodPressureSystolic: number;
+    bloodPressureDiastolic: number;
+    notes?: string | null;
+    createdAt: TimestampString;
+    updatedAt?: TimestampString | null;
+    logbookEntryFiles_on_logbookEntry: ({
+      file: {
+        id: UUIDString;
+        fileName: string;
+        storagePath: string;
+        mimeType: string;
+        fileSizeBytes: number;
+        createdAt: TimestampString;
+      } & File_Key;
+    })[];
+  } & LogbookEntry_Key)[];
+}
+
+export interface ListPatientLogbookHistoryVariables {
+  patientPid: UUIDString;
+  startTime: TimestampString;
+  endTime: TimestampString;
+  limit: number;
+  offset: number;
 }
 
 export interface ListPatientsByStatusData {
@@ -774,6 +870,7 @@ export interface ListPatientsByStatusesVariables {
 export interface ListPatientsData {
   patients: ({
     pid: UUIDString;
+    firebaseUid?: string | null;
     email: string;
     firstName: string;
     lastName: string;
@@ -1159,65 +1256,77 @@ export const listHeartsByPatientRef: ListHeartsByPatientRef;
 export function listHeartsByPatient(vars: ListHeartsByPatientVariables, options?: ExecuteQueryOptions): QueryPromise<ListHeartsByPatientData, ListHeartsByPatientVariables>;
 export function listHeartsByPatient(dc: DataConnect, vars: ListHeartsByPatientVariables, options?: ExecuteQueryOptions): QueryPromise<ListHeartsByPatientData, ListHeartsByPatientVariables>;
 
-interface CreateLogbookEntryRef {
+interface GetMyLogbookEntryRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: CreateLogbookEntryVariables): MutationRef<CreateLogbookEntryData, CreateLogbookEntryVariables>;
+  (vars: GetMyLogbookEntryVariables): QueryRef<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: CreateLogbookEntryVariables): MutationRef<CreateLogbookEntryData, CreateLogbookEntryVariables>;
+  (dc: DataConnect, vars: GetMyLogbookEntryVariables): QueryRef<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
   operationName: string;
 }
-export const createLogbookEntryRef: CreateLogbookEntryRef;
+export const getMyLogbookEntryRef: GetMyLogbookEntryRef;
 
-export function createLogbookEntry(vars: CreateLogbookEntryVariables): MutationPromise<CreateLogbookEntryData, CreateLogbookEntryVariables>;
-export function createLogbookEntry(dc: DataConnect, vars: CreateLogbookEntryVariables): MutationPromise<CreateLogbookEntryData, CreateLogbookEntryVariables>;
+export function getMyLogbookEntry(vars: GetMyLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
+export function getMyLogbookEntry(dc: DataConnect, vars: GetMyLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetMyLogbookEntryData, GetMyLogbookEntryVariables>;
 
-interface CreateFileRef {
+interface ListMyLogbookEntriesRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: CreateFileVariables): MutationRef<CreateFileData, CreateFileVariables>;
+  (vars: ListMyLogbookEntriesVariables): QueryRef<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: CreateFileVariables): MutationRef<CreateFileData, CreateFileVariables>;
+  (dc: DataConnect, vars: ListMyLogbookEntriesVariables): QueryRef<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
   operationName: string;
 }
-export const createFileRef: CreateFileRef;
+export const listMyLogbookEntriesRef: ListMyLogbookEntriesRef;
 
-export function createFile(vars: CreateFileVariables): MutationPromise<CreateFileData, CreateFileVariables>;
-export function createFile(dc: DataConnect, vars: CreateFileVariables): MutationPromise<CreateFileData, CreateFileVariables>;
+export function listMyLogbookEntries(vars: ListMyLogbookEntriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
+export function listMyLogbookEntries(dc: DataConnect, vars: ListMyLogbookEntriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListMyLogbookEntriesData, ListMyLogbookEntriesVariables>;
 
-interface AttachFileToLogbookEntryRef {
+interface CreateMyDailyLogbookRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: AttachFileToLogbookEntryVariables): MutationRef<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
+  (vars: CreateMyDailyLogbookVariables): MutationRef<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: AttachFileToLogbookEntryVariables): MutationRef<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
+  (dc: DataConnect, vars: CreateMyDailyLogbookVariables): MutationRef<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
   operationName: string;
 }
-export const attachFileToLogbookEntryRef: AttachFileToLogbookEntryRef;
+export const createMyDailyLogbookRef: CreateMyDailyLogbookRef;
 
-export function attachFileToLogbookEntry(vars: AttachFileToLogbookEntryVariables): MutationPromise<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
-export function attachFileToLogbookEntry(dc: DataConnect, vars: AttachFileToLogbookEntryVariables): MutationPromise<AttachFileToLogbookEntryData, AttachFileToLogbookEntryVariables>;
+export function createMyDailyLogbook(vars: CreateMyDailyLogbookVariables): MutationPromise<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
+export function createMyDailyLogbook(dc: DataConnect, vars: CreateMyDailyLogbookVariables): MutationPromise<CreateMyDailyLogbookData, CreateMyDailyLogbookVariables>;
 
-interface GetLogbookEntryRef {
+interface GetPatientLatestLogbookRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: GetLogbookEntryVariables): QueryRef<GetLogbookEntryData, GetLogbookEntryVariables>;
+  (vars: GetPatientLatestLogbookVariables): QueryRef<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: GetLogbookEntryVariables): QueryRef<GetLogbookEntryData, GetLogbookEntryVariables>;
+  (dc: DataConnect, vars: GetPatientLatestLogbookVariables): QueryRef<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
   operationName: string;
 }
-export const getLogbookEntryRef: GetLogbookEntryRef;
+export const getPatientLatestLogbookRef: GetPatientLatestLogbookRef;
 
-export function getLogbookEntry(vars: GetLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetLogbookEntryData, GetLogbookEntryVariables>;
-export function getLogbookEntry(dc: DataConnect, vars: GetLogbookEntryVariables, options?: ExecuteQueryOptions): QueryPromise<GetLogbookEntryData, GetLogbookEntryVariables>;
+export function getPatientLatestLogbook(vars: GetPatientLatestLogbookVariables, options?: ExecuteQueryOptions): QueryPromise<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
+export function getPatientLatestLogbook(dc: DataConnect, vars: GetPatientLatestLogbookVariables, options?: ExecuteQueryOptions): QueryPromise<GetPatientLatestLogbookData, GetPatientLatestLogbookVariables>;
 
-interface ListLogBookEntriesByPatientRef {
+interface ListPatientLogbookHistoryRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: ListLogBookEntriesByPatientVariables): QueryRef<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
+  (vars: ListPatientLogbookHistoryVariables): QueryRef<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: ListLogBookEntriesByPatientVariables): QueryRef<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
+  (dc: DataConnect, vars: ListPatientLogbookHistoryVariables): QueryRef<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
   operationName: string;
 }
-export const listLogBookEntriesByPatientRef: ListLogBookEntriesByPatientRef;
+export const listPatientLogbookHistoryRef: ListPatientLogbookHistoryRef;
 
-export function listLogBookEntriesByPatient(vars: ListLogBookEntriesByPatientVariables, options?: ExecuteQueryOptions): QueryPromise<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
-export function listLogBookEntriesByPatient(dc: DataConnect, vars: ListLogBookEntriesByPatientVariables, options?: ExecuteQueryOptions): QueryPromise<ListLogBookEntriesByPatientData, ListLogBookEntriesByPatientVariables>;
+export function listPatientLogbookHistory(vars: ListPatientLogbookHistoryVariables, options?: ExecuteQueryOptions): QueryPromise<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
+export function listPatientLogbookHistory(dc: DataConnect, vars: ListPatientLogbookHistoryVariables, options?: ExecuteQueryOptions): QueryPromise<ListPatientLogbookHistoryData, ListPatientLogbookHistoryVariables>;
+
+interface ListMissingDailyLogbooksRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListMissingDailyLogbooksVariables): QueryRef<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: ListMissingDailyLogbooksVariables): QueryRef<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
+  operationName: string;
+}
+export const listMissingDailyLogbooksRef: ListMissingDailyLogbooksRef;
+
+export function listMissingDailyLogbooks(vars: ListMissingDailyLogbooksVariables, options?: ExecuteQueryOptions): QueryPromise<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
+export function listMissingDailyLogbooks(dc: DataConnect, vars: ListMissingDailyLogbooksVariables, options?: ExecuteQueryOptions): QueryPromise<ListMissingDailyLogbooksData, ListMissingDailyLogbooksVariables>;
 
 interface CreateLogbookFileMetadataRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -1615,6 +1724,18 @@ export const createPatientRef: CreatePatientRef;
 export function createPatient(vars: CreatePatientVariables): MutationPromise<CreatePatientData, CreatePatientVariables>;
 export function createPatient(dc: DataConnect, vars: CreatePatientVariables): MutationPromise<CreatePatientData, CreatePatientVariables>;
 
+interface CreatePatientForStaffRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: CreatePatientForStaffVariables): MutationRef<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: CreatePatientForStaffVariables): MutationRef<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+  operationName: string;
+}
+export const createPatientForStaffRef: CreatePatientForStaffRef;
+
+export function createPatientForStaff(vars: CreatePatientForStaffVariables): MutationPromise<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+export function createPatientForStaff(dc: DataConnect, vars: CreatePatientForStaffVariables): MutationPromise<CreatePatientForStaffData, CreatePatientForStaffVariables>;
+
 interface GetPatientRef {
   /* Allow users to create refs without passing in DataConnect */
   (vars: GetPatientVariables): QueryRef<GetPatientData, GetPatientVariables>;
@@ -1638,6 +1759,18 @@ export const listPatientsRef: ListPatientsRef;
 
 export function listPatients(options?: ExecuteQueryOptions): QueryPromise<ListPatientsData, undefined>;
 export function listPatients(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListPatientsData, undefined>;
+
+interface GetMyPatientRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<GetMyPatientData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<GetMyPatientData, undefined>;
+  operationName: string;
+}
+export const getMyPatientRef: GetMyPatientRef;
+
+export function getMyPatient(options?: ExecuteQueryOptions): QueryPromise<GetMyPatientData, undefined>;
+export function getMyPatient(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetMyPatientData, undefined>;
 
 interface UpdatePatientRef {
   /* Allow users to create refs without passing in DataConnect */
