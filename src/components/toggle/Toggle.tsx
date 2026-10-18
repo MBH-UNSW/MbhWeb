@@ -23,8 +23,6 @@ export function ToggleSwitch({
       label={label}
       description={description}
       withThumbIndicator={false}
-      onLabel="ON"
-      offLabel="OFF"
       checked={checked}
       onChange={onChange}
       error={error}

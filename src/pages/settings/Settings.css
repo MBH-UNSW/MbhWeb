@@ -1,0 +1,60 @@
+
+Settings · CSS
+.settings-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xxxs);
+}
+ 
+.settings-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+  width: 100%;
+}
+ 
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+ 
+.settings-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xxxs);
+  margin-bottom: var(--mantine-spacing-md);
+}
+ 
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 32px);
+  padding-bottom: var(--mantine-spacing-sm);
+}
+ 
+.settings-row + .settings-row {
+  padding-top: var(--mantine-spacing-sm);
+  border-top: 1px solid var(--mantine-color-ubhNeutral-1);
+}
+ 
+.settings-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xxxs);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+ 
+.settings-toggle-control {
+  flex-shrink: 0;
+  transform: scale(1.35);
+  transform-origin: right center;
+}
+ 
+.settings-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}

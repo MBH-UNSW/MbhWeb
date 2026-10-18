@@ -7,6 +7,8 @@ import { Button } from '../../components/buttons/Button';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 type TimePeriod = 'morning' | 'afternoon' | 'evening' | 'night';
 type Status = 'good' | 'warning' | 'critical';
 
@@ -154,6 +156,8 @@ export default function DashboardPage() {
     notification => notificationFilter === 'all' || notification.category === notificationFilter,
   );
 
+  const navigate = useNavigate();
+
   return (
     <div className="page">
       <div className="dashboard-greeting">
@@ -171,7 +175,7 @@ export default function DashboardPage() {
               <span>Require Urgent Care</span>
             </Header6>
           </div>
-          <Button variant="default" size="sm" fullWidth>
+          <Button variant="default" size="sm" fullWidth onClick={() => navigate('/patients')}>
             Review Patients
           </Button>
         </div>
@@ -183,7 +187,7 @@ export default function DashboardPage() {
               <span>Tasks to Complete</span>
             </Header6>
           </div>
-          <Button variant="default" size="sm" fullWidth>
+          <Button variant="default" size="sm" fullWidth onClick={() => navigate('/appointments')}>
             View Tasks
           </Button>
         </div>
@@ -195,7 +199,7 @@ export default function DashboardPage() {
               <span>In Good Condition</span>
             </Header6>
           </div>
-          <Button variant="default" size="sm" fullWidth>
+          <Button variant="default" size="sm" fullWidth onClick={() => navigate('/patients')}>
             View Patients
           </Button>
         </div>

@@ -7,9 +7,10 @@
   gap: 10px;
   background: var(--mantine-color-ubhNeutral-0);
   border-radius: var(--mantine-radius-sm);
-  border: 1px solid var(--mantine-color-ubhNeutral-9);
-  padding: 26px 30px 22px;
+  /* border: 1px solid var(--mantine-color-ubhNeutral-9); */
+  padding: 26px 30px 32px;
   box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .profile-picture-details {
@@ -28,6 +29,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.profile-card h4 {
+  font-weight: var(--mantine-font-weight-semibold);
 }
 
 .profile-card h5 {
