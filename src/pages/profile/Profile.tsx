@@ -23,7 +23,7 @@ export default function ProfilePage() {
   const [position, setPosition] = useState('Registered Nurse'); // obv wouldnt exist for dr
   const [email, setEmail] = useState('asna.hassan@victorchang.com');
 
-  const idNumber = 888;
+  const idNumber = '888';
   const status: Status = 'online';
   const lastLogin = '18 Sep 2026, 9:42 PM';
 
