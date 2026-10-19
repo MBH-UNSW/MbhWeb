@@ -13,7 +13,7 @@ import { Loader, Modal } from '@mantine/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
  
-import { LayoutGrid, List as ListIcon, Plus, ChevronRight } from 'lucide-react';
+import { LayoutGrid, List as ListIcon, Plus, ChevronRight, X } from 'lucide-react';
  
 import {
   type PatientStatus,
@@ -202,7 +202,6 @@ export default function PatientsPage() {
             New Patient
           </Button>
         </div>
- 
         <div className="notification-filters">
           {statusFilters.map(({ value, label }) => (
             <Button
@@ -211,7 +210,10 @@ export default function PatientsPage() {
               size="xs"
               onClick={() => toggleStatusFilter(value)}
             >
-              {label}
+              <span className="status-filter-label">
+                {statusFilter === value && <X size={14} strokeWidth={2} />}
+                {label}
+              </span>
             </Button>
           ))}
         </div>
