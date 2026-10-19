@@ -1,4 +1,5 @@
 .live-sensor-chart {
+  --sensor-blue: #153e75;
   width: 100%;
   min-width: 0;
 }
@@ -14,14 +15,14 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--mantine-color-ubhNeutral-7);
+  color: #000;
   font-size: 11px;
 }
 .sensor-simulation-label > span {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--mantine-color-ubhNeutral-7);
+  background: #000;
 }
 .sensor-readouts {
   display: flex;
@@ -38,10 +39,10 @@
 .sensor-reading small {
   font-size: 12px;
   font-weight: 500;
-  color: var(--mantine-color-ubhNeutral-7);
+  color: #000;
 }
 .sensor-reading-blue {
-  color: var(--mantine-color-ubhBlue-6);
+  color: var(--sensor-blue);
 }
 .sensor-reading-red {
   color: var(--mantine-color-ubhRed-6);

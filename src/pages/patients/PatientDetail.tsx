@@ -709,6 +709,7 @@ export default function PatientDetailPage() {
           <Button
             key={tab.value}
             variant={getTabVariant(tab.value, activeTab)}
+            size="xs"
             onClick={() => setActiveTab(tab.value)}
           >
             {tab.label}
