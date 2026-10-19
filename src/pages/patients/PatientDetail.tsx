@@ -222,7 +222,7 @@ function getChartTitle(chart: ExpandedChart): string {
 // info icon --> draft idea, just gives nurses/clinicians a brief summary of what to identify at a glace.
 function getChartInfo(chart: 'flow' | 'pressure'): string {
   if (chart === 'pressure') {
-    return 'L/R pressures should remain in sync. Broading gap in L/R can signify desync or irregular pumping.';
+    return 'Left and right pressure should remain between 90-110 mmHg. Left pressure should always be above right. Significant dips or spikes can signify irregular pumping.';
   } else {
     return 'Flow rate should remain between 4-5 L/min. Significant dips or spikes can signify irregular pumping.';
   }
