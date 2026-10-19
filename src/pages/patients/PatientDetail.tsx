@@ -1,7 +1,7 @@
 import '../Page.css';
 import './PatientDetail.css';
-import { Header2, Header3, Header4 } from '../../components/typography/Header';
-import { Body1, Body2 } from '../../components/typography/Body';
+import { Header3, Header4 } from '../../components/typography/Header';
+import { Body1 } from '../../components/typography/Body';
 import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
 import { SearchBar } from '../../components/searchBar/SearchBar';
@@ -10,15 +10,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react'
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { LiveSensorChart } from '../../components/liveSensorChart/LiveSensorChart';
 
 import { Modal, Tooltip } from '@mantine/core';
 
@@ -30,44 +22,6 @@ type SortColumn = 'date' | 'weight' | 'systolic' | 'diastolic' | 'map' | 'inr';
 type SortDirection = 'asc' | 'desc';
 type ExpandedChart = 'flow' | 'pressure' | null;
 type VitalsFilter = 'all' | 'warning' | 'stable';
-
-interface SensorPlot {
-  x: number;
-  y: number;
-}
-
-interface PressurePlot {
-  x: number;
-  left: number;
-  right: number;
-}
-
-interface ChartPlot {
-  x: number;
-  y?: number;
-  left?: number;
-  right?: number;
-}
-
-interface GeneralInfo {
-  name: string;
-  patientId: string;
-  gender: string;
-  age: number;
-  dob: string;
-}
-
-interface MedicalInfo {
-  bloodType: string;
-  height: string;
-  allergies: string;
-}
-
-interface MedicareInfo {
-  cardNumber: string;
-  irn: string;
-  expiryDate: string;
-}
 
 interface DocumentEntry {
   id: number;
@@ -268,57 +222,9 @@ function getChartTitle(chart: ExpandedChart): string {
 // info icon --> draft idea, just gives nurses/clinicians a brief summary of what to identify at a glace.
 function getChartInfo(chart: 'flow' | 'pressure'): string {
   if (chart === 'pressure') {
-    return 'L/R pressures should remain in sync. Broading gap in L/R can signify desync or irregular pumping.';
+    return 'Left and right pressure should remain between 90-110 mmHg. Left pressure should always be above right. Significant dips or spikes can signify irregular pumping.';
   } else {
-    return 'Blood volume moved per minute. Watch for sudden drops or spikes.';
-  }
-}
-
-function getChartData(
-  chart: ExpandedChart,
-  flowRateData: SensorPlot[],
-  lrPressureData: PressurePlot[],
-): ChartPlot[] {
-  if (chart === 'pressure') {
-    return lrPressureData;
-  } else {
-    return flowRateData;
-  }
-}
-
-function getChartLines(chart: ExpandedChart) {
-  if (chart === 'pressure') {
-    return (
-      <>
-        <Line
-          type="monotone"
-          dataKey="left"
-          name="Left"
-          stroke="var(--mantine-color-ubhBlue-6)"
-          strokeWidth={2}
-          dot={{ r: 6, fill: 'var(--mantine-color-ubhBlue-6' }}
-        />
-        <Line
-          type="monotone"
-          dataKey="right"
-          name="Right"
-          stroke="var(--mantine-color-ubhRed-6)"
-          strokeWidth={2}
-          dot={{ r: 6, fill: 'var(--mantine-color-ubhRed-6)' }}
-        />
-      </>
-    );
-  } else {
-    return (
-      <Line
-        type="monotone"
-        dataKey="y"
-        name="Flow Rate"
-        stroke="var(--mantine-color-ubhBlue-6)"
-        strokeWidth={2}
-        dot={{ r: 6, fill: 'var(--mantine-color-ubhBlue-6)' }}
-      />
-    );
+    return 'Flow rate should remain between 4-5 L/min. Significant dips or spikes can signify irregular pumping.';
   }
 }
 
@@ -398,24 +304,7 @@ export default function PatientDetailPage() {
   const [activeTab, setActiveTab] = useState<DetailTab>('sensor');
   const [expandedChart, setExpandedChart] = useState<ExpandedChart>(null);
 
-  // mock bs data points
-  const flowRateData: SensorPlot[] = [
-    { x: 0.5, y: 58 },
-    { x: 1.0, y: 142 },
-    { x: 1.5, y: 208 },
-    { x: 2.0, y: 176 },
-    { x: 2.5, y: 96 },
-    { x: 3.0, y: 52 },
-  ];
-
-  const lrPressureData: PressurePlot[] = [
-    { x: 0.5, left: 42, right: 30 },
-    { x: 1.0, left: 118, right: 82 },
-    { x: 1.5, left: 176, right: 118 },
-    { x: 2.0, left: 150, right: 92 },
-    { x: 2.5, left: 82, right: 56 },
-    { x: 3.0, left: 46, right: 34 },
-  ];
+  const [sensorStartedAt] = useState(() => performance.now());
 
   const vitalsLog: VitalsEntry[] = [
     { id: 1, date: '06/03/23 at 8:25 AM', weight: 71.5, systolic: 122, diastolic: 78, inr: 2.6 },
@@ -540,23 +429,7 @@ export default function PatientDetailPage() {
           </div>
 
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={flowRateData} margin={{ top: 10, right: 40, left: 0, bottom: 0 }}>
-                <CartesianGrid stroke="var(--mantine-color-ubhNeutral-3)" strokeDasharray="3 3" />
-
-                <XAxis dataKey="x" stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
-
-                <YAxis stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
-
-                <Line
-                  type="monotone"
-                  dataKey="y"
-                  stroke="var(--mantine-color-ubhBlue-6)"
-                  strokeWidth={2}
-                  dot={{ r: 5, fill: 'var(--mantine-color-ubhBlue-6)' }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <LiveSensorChart kind="flow" startedAt={sensorStartedAt} />
           </div>
         </div>
 
@@ -577,33 +450,7 @@ export default function PatientDetailPage() {
           </div>
 
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={lrPressureData} margin={{ top: 10, right: 40, left: 0, bottom: 0 }}>
-                <CartesianGrid stroke="var(--mantine-color-ubhNeutral-3)" strokeDasharray="3 3" />
-
-                <XAxis dataKey="x" stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
-
-                <YAxis stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
-
-                <Legend position="bottom" wrapperStyle={{ paddingTop: 12, paddingLeft: 36 }} />
-                <Line
-                  type="monotone"
-                  dataKey="left"
-                  name="Left"
-                  stroke="var(--mantine-color-ubhBlue-6)"
-                  strokeWidth={2}
-                  dot={{ r: 5, fill: 'var(--mantine-color-ubhBlue-6)' }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="right"
-                  name="Right"
-                  stroke="var(--mantine-color-ubhRed-6)"
-                  strokeWidth={2}
-                  dot={{ r: 5, fill: 'var(--mantine-color-ubhRed-6)' }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <LiveSensorChart kind="pressure" startedAt={sensorStartedAt} />
           </div>
         </div>
       </div>
@@ -890,18 +737,9 @@ export default function PatientDetailPage() {
         padding="xl"
       >
         <div className="chart-wrapper expanded-chart">
-          <ResponsiveContainer width="100%" height={500}>
-            <LineChart
-              data={getChartData(expandedChart, flowRateData, lrPressureData)}
-              margin={{ top: 10, right: 40, left: 0, bottom: 0 }}
-            >
-              <CartesianGrid stroke="var(--mantine-color-ubhNeutral-3)" strokeDasharray="3 3" />
-              <XAxis dataKey="x" stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
-              <YAxis stroke="var(--mantine-color-ubhNeutral-8)" fontSize={12} />
-              <Legend position="bottom" wrapperStyle={{ paddingTop: 16, paddingLeft: 48 }} />
-              {getChartLines(expandedChart)}
-            </LineChart>
-          </ResponsiveContainer>
+          {expandedChart && (
+            <LiveSensorChart kind={expandedChart} startedAt={sensorStartedAt} expanded />
+          )}
         </div>
       </Modal>
     </div>
