@@ -35,7 +35,13 @@ const statusFilters: { value: PatientStatus; label: string }[] = [
   { value: 'Warning', label: 'Warning' },
   { value: 'Stable', label: 'Stable' },
 ];
- 
+
+const statusPriority: Record<PatientStatus, number> = {
+  Unstable: 0,
+  Warning: 1,
+  Stable: 2,
+};
+
 //  change function name to getStatus
 function getStatusClass(status: PatientStatus) {
   if (status === 'Unstable') {
@@ -53,31 +59,18 @@ export default function PatientsPage() {
   const { patients, isLoading, error } = usePatients();
  
   console.log('Current user:', auth.currentUser);
- 
-  // // some mock bs.. (backend tba)
-  // const patients: Patient[] = [
-  //   { id: 1, name: 'Emaan Khurram', patientId: 'M104933', status: 'Unstable' },
-  //   { id: 2, name: 'Avish Reddy', patientId: 'M937927', status: 'Unstable' },
-  //   { id: 3, name: 'Asna Hassan', patientId: 'M104223', status: 'Stable' },
-  //   { id: 4, name: 'Ansh Rawat', patientId: 'M104000', status: 'Warning' },
-  //   { id: 5, name: 'Denzel Iskandar', patientId: 'M504948', status: 'Stable' },
-  //   { id: 6, name: 'Fareed Farooqi', patientId: 'M402933', status: 'Stable' },
-  //   { id: 7, name: 'Parth Shrivastava', patientId: 'M1149571', status: 'Unstable' },
-  //   { id: 8, name: 'Lipda Chantayasakorn', patientId: 'M926484', status: 'Warning' },
-  //   { id: 9, name: 'Jade Kim', patientId: 'M353213', status: 'Unstable' },
-  // ];
- 
+
   const [view, setView] = useState<ViewMode>('grid');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
  
-  const filteredPatients = patients.filter(patient => {
+  const filteredPatients = patients
+  .filter(patient => {
     const matchesSearch = patient.name.toLowerCase().includes(search.toLowerCase());
- 
     const matchesStatus = statusFilter === 'all' || patient.status === statusFilter;
- 
     return matchesSearch && matchesStatus;
-  });
+  })
+  .sort((a, b) => statusPriority[a.status] - statusPriority[b.status]);
  
   const patientCardOnClick = (patient: PatientSummary) => {
     navigate(`/patients/${patient.pid}`);

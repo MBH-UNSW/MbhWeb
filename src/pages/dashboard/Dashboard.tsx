@@ -2,7 +2,7 @@
 import '../Page.css';
 import './Dashboard.css';
 import { HeartPulse, ListChecks, HeartHandshake } from 'lucide-react';
-import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
+import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
 import { Button } from '../../components/buttons/Button';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { useState } from 'react';
@@ -46,29 +46,29 @@ function getTimeOfDay(): TimePeriod {
   }
 }
 
-function getStatus(value: number, total: number, goal: 'low' | 'high'): Status {
-  if (total === 0) {
-    return 'good';
-  }
-  const percentage = value / total;
-  if (goal === 'low') {
-    if (percentage >= 0.75) {
-      return 'critical';
-    } else if (percentage >= 0.25) {
-      return 'warning';
-    } else {
-      return 'good';
-    }
-  }
-  // if the goal is higher
-  if (percentage >= 0.75) {
-    return 'good';
-  } else if (percentage >= 0.5) {
-    return 'warning';
-  } else {
-    return 'critical';
-  }
-}
+// function getStatus(value: number, total: number, goal: 'low' | 'high'): Status {
+//   if (total === 0) {
+//     return 'good';
+//   }
+//   const percentage = value / total;
+//   if (goal === 'low') {
+//     if (percentage >= 0.75) {
+//       return 'critical';
+//     } else if (percentage >= 0.25) {
+//       return 'warning';
+//     } else {
+//       return 'good';
+//     }
+//   }
+//   // if the goal is higher
+//   if (percentage >= 0.75) {
+//     return 'good';
+//   } else if (percentage >= 0.5) {
+//     return 'warning';
+//   } else {
+//     return 'critical';
+//   }
+// }
 
 function getTaskStatus(uncompleted: number, overdue: number): Status {
   if (overdue > 0) {
@@ -83,7 +83,6 @@ function getTaskStatus(uncompleted: number, overdue: number): Status {
 export default function DashboardPage() {
   // filler for backend functions later !!!
   const timePeriod = getTimeOfDay();
-  const user = 'Dr. Asna';
   const totalPatients = 25;
   const needUrgentCare = 3;
   const inGoodCondition = 12;
@@ -174,7 +173,7 @@ export default function DashboardPage() {
         <Header6>You currently have {totalPatients} patients under your care.</Header6>
       </div> */}
       <div className="dashboard-greeting">
-        <Header3>
+        <Header2>
           Good {timePeriod},{' '}
           <span className="greeting">
             {isLoading
@@ -183,7 +182,7 @@ export default function DashboardPage() {
                 ? `Dr. ${clinician.firstName}!`
                 : 'Welcome!'}
           </span>
-        </Header3>
+        </Header2>
 
         {error && <Body2>{error}</Body2>}
 
