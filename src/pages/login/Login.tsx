@@ -11,8 +11,6 @@ import { Button } from '../../components/buttons/Button';
 import { auth } from '../../firebase/client';
 import { useAuth } from '../../auth/useAuth';
 
-// Replace these placeholders with credentials for a dedicated demo account.
-// These values are visible in the browser, so never use a real staff account.
 const NURSE_DEMO_EMAIL = 'clinician2@ubh.com.au';
 const NURSE_DEMO_PASSWORD = 'clinician';
 
