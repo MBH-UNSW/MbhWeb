@@ -117,6 +117,29 @@
   color: var(--mantine-color-ubhNeutral-8);
 }
 
+.conversation-status-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mantine-color-ubhNeutral-8);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-regular);
+}
+
+.conversation-status-divider::before, .conversation-status-divider::after {
+  content: '';
+  width: 5vh;
+  border: 0.5px solid var(--mantine-color-ubhNeutral-7);
+}
+
+.conversation-status-divider::before {
+  margin-right: 5px;
+}
+
+.conversation-status-divider::after {
+  margin-left: 5px;
+}
+
 .conversation-footer-wrapper {
   display: flex;
   align-items: center;
