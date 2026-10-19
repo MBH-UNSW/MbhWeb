@@ -51,7 +51,7 @@
 
 .info-icon {
   cursor: help;
-  color: var(--mantine-color-ubhNeutral-7);
+  color: #000;
 }
 
 .chart-wrapper {

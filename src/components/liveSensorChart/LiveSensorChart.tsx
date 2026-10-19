@@ -29,20 +29,20 @@ export function LiveSensorChart({ kind, startedAt, expanded = false }: Props) {
     const styles = getComputedStyle(canvas);
     const color = (name: string, fallback: string) =>
       styles.getPropertyValue(`--mantine-color-${name}`).trim() || fallback;
-    const blue = color('ubhBlue-6', '#2f6fd6');
+    const blue = styles.getPropertyValue('--sensor-blue').trim() || '#153e75';
     const red = color('ubhRed-6', '#b5302f');
     const grid = color('ubhNeutral-3', '#dee2e6');
-    const axis = color('ubhNeutral-7', '#6b7280');
+    const axis = '#000';
 
     function draw(now: number) {
       if (!ctx || width <= 0 || height <= 0) return;
       const elapsed = Math.max(0, (now - startedAt) / 1000);
       const end = Math.max(WINDOW_SECONDS, elapsed);
       const start = end - WINDOW_SECONDS;
-      const left = 38;
+      const left = 64;
       const top = 12;
       const plotWidth = width - left - 12;
-      const plotHeight = height - top - 30;
+      const plotHeight = height - top - 48;
       if (plotWidth <= 0 || plotHeight <= 0) return;
       const min = kind === 'flow' ? 4 : 90;
       const max = kind === 'flow' ? 5 : 110;
@@ -89,6 +89,16 @@ export function LiveSensorChart({ kind, startedAt, expanded = false }: Props) {
       ctx.lineTo(left, top + plotHeight);
       ctx.lineTo(left + plotWidth, top + plotHeight);
       ctx.stroke();
+
+      ctx.save();
+      ctx.font = '12px Inter, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Time (s)', left + plotWidth / 2, height - 8);
+      ctx.translate(12, top + plotHeight / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText(kind === 'flow' ? 'Flow rate (L/min)' : 'Pressure (mmHg)', 0, 0);
+      ctx.restore();
 
       ctx.save();
       ctx.beginPath();
