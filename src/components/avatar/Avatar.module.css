@@ -2,6 +2,7 @@
   background-color: var(--mantine-color-ubhNeutral-3);
   border-radius: 50%;
   color: var(--mantine-color-ubhNeutral-9);
+  border: 1px solid var(--mantine-color-ubhNeutral-9);
 }
 
 .placeholder {

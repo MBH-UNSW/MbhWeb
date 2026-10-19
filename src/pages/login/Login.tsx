@@ -11,6 +11,9 @@ import { Button } from '../../components/buttons/Button';
 import { auth } from '../../firebase/client';
 import { useAuth } from '../../auth/useAuth';
 
+const NURSE_DEMO_EMAIL = 'clinician2@ubh.com.au';
+const NURSE_DEMO_PASSWORD = 'clinician';
+
 function getAuthErrorMessage(error: unknown) {
   if (!(error instanceof FirebaseError)) {
     return 'Something went wrong. Please try again.';
@@ -38,8 +41,8 @@ function getAuthErrorMessage(error: unknown) {
 export default function LoginPage() {
   const navigate = useNavigate();
   const { user, loading, profile, role, accessError } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(NURSE_DEMO_EMAIL);
+  const [password, setPassword] = useState(NURSE_DEMO_PASSWORD);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
   const [emailError, setEmailError] = useState<string>();
