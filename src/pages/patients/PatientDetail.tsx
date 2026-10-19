@@ -228,9 +228,20 @@ function getChartInfo(chart: 'flow' | 'pressure'): string {
   }
 }
 
+function parseLogbookDate(value: string): number {
+  const [datePart, timePart] = value.split(' at ');
+  const [day, month, year] = datePart.split('/').map(Number);
+  const [time, period] = timePart.split(' ');
+  const [hour, minute] = time.split(':').map(Number);
+
+  const hour24 = (hour % 12) + (period.toUpperCase() === 'PM' ? 12 : 0);
+
+  return new Date(2000 + year, month - 1, day, hour24, minute).getTime();
+}
+
 function compareEntries(a: VitalsEntry, b: VitalsEntry, column: SortColumn) {
   if (column === 'date') {
-    return a.date.localeCompare(b.date);
+    return parseLogbookDate(a.date) - parseLogbookDate(b.date);
   } else if (column === 'weight') {
     return a.weight - b.weight;
   } else if (column === 'systolic') {
@@ -338,8 +349,8 @@ export default function PatientDetailPage() {
   const [logbookSearch, setLogbookSearch] = useState('');
   const [vitalsFilter, setVitalsFilter] = useState<VitalsFilter>('all');
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [sortColumn, setSortColumn] = useState<SortColumn | null>(null);
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [sortColumn, setSortColumn] = useState<SortColumn | null>('date');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   const handleSort = (column: SortColumn) => {
     if (sortColumn === column) {

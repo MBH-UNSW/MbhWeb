@@ -260,3 +260,13 @@
   flex: 1;
   min-width: 240px;
 }
+
+.logbook-table th svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+.logbook-table .status-pill {
+  border: none;
+}
