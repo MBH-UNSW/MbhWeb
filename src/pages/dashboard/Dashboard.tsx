@@ -18,7 +18,7 @@ interface Notification {
   id: number;
   category: NotificationCategory;
   patientName: string;
-  patientId: string;
+  patientCode: string | null;
   message: string;
   time: string;
 }
@@ -97,7 +97,7 @@ export default function DashboardPage() {
       id: 1,
       category: 'checkup',
       patientName: 'Bob Smith',
-      patientId: '75311093',
+      patientCode: 'UBH0001',
       message: 'Follow-up check-up due in two days',
       time: '10:00 am · 1 Sep 2026',
     },
@@ -105,7 +105,7 @@ export default function DashboardPage() {
       id: 2,
       category: 'update',
       patientName: 'Jane Doe',
-      patientId: '88733825',
+      patientCode: 'UBH0002',
       message: 'New device readings available',
       time: '5:15 pm · 30 Aug 2026',
     },
@@ -113,7 +113,7 @@ export default function DashboardPage() {
       id: 3,
       category: 'critical',
       patientName: 'John Doe',
-      patientId: '67999018',
+      patientCode: 'UBH0003',
       message: 'Low heart rate detected',
       time: '12:35 pm · 26 Aug 2026',
     },
@@ -121,7 +121,7 @@ export default function DashboardPage() {
       id: 4,
       category: 'critical',
       patientName: 'John Doe',
-      patientId: '67999018',
+      patientCode: 'UBH0003',
       message: 'Abnormal flow rate detected',
       time: '12:30 pm · 26 Aug 2026',
     },
@@ -129,7 +129,7 @@ export default function DashboardPage() {
       id: 5,
       category: 'critical',
       patientName: 'Jane Doe',
-      patientId: '88733825',
+      patientCode: 'UBH0002',
       message: 'Low flow rate detected',
       time: '2:03 am · 20 Aug 2026',
     },
@@ -137,7 +137,7 @@ export default function DashboardPage() {
       id: 6,
       category: 'critical',
       patientName: 'David Bowie',
-      patientId: '19470801',
+      patientCode: 'UBH0004',
       message: 'Device battery is low',
       time: '7:49 pm · 18 Aug 2026',
     },
@@ -145,7 +145,7 @@ export default function DashboardPage() {
       id: 7,
       category: 'task',
       patientName: 'Marc Bolan',
-      patientId: '19473009',
+      patientCode: 'UBH0005',
       message: 'Review uploaded driveline image',
       time: '10:08 am · 16 Aug 2026',
     },
@@ -222,7 +222,7 @@ export default function DashboardPage() {
           {filteredNotifications.map(notification => (
             <div className="dashboard-patient-card" key={notification.id}>
               <Header6>
-                {notification.patientName} | ID: {notification.patientId}
+                {notification.patientName} | Patient ID: {notification.patientCode ?? 'Pending'}
               </Header6>
               <div className="dashboard-patient-card-info">
                 <Body1>{notification.message}</Body1>

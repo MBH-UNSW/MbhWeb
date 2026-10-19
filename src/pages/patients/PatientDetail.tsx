@@ -639,7 +639,7 @@ export default function PatientDetailPage() {
                   {patient.firstName} {patient.lastName}
                 </Header3>
                 <Body1>
-                  <strong>Patient ID:</strong> {patient.pid}
+                  <strong>Patient ID:</strong> {patient.patientCode ?? 'Pending'}
                 </Body1>
               </div>
             </div>
@@ -700,7 +700,7 @@ export default function PatientDetailPage() {
       <div className="detail-header">
         <IconButton icon={ArrowLeft} variant="text" onClick={() => navigate('/patients')} />
         <Header3>
-          Patient ID: <span className="patient-id-accent">{patientId}</span>
+          Patient ID: <span className="patient-id-accent">{patient?.patientCode ?? 'Pending'}</span>
         </Header3>
       </div>
 

@@ -4,10 +4,13 @@ import {
   type GetPatientData,
   type ListPatientsData,
 } from '@mbh/dataconnect';
+import { httpsCallable } from 'firebase/functions';
+import { functions } from '../firebase/client';
 
 export type PatientStatus = 'Stable' | 'Warning' | 'Unstable';
 
-type DataConnectPatient = ListPatientsData['patients'][number];
+type PatientCodeField = { patientCode?: string | null };
+type DataConnectPatient = ListPatientsData['patients'][number] & PatientCodeField;
 
 export interface PatientSummary {
   pid: string;
@@ -16,7 +19,13 @@ export interface PatientSummary {
   status: PatientStatus;
 }
 
-export type PatientDetails = NonNullable<GetPatientData['patient']>;
+// The local generated SDK predates the patientCode field.
+export type PatientDetails = NonNullable<GetPatientData['patient']> & PatientCodeField;
+
+const getPatientDisplayCode = httpsCallable<
+  { pid: string },
+  { pid: string; patientCode: string }
+>(functions, 'getPatientDisplayCode');
 
 function formatStatus(status: string): PatientStatus {
   switch (status.toUpperCase()) {
@@ -29,14 +38,25 @@ function formatStatus(status: string): PatientStatus {
   }
 }
 
-function formatPatientId(pid: string): string {
-  return `P-${pid.slice(0, 8).toUpperCase()}`;
+async function resolvePatientCode(patient: { pid: string } & PatientCodeField): Promise<string | null> {
+  if (patient.patientCode) return patient.patientCode;
+
+  try {
+    const { data } = await getPatientDisplayCode({ pid: patient.pid });
+    if (data.pid !== patient.pid || !data.patientCode) {
+      throw new Error('Invalid patient code response.');
+    }
+    return data.patientCode;
+  } catch (error) {
+    console.warn('Unable to load patient code.', error);
+    return null;
+  }
 }
 
-function toPatientSummary(patient: DataConnectPatient): PatientSummary {
+async function toPatientSummary(patient: DataConnectPatient): Promise<PatientSummary> {
   return {
     pid: patient.pid,
-    displayId: formatPatientId(patient.pid),
+    displayId: (await resolvePatientCode(patient)) ?? 'Pending',
     name: `${patient.firstName} ${patient.lastName}`,
     status: formatStatus(patient.status),
   };
@@ -45,7 +65,7 @@ function toPatientSummary(patient: DataConnectPatient): PatientSummary {
 export async function fetchPatients(): Promise<PatientSummary[]> {
   const result = await listPatients();
 
-  return result.data.patients.map(toPatientSummary);
+  return Promise.all(result.data.patients.map(toPatientSummary));
 }
 
 export async function fetchPatient(pid: string): Promise<PatientDetails> {
@@ -55,5 +75,6 @@ export async function fetchPatient(pid: string): Promise<PatientDetails> {
     throw new Error('Patient not found.');
   }
 
-  return result.data.patient;
+  const patient: PatientDetails = result.data.patient;
+  return { ...patient, patientCode: await resolvePatientCode(patient) };
 }

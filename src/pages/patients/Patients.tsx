@@ -132,7 +132,7 @@ export default function PatientsPage() {
           >
             <div>
               <Header6>{patient.name}</Header6>
-              <Body2>{patient.displayId}</Body2>
+              <Body2>Patient ID: {patient.displayId}</Body2>
             </div>
  
             <div className="patient-tile-footer">
@@ -153,9 +153,10 @@ export default function PatientsPage() {
             onClick={() => patientCardOnClick(patient)}
           >
             <div className="patient-card-info">
-              <Body1>
-                {patient.name} | ID: {patient.displayId}
-              </Body1>
+              <div>
+                <Body1>{patient.name}</Body1>
+                <Body2>Patient ID: {patient.displayId}</Body2>
+              </div>
  
               <div className="patient-card-status">
                 <Body2 bold>{patient.status}</Body2>
