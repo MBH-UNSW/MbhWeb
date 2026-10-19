@@ -23,7 +23,7 @@ function getPillColour(label?: string) {
   if (label === 'General Question') {
     return 'var(--gen-pill-fill)';
   }
-  return 'var(--mantine-color-neutral-6)';
+  return 'var(--mantine-color-ubhNeutral-6)';
 }
 
 function setLabelSize(size: PillSize) {

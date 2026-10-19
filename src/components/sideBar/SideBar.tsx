@@ -1,4 +1,6 @@
 import classes from './SideBar.module.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/client';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
   House,
@@ -10,27 +12,33 @@ import {
   LogOut,
 } from 'lucide-react';
 import { /*Logo,*/ FullLogo } from '../icons/Logo';
+import { useAuth } from '../../auth/useAuth';
 
-const tabs = {
-  nurse: [{ link: '/messages', label: 'Messages', icon: MessageSquare }],
-  general: [
-    { link: '/home', label: 'Dashboard', icon: House },
-    { link: '/patients', label: 'Patients', icon: SquareActivity },
-    { link: '/appointments', label: 'Appointments', icon: Calendar },
-    { link: '/profile', label: 'Profile', icon: UserRound },
-    { link: '/settings', label: 'Settings', icon: Settings },
-  ],
-};
+const allTabs = [
+  { link: '/home', label: 'Dashboard', icon: House, roles: ['nurse', 'clinician'] },
+  { link: '/patients', label: 'Patients', icon: SquareActivity, roles: ['nurse', 'clinician'] },
+  { link: '/appointments', label: 'Appointments', icon: Calendar, roles: ['nurse', 'clinician'] },
+  { link: '/profile', label: 'Profile', icon: UserRound, roles: ['nurse', 'clinician'] },
+  { link: '/messages', label: 'Messages', icon: MessageSquare, roles: ['nurse'] },
+  { link: '/settings', label: 'Settings', icon: Settings, roles: ['nurse', 'clinician'] },
+];
 
 export function SideBar() {
   const location = useLocation();
   const navigate = useNavigate();
-  function handleLogout() {
-    localStorage.removeItem('session');
-    navigate('/');
+  async function handleLogout() {
+    try {
+      await signOut(auth);
+      navigate('/login');
+    } catch (error) {
+      console.error('Unable to sign out', error);
+    }
   }
 
-  const links = tabs.general.map(item => {
+  const role = useAuth().role!;
+  const allowedTabs = allTabs.filter(t => t.roles.includes(role));
+
+  const links = allowedTabs.map(item => {
     const Icon = item.icon;
     const isActive = location.pathname === item.link;
 

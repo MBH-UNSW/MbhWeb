@@ -11,6 +11,8 @@ import ProfilePage from './pages/profile/Profile';
 import SettingsPage from './pages/settings/Settings';
 import { PageTitle } from './components/pageTitle/PageTitle';
 import { ProtectedRoute } from './pages/ProtectedRoute';
+import MessagesPage from './pages/messages/Messages';
+import ConversationPage from './pages/messages/Conversation';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             <Route path="/patients/:patientId" element={<PatientDetail />} />
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/messages" element={<MessagesPage />} />
+            <Route path="/messages/:conversationId" element={<ConversationPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
         </Route>
