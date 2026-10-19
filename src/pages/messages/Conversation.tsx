@@ -110,7 +110,7 @@ export default function ConversationPage() {
             </div>
           ))}
         </div>
-        <div className="conversation-footer-wrapper">
+        <div className={`conversation-footer-wrapper ${conversation.assigneeId}`}>
           <IconButton icon={Paperclip} variant="outlined"></IconButton>
           <Button variant="outlined">Mark as resolved</Button>
           <Input placeholder="Send a message" variant="single-line"></Input>

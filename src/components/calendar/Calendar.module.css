@@ -1,0 +1,81 @@
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  margin-bottom: 12px;
+}
+
+.calendarHeaderControl {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-color-ubhNeutral-9);
+}
+
+.calendarHeaderControl:hover {
+  color: var(--mantine-color-ubhRed-9);
+}
+
+.calendarHeaderControl:active {
+  color: var(--mantine-color-ubhRed-4);
+}
+
+.calendarHeaderControlIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.calendarHeaderLevel {
+  font-size: var(--mantine-font-size-xl);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-ubhNeutral-9);
+  pointer-events: none;
+}
+
+.weekday {
+  text-align: center;
+  padding-bottom: 2.5px;
+  color: var(--mantine-color-ubhNeutral-7);
+  font-weight: var(--mantine-font-weight-semibold);
+  /* text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px; */
+}
+
+.month {
+  width: 100%;
+  min-height: 320px;
+  height: auto;
+  table-layout: fixed;
+}
+
+.day {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mantine-radius-sm);
+  background-color: var(--mantine-color-ubhNeutral-0);
+  color: var(--mantine-color-ubhNeutral-9);
+  transition: background-color 0.15s ease;
+}
+
+.day:hover {
+  background-color: var(--mantine-color-ubhNeutral-2);
+}
+
+.day[data-selected] {
+  font-weight: var(--mantine-font-weight-semibold);
+  background-color: var(--mantine-color-ubhRed-7);
+  color: var(--mantine-color-ubhNeutral-0);
+}
+
+.day[data-outside] {
+  background-color: var(--mantine-color-ubhNeutral-1);
+  color: var(--mantine-color-ubhNeutral-3);
+}

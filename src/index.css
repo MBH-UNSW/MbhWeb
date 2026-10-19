@@ -28,6 +28,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --sidebar-width: clamp(240px, 18vw, 320px);
+	--sidebar-logo-width: clamp(150px, 9vw, 170px);
+  --schedule-panel-width: clamp(360px, 30vw, 420px);
 }
 
 #root {

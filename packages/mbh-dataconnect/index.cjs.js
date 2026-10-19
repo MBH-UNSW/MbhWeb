@@ -168,75 +168,92 @@ exports.listHeartsByPatient = function listHeartsByPatient(dcOrVars, varsOrOptio
 }
 ;
 
-const createLogbookEntryRef = (dcOrVars, vars) => {
+const getMyLogbookEntryRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'CreateLogbookEntry', inputVars);
+  return queryRef(dcInstance, 'GetMyLogbookEntry', inputVars);
 }
-createLogbookEntryRef.operationName = 'CreateLogbookEntry';
-exports.createLogbookEntryRef = createLogbookEntryRef;
+getMyLogbookEntryRef.operationName = 'GetMyLogbookEntry';
+exports.getMyLogbookEntryRef = getMyLogbookEntryRef;
 
-exports.createLogbookEntry = function createLogbookEntry(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(createLogbookEntryRef(dcInstance, inputVars));
-}
-;
-
-const createFileRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'CreateFile', inputVars);
-}
-createFileRef.operationName = 'CreateFile';
-exports.createFileRef = createFileRef;
-
-exports.createFile = function createFile(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(createFileRef(dcInstance, inputVars));
-}
-;
-
-const attachFileToLogbookEntryRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'AttachFileToLogbookEntry', inputVars);
-}
-attachFileToLogbookEntryRef.operationName = 'AttachFileToLogbookEntry';
-exports.attachFileToLogbookEntryRef = attachFileToLogbookEntryRef;
-
-exports.attachFileToLogbookEntry = function attachFileToLogbookEntry(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(attachFileToLogbookEntryRef(dcInstance, inputVars));
-}
-;
-
-const getLogbookEntryRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'GetLogbookEntry', inputVars);
-}
-getLogbookEntryRef.operationName = 'GetLogbookEntry';
-exports.getLogbookEntryRef = getLogbookEntryRef;
-
-exports.getLogbookEntry = function getLogbookEntry(dcOrVars, varsOrOptions, options) {
+exports.getMyLogbookEntry = function getMyLogbookEntry(dcOrVars, varsOrOptions, options) {
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
-  return executeQuery(getLogbookEntryRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+  return executeQuery(getMyLogbookEntryRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 ;
 
-const listLogBookEntriesByPatientRef = (dcOrVars, vars) => {
+const listMyLogbookEntriesRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'ListLogBookEntriesByPatient', inputVars);
+  return queryRef(dcInstance, 'ListMyLogbookEntries', inputVars);
 }
-listLogBookEntriesByPatientRef.operationName = 'ListLogBookEntriesByPatient';
-exports.listLogBookEntriesByPatientRef = listLogBookEntriesByPatientRef;
+listMyLogbookEntriesRef.operationName = 'ListMyLogbookEntries';
+exports.listMyLogbookEntriesRef = listMyLogbookEntriesRef;
 
-exports.listLogBookEntriesByPatient = function listLogBookEntriesByPatient(dcOrVars, varsOrOptions, options) {
+exports.listMyLogbookEntries = function listMyLogbookEntries(dcOrVars, varsOrOptions, options) {
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
-  return executeQuery(listLogBookEntriesByPatientRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+  return executeQuery(listMyLogbookEntriesRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+;
+
+const createMyDailyLogbookRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'CreateMyDailyLogbook', inputVars);
+}
+createMyDailyLogbookRef.operationName = 'CreateMyDailyLogbook';
+exports.createMyDailyLogbookRef = createMyDailyLogbookRef;
+
+exports.createMyDailyLogbook = function createMyDailyLogbook(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(createMyDailyLogbookRef(dcInstance, inputVars));
+}
+;
+
+const getPatientLatestLogbookRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'GetPatientLatestLogbook', inputVars);
+}
+getPatientLatestLogbookRef.operationName = 'GetPatientLatestLogbook';
+exports.getPatientLatestLogbookRef = getPatientLatestLogbookRef;
+
+exports.getPatientLatestLogbook = function getPatientLatestLogbook(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(getPatientLatestLogbookRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+;
+
+const listPatientLogbookHistoryRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'ListPatientLogbookHistory', inputVars);
+}
+listPatientLogbookHistoryRef.operationName = 'ListPatientLogbookHistory';
+exports.listPatientLogbookHistoryRef = listPatientLogbookHistoryRef;
+
+exports.listPatientLogbookHistory = function listPatientLogbookHistory(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(listPatientLogbookHistoryRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+;
+
+const listMissingDailyLogbooksRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'ListMissingDailyLogbooks', inputVars);
+}
+listMissingDailyLogbooksRef.operationName = 'ListMissingDailyLogbooks';
+exports.listMissingDailyLogbooksRef = listMissingDailyLogbooksRef;
+
+exports.listMissingDailyLogbooks = function listMissingDailyLogbooks(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(listMissingDailyLogbooksRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 ;
 
@@ -725,6 +742,20 @@ exports.createPatient = function createPatient(dcOrVars, vars) {
 }
 ;
 
+const createPatientForStaffRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'CreatePatientForStaff', inputVars);
+}
+createPatientForStaffRef.operationName = 'CreatePatientForStaff';
+exports.createPatientForStaffRef = createPatientForStaffRef;
+
+exports.createPatientForStaff = function createPatientForStaff(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(createPatientForStaffRef(dcInstance, inputVars));
+}
+;
+
 const getPatientRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
@@ -752,6 +783,21 @@ exports.listPatients = function listPatients(dcOrOptions, options) {
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
   return executeQuery(listPatientsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+;
+
+const getMyPatientRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'GetMyPatient');
+}
+getMyPatientRef.operationName = 'GetMyPatient';
+exports.getMyPatientRef = getMyPatientRef;
+
+exports.getMyPatient = function getMyPatient(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(getMyPatientRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 ;
 

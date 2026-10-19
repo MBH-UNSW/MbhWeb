@@ -50,7 +50,7 @@ export function SideBar() {
   return (
     <nav className={classes.sideBar}>
       <div className={classes.header}>
-        <FullLogo width={200} />
+        <FullLogo width={150} />
       </div>
 
       <div className={classes.divider} />

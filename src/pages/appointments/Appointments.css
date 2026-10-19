@@ -1,0 +1,265 @@
+.appointments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-md);
+}
+
+.page.appointments-page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.appointments-layout {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1100px) {
+  .appointments-main {
+    margin-right: 0;
+  }
+}
+
+.appointments-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: var(--mantine-spacing-md);
+  margin-right: var(--schedule-panel-width);
+}
+
+.today-summary-card {
+  flex-shrink: 0;
+  display: flex;
+  /* align-items: center; */
+  gap: var(--mantine-spacing-md);
+}
+
+.today-summary-card button {
+  height: 48px;
+}
+
+.today-summary-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.calendar-card {
+  flex-shrink: 0;
+  align-self: center;
+  width: 100%;
+  max-width: min(640px, 60vh);
+  padding-top: clamp(16px, 3vw, 30px);
+  gap: var(--mantine-spacing-md);
+  box-shadow: 0 12px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* .schedule-panel p {
+  color: var(--mantine-color-ubhNeutral-7);
+} */
+
+.schedule-panel h4 {
+  margin-top: -10px;
+}
+
+.schedule-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--schedule-panel-width);
+  height: 100vh;
+  max-height: none;
+  gap: var(--mantine-spacing-md);
+  border-radius: 0;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  overflow-y: auto;
+}
+
+@media (max-width: 1100px) {
+  .schedule-panel {
+    position: static;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    margin-top: 0;
+  }
+}
+
+.day-picker {
+  padding-top: var(--mantine-spacing-sm);
+  padding-bottom: var(--mantine-spacing-sm);
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+  overflow-x: auto;
+}
+
+.day-chip {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mantine-spacing-xxs);
+  padding: var(--mantine-spacing-xs);
+  border: none;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--error-bg);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.day-chip:hover {
+  transform: translateY(-2px);
+}
+
+.day-chip * {
+  color: var(--mantine-color-ubhRed-8);
+}
+
+.day-chip.selected {
+  background: var(--mantine-color-ubhRed-7);
+}
+
+.day-chip.selected * {
+  color: white;
+}
+
+.day-chip-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--mantine-color-ubhRed-7);
+}
+
+.day-chip.selected .day-chip-dot {
+  background: white;
+}
+
+.timeline {
+  padding-top: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-lg);
+}
+
+.timeline-row {
+  display: flex;
+  gap: var(--mantine-spacing-sm);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.timeline-time {
+  flex-shrink: 0;
+  width: 65px;
+  padding-top: var(--mantine-spacing-sm);
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-ubhNeutral-7);
+}
+
+.timeline-card {
+  max-height: 80px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  /* justify-items: center; */
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-sm);
+  background: var(--error-bg);
+  overflow: hidden;
+}
+
+.timeline-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xxxs);
+  min-width: 0;
+}
+
+.timeline-card.patient {
+  border-left: 4px solid var(--mantine-color-ubhRed-7);
+  /* box-shadow: inset 8px 0 0 0 var(--mantine-color-ubhRed-7); */
+}
+
+.timeline-card.event {
+  border-left: 4px solid var(--mantine-color-ubhRed-7);
+  /* background: var(--mantine-color-ubhNeutral-1); */
+}
+
+.timeline-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mantine-spacing-xxxs);
+  flex-shrink: 0;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--mantine-spacing-xxs) var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-xl);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-semibold);
+  width: fit-content;
+}
+
+.status-pill.good {
+  background: var(--success-bg2);
+  color: var(--success-text, var(--mantine-color-ubhNeutral-9));
+}
+
+.status-pill.warning {
+  background: var(--warning-bg);
+  color: var(--warning-text, var(--mantine-color-ubhNeutral-9));
+}
+
+.status-pill.critical {
+  background: var(--error-bg);
+  color: var(--error-text, var(--mantine-color-ubhNeutral-9));
+}
+
+.status-pill.neutral {
+  background: var(--mantine-color-ubhNeutral-2);
+  color: var(--mantine-color-ubhNeutral-9);
+}
+
+.details-modal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* gap: var(--mantine-spacing-lg); */
+  margin-top: var(--mantine-spacing-xs);
+  padding-top: var(--mantine-spacing-md);
+  border-top: 1px solid var(--mantine-color-ubhNeutral-2);
+}
+
+.details-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+.details-modal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-md);
+}
+
+.new-appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
