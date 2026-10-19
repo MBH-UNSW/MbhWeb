@@ -1,4 +1,6 @@
 import classes from './SideBar.module.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/client';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
   House,
@@ -25,9 +27,13 @@ const tabs = {
 export function SideBar() {
   const location = useLocation();
   const navigate = useNavigate();
-  function handleLogout() {
-    localStorage.removeItem('session');
-    navigate('/');
+  async function handleLogout() {
+    try {
+      await signOut(auth);
+      navigate('/login');
+    } catch (error) {
+      console.error('Unable to sign out', error);
+    }
   }
 
   const links = tabs.general.map(item => {
