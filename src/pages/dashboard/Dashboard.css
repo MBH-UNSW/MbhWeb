@@ -167,3 +167,25 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.dashboard-card.good button {
+  background-color: var(--success-text);
+  border-color: var(--success-text);
+  color: white;
+}
+
+.dashboard-card.good button:hover {
+  background-color: var(--success-hover);
+  border-color: var(--success-hover);
+}
+
+.dashboard-card.warning button {
+  background-color: var(--warning-text);
+  border: none;
+  color: white;
+}
+
+.dashboard-card.warning button:hover {
+  background-color: var(--warning-hover);
+  border: none;
+}

@@ -2,7 +2,7 @@
 import '../Page.css';
 import './Dashboard.css';
 import { HeartPulse, ListChecks, HeartHandshake } from 'lucide-react';
-import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
+import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
 import { Button } from '../../components/buttons/Button';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { useState } from 'react';
@@ -88,8 +88,11 @@ export default function DashboardPage() {
   const numUncompletedTasks = 11;
   const numOverdueTasks = 0;
 
-  const urgentCareStatus = getStatus(needUrgentCare, totalPatients, 'low');
-  const goodConditionStatus = getStatus(inGoodCondition, totalPatients, 'high');
+  // const urgentCareStatus = getStatus(needUrgentCare, totalPatients, 'high');
+  // const goodConditionStatus = getStatus(inGoodCondition, totalPatients, 'low');
+  const urgentCareStatus: Status = needUrgentCare > 0 ? 'critical' : 'good';
+  const goodConditionStatus: Status = 'good';
+
   const pendingTasksStatus = getTaskStatus(numUncompletedTasks, numOverdueTasks);
 
   const notifications: Notification[] = [
@@ -161,10 +164,10 @@ export default function DashboardPage() {
   return (
     <div className="page">
       <div className="dashboard-greeting">
-        <Header3>
+        <Header2>
           Good {timePeriod}, <span className="greeting">{user}!</span>
-        </Header3>
-        <Header5>You have {totalPatients} patients under your care.</Header5>
+        </Header2>
+        <Header6>You currently have {totalPatients} patients under your care.</Header6>
       </div>
       <div className="dashboard-card-container">
         <div className={`dashboard-card ${urgentCareStatus}`}>
