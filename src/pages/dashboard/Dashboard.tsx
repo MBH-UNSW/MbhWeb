@@ -2,12 +2,14 @@
 import '../Page.css';
 import './Dashboard.css';
 import { HeartPulse, ListChecks, HeartHandshake } from 'lucide-react';
-import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
+import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
 import { Button } from '../../components/buttons/Button';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+
+import { useClinician } from '../../hooks/useClinician';
 
 type TimePeriod = 'morning' | 'afternoon' | 'evening' | 'night';
 type Status = 'good' | 'warning' | 'critical';
@@ -88,6 +90,8 @@ export default function DashboardPage() {
   const numUncompletedTasks = 11;
   const numOverdueTasks = 0;
 
+  const { clinician, isLoading, error } = useClinician();
+
   // const urgentCareStatus = getStatus(needUrgentCare, totalPatients, 'high');
   // const goodConditionStatus = getStatus(inGoodCondition, totalPatients, 'low');
   const urgentCareStatus: Status = needUrgentCare > 0 ? 'critical' : 'good';
@@ -163,11 +167,29 @@ export default function DashboardPage() {
 
   return (
     <div className="page">
-      <div className="dashboard-greeting">
+      {/* <div className="dashboard-greeting">
         <Header2>
           Good {timePeriod}, <span className="greeting">{user}!</span>
         </Header2>
         <Header6>You currently have {totalPatients} patients under your care.</Header6>
+      </div> */}
+      <div className="dashboard-greeting">
+        <Header3>
+          Good {timePeriod},{' '}
+          <span className="greeting">
+            {isLoading
+              ? 'Loading...'
+              : clinician
+                ? `Dr. ${clinician.firstName}!`
+                : 'Welcome!'}
+          </span>
+        </Header3>
+
+        {error && <Body2>{error}</Body2>}
+
+        <Header5>
+          You have {totalPatients} patients under your care.
+        </Header5>
       </div>
       <div className="dashboard-card-container">
         <div className={`dashboard-card ${urgentCareStatus}`}>
