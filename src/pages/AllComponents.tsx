@@ -54,7 +54,7 @@ export default function AllComponents() {
       </Box>
 
       <Box py="xl">
-        <Button variant="default" size="md" fullWidth onClick={() => navigate('/login')}>
+        <Button variant="default" size="md" fullWidth onClick={() => navigate('/')}>
           Login here (access the rest of the website) !!!
         </Button>
       </Box>
