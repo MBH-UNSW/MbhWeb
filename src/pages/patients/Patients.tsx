@@ -13,7 +13,7 @@ import { Loader, Modal } from '@mantine/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { LayoutGrid, List as ListIcon, Plus, ChevronRight, X, UserRoundPlus } from 'lucide-react';
+import { LayoutGrid, List as ListIcon, ChevronRight, X, UserRoundPlus } from 'lucide-react';
 
 import { type PatientStatus, type PatientSummary } from '../../api/patientApi';
 
@@ -185,13 +185,13 @@ export default function PatientsPage() {
             onClear={() => setSearch('')}
           />
           <div className="mini">
-            <IconButton size="md" icon={UserRoundPlus} onClick={() => setIsNewPatientOpen(true)} />
+            <IconButton icon={UserRoundPlus} tooltip='Add new patient' size="md" onClick={() => setIsNewPatientOpen(true)} />
           </div>
           <div className="full">
             <Button
               variant="default"
               size="sm"
-              leftIcon={Plus}
+              leftIcon={UserRoundPlus}
               onClick={() => setIsNewPatientOpen(true)}
             >
               New Patient
