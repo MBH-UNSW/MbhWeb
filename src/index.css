@@ -32,7 +32,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   --sidebar-width: clamp(240px, 18vw, 320px);
-	--sidebar-logo-width: clamp(150px, 9vw, 170px);
+  --sidebar-collapsed-width: 10vw;
+  --sidebar-tablet-width: clamp(64px, 10vw, 84px);
   --schedule-panel-width: clamp(360px, 30vw, 420px);
 }
 
