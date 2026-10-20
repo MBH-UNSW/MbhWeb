@@ -8,3 +8,35 @@
   padding: 30px;
   box-sizing: border-box;
 }
+
+/* Shared horizontal scrolling for tabs and filters */
+@media (max-width: 768px) {
+  .page .horizontal-tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 48px;
+
+    /* Prevent the container from shrinking vertically */
+    flex-shrink: 0;
+
+    gap: 10px;
+    padding: 6px 2px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .page .horizontal-tabs > * {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}

@@ -495,87 +495,88 @@ export default function PatientDetailPage() {
             Download
           </Button>
         </div>
+        <div className="logbook-table-scroll" role="region" aria-label="Patient logbook data" tabIndex={0}>
+          <table className="logbook-table">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" checked={allSelected} onChange={toggleSelectAll} />
+                </th>
+                <th onClick={() => handleSort('date')}>
+                  Date <ArrowUpDown size={14} />
+                </th>
+                <th onClick={() => handleSort('weight')}>
+                  Weight <ArrowUpDown size={14} />
+                </th>
+                <th onClick={() => handleSort('systolic')}>
+                  Systolic <ArrowUpDown size={14} />
+                </th>
+                <th onClick={() => handleSort('diastolic')}>
+                  Diastolic <ArrowUpDown size={14} />
+                </th>
+                <th onClick={() => handleSort('map')}>
+                  MAP <ArrowUpDown size={14} />
+                </th>
+                <th onClick={() => handleSort('inr')}>
+                  INR <ArrowUpDown size={14} />
+                </th>
+              </tr>
+            </thead>
 
-        <table className="logbook-table">
-          <thead>
-            <tr>
-              <th>
-                <input type="checkbox" checked={allSelected} onChange={toggleSelectAll} />
-              </th>
-              <th onClick={() => handleSort('date')}>
-                Date <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('weight')}>
-                Weight <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('systolic')}>
-                Systolic <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('diastolic')}>
-                Diastolic <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('map')}>
-                MAP <ArrowUpDown size={14} />
-              </th>
-              <th onClick={() => handleSort('inr')}>
-                INR <ArrowUpDown size={14} />
-              </th>
-            </tr>
-          </thead>
+            <tbody>
+              {sortedEntries.map(entry => {
+                const {
+                  map,
+                  weightConcerning,
+                  systolicConcerning,
+                  diastolicConcerning,
+                  mapConcerning,
+                  inrConcerning,
+                } = getVitalsFlags(entry, weightFlags);
 
-          <tbody>
-            {sortedEntries.map(entry => {
-              const {
-                map,
-                weightConcerning,
-                systolicConcerning,
-                diastolicConcerning,
-                mapConcerning,
-                inrConcerning,
-              } = getVitalsFlags(entry, weightFlags);
+                return (
+                  <tr key={entry.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(entry.id)}
+                        onChange={() => toggleRowSelected(entry.id)}
+                      />
+                    </td>
+                    <td>{entry.date}</td>
+                    <td>
+                      <span className={`status-pill ${getVitalClass(weightConcerning)}`}>
+                        {entry.weight.toFixed(1)} kg
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`status-pill ${getVitalClass(systolicConcerning)}`}>
+                        {entry.systolic} mmHg
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`status-pill ${getVitalClass(diastolicConcerning)}`}>
+                        {entry.diastolic} mmHg
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`status-pill ${getVitalClass(mapConcerning)}`}>
+                        {map.toFixed(1)} mmHg
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`status-pill ${getVitalClass(inrConcerning)}`}>
+                        {entry.inr.toFixed(1)}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
 
-              return (
-                <tr key={entry.id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedIds.includes(entry.id)}
-                      onChange={() => toggleRowSelected(entry.id)}
-                    />
-                  </td>
-                  <td>{entry.date}</td>
-                  <td>
-                    <span className={`status-pill ${getVitalClass(weightConcerning)}`}>
-                      {entry.weight.toFixed(1)} kg
-                    </span>
-                  </td>
-                  <td>
-                    <span className={`status-pill ${getVitalClass(systolicConcerning)}`}>
-                      {entry.systolic} mmHg
-                    </span>
-                  </td>
-                  <td>
-                    <span className={`status-pill ${getVitalClass(diastolicConcerning)}`}>
-                      {entry.diastolic} mmHg
-                    </span>
-                  </td>
-                  <td>
-                    <span className={`status-pill ${getVitalClass(mapConcerning)}`}>
-                      {map.toFixed(1)} mmHg
-                    </span>
-                  </td>
-                  <td>
-                    <span className={`status-pill ${getVitalClass(inrConcerning)}`}>
-                      {entry.inr.toFixed(1)}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-
-            {emptyStateRow}
-          </tbody>
-        </table>
+              {emptyStateRow}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   } else if (activeTab === 'documents') {
@@ -715,7 +716,7 @@ export default function PatientDetailPage() {
         </Header3>
       </div>
 
-      <div className="detail-tabs">
+      <div className="detail-tabs horizontal-tabs">
         {tabs.map(tab => (
           <Button
             key={tab.value}
