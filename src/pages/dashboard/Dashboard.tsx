@@ -186,9 +186,9 @@ export default function DashboardPage() {
 
         {error && <Body2>{error}</Body2>}
 
-        <Header5>
+        <Header6>
           You have {totalPatients} patients under your care.
-        </Header5>
+        </Header6>
       </div>
       <div className="dashboard-card-container">
         <div className={`dashboard-card ${urgentCareStatus}`}>
