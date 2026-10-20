@@ -1,5 +1,5 @@
 import { ActionIcon, Tooltip } from '@mantine/core';
-import { type LucideIcon, X } from 'lucide-react';
+import { type LucideIcon, type LucideProps, X } from 'lucide-react';
 
 import classes from './IconButton.module.css';
 import { Caption } from '../typography/Body';
@@ -13,6 +13,7 @@ type IconButtonProps = {
   tooltip?: string;
   variant?: IconButtonVariant;
   size?: IconButtonSize;
+  iconProps?: LucideProps;
   disabled?: boolean;
   onClick?: () => void; // Temporary Placeholder
 };
@@ -22,6 +23,7 @@ export function IconButton({
   tooltip,
   variant = 'default',
   size = 'md',
+  iconProps,
   disabled,
   onClick,
 }: IconButtonProps) {
@@ -70,7 +72,7 @@ export function IconButton({
           root: `${classes.root} ${classes[variant]}`,
         }}
       >
-        <Icon size={iconSize} />
+        <Icon size={iconSize} {...iconProps} />
       </ActionIcon>
     </Tooltip>
   );
