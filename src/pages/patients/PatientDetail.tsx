@@ -6,15 +6,26 @@ import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
 import { SearchBar } from '../../components/searchBar/SearchBar';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown } from 'lucide-react'
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react'
 import { LiveSensorChart } from '../../components/liveSensorChart/LiveSensorChart';
 
 import { Modal, Tooltip } from '@mantine/core';
 
 import { usePatient } from '../../hooks/usePatient';
+import PatientDocuments from './PatientDocuments';
 
 type DetailTab = 'sensor' | 'logbook' | 'documents' | 'general';
 type ButtonVariant = 'default' | 'outlined' | 'text';
@@ -23,6 +34,42 @@ type SortDirection = 'asc' | 'desc';
 type ExpandedChart = 'flow' | 'pressure' | null;
 type VitalsFilter = 'all' | 'warning' | 'stable';
 
+interface SensorPlot {
+  x: number;
+  y: number;
+}
+
+interface PressurePlot {
+  x: number;
+  left: number;
+  right: number;
+}
+
+interface ChartPlot {
+  x: number;
+  y?: number;
+  left?: number;
+  right?: number;
+}
+
+interface GeneralInfo {
+  name: string;
+  patientId: string;
+  gender: string;
+  age: number;
+  dob: string;
+}
+
+interface MedicalInfo {
+  bloodType: string;
+  height: string;
+  allergies: string;
+}
+
+interface MedicareInfo {
+  cardNumber: string;
+  irn: string;
+  expiryDate: string;
 interface DocumentEntry {
   id: number;
   name: string;
@@ -202,15 +249,6 @@ function getFilterButtonVariant(filter: VitalsFilter): ButtonVariant {
   }
 }
 
-// TODO: Slightly buggy scroll thing for the documents tab. (kinda untested tho)
-function getScrollIndicatorClass(canScrollMore: boolean): string {
-  if (canScrollMore) {
-    return 'scrollable';
-  } else {
-    return 'scroll-inactive';
-  }
-}
-
 function getChartTitle(chart: ExpandedChart): string {
   if (chart === 'pressure') {
     return 'L & R Pressure';
@@ -292,11 +330,6 @@ function downloadLogbookCsv(entries: VitalsEntry[]) {
   URL.revokeObjectURL(url);
 }
 
-// PLACEHOLDER UNTIL I GET THE BACKEND FIREBASE CONNECTED FOR DOCUMENTS.
-function downloadDocument(doc: DocumentEntry) {
-  console.log('download document', doc.name);
-}
-
 export default function PatientDetailPage() {
   const navigate = useNavigate();
   const { patientId } = useParams<{ patientId: string }>();
@@ -317,33 +350,6 @@ export default function PatientDetailPage() {
   ];
 
   const weightFlags = getWeightFlags(vitalsLog);
-
-  // some mock bs.. (backend tba)
-  const documents: DocumentEntry[] = [
-    { id: 1, name: 'Discharge Summary.pdf', size: '248 KB', dateUploaded: '20/08/26' },
-    { id: 2, name: 'Echocardiogram Report.pdf', size: '1.1 MB', dateUploaded: '17/08/26' },
-    { id: 3, name: 'Device Implant Consent Form.pdf', size: '86 KB', dateUploaded: '24/07/26' },
-    { id: 4, name: 'Medication Chart.pdf', size: '132 KB', dateUploaded: '20/07/26' },
-    { id: 5, name: 'Cardiology Referral Letter.pdf', size: '64 KB', dateUploaded: '09/07/26' },
-    { id: 6, name: 'Electrocardiogram Report.pdf', size: '64 KB', dateUploaded: '25/06/26' },
-  ];
-
-  // Document scrolling (UNTESTED!!)
-  const documentsScrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollMore, setCanScrollMore] = useState(false);
-
-  const updateScrollState = () => {
-    const el = documentsScrollRef.current;
-    if (!el) {
-      return;
-    }
-    const hasMoreBelow = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
-    setCanScrollMore(hasMoreBelow);
-  };
-
-  useEffect(() => {
-    updateScrollState();
-  }, [documents]);
 
   // Sort/Filter features.
   const [logbookSearch, setLogbookSearch] = useState('');
@@ -579,48 +585,7 @@ export default function PatientDetailPage() {
       </div>
     );
   } else if (activeTab === 'documents') {
-    tabContent = (
-      <div className="card documents-card">
-        <div
-          className={`documents-scroll ${getScrollIndicatorClass(canScrollMore)}`}
-          onScroll={updateScrollState}
-        >
-          <table className="documents-table">
-            <thead>
-              <tr>
-                <th>File Name</th>
-                <th>Size</th>
-                <th>Date Uploaded</th>
-                <th></th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {documents.map(doc => (
-                <tr key={doc.id}>
-                  <td>
-                    <div className="document-name-cell">
-                      <FileText size={16} />
-                      {doc.name}
-                    </div>
-                  </td>
-                  <td>{doc.size}</td>
-                  <td>{doc.dateUploaded}</td>
-                  <td>
-                    <IconButton
-                      icon={Download}
-                      variant="text"
-                      size="sm"
-                      onClick={() => downloadDocument(doc)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
+    tabContent = <PatientDocuments key={patientId} patientId={patientId} />;
   } else {
     if (infoLoading) {
       tabContent = (
