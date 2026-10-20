@@ -22,6 +22,7 @@ function App() {
         <Route path="/components" element={<AllComponents />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
