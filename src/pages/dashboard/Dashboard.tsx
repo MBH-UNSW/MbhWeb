@@ -2,12 +2,14 @@
 import '../Page.css';
 import './Dashboard.css';
 import { HeartPulse, ListChecks, HeartHandshake } from 'lucide-react';
-import { Header2, Header3, Header4, Header5, Header6 } from '../../components/typography/Header';
+import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
 import { Button } from '../../components/buttons/Button';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+
+import { useClinician } from '../../hooks/useClinician';
 
 type TimePeriod = 'morning' | 'afternoon' | 'evening' | 'night';
 type Status = 'good' | 'warning' | 'critical';
@@ -18,7 +20,7 @@ interface Notification {
   id: number;
   category: NotificationCategory;
   patientName: string;
-  patientId: string;
+  patientCode: string | null;
   message: string;
   time: string;
 }
@@ -44,29 +46,29 @@ function getTimeOfDay(): TimePeriod {
   }
 }
 
-function getStatus(value: number, total: number, goal: 'low' | 'high'): Status {
-  if (total === 0) {
-    return 'good';
-  }
-  const percentage = value / total;
-  if (goal === 'low') {
-    if (percentage >= 0.75) {
-      return 'critical';
-    } else if (percentage >= 0.25) {
-      return 'warning';
-    } else {
-      return 'good';
-    }
-  }
-  // if the goal is higher
-  if (percentage >= 0.75) {
-    return 'good';
-  } else if (percentage >= 0.5) {
-    return 'warning';
-  } else {
-    return 'critical';
-  }
-}
+// function getStatus(value: number, total: number, goal: 'low' | 'high'): Status {
+//   if (total === 0) {
+//     return 'good';
+//   }
+//   const percentage = value / total;
+//   if (goal === 'low') {
+//     if (percentage >= 0.75) {
+//       return 'critical';
+//     } else if (percentage >= 0.25) {
+//       return 'warning';
+//     } else {
+//       return 'good';
+//     }
+//   }
+//   // if the goal is higher
+//   if (percentage >= 0.75) {
+//     return 'good';
+//   } else if (percentage >= 0.5) {
+//     return 'warning';
+//   } else {
+//     return 'critical';
+//   }
+// }
 
 function getTaskStatus(uncompleted: number, overdue: number): Status {
   if (overdue > 0) {
@@ -81,15 +83,19 @@ function getTaskStatus(uncompleted: number, overdue: number): Status {
 export default function DashboardPage() {
   // filler for backend functions later !!!
   const timePeriod = getTimeOfDay();
-  const user = 'Dr. Asna';
   const totalPatients = 25;
   const needUrgentCare = 3;
   const inGoodCondition = 12;
   const numUncompletedTasks = 11;
   const numOverdueTasks = 0;
 
-  const urgentCareStatus = getStatus(needUrgentCare, totalPatients, 'low');
-  const goodConditionStatus = getStatus(inGoodCondition, totalPatients, 'high');
+  const { clinician, isLoading, error } = useClinician();
+
+  // const urgentCareStatus = getStatus(needUrgentCare, totalPatients, 'high');
+  // const goodConditionStatus = getStatus(inGoodCondition, totalPatients, 'low');
+  const urgentCareStatus: Status = needUrgentCare > 0 ? 'critical' : 'good';
+  const goodConditionStatus: Status = 'good';
+
   const pendingTasksStatus = getTaskStatus(numUncompletedTasks, numOverdueTasks);
 
   const notifications: Notification[] = [
@@ -97,7 +103,7 @@ export default function DashboardPage() {
       id: 1,
       category: 'checkup',
       patientName: 'Bob Smith',
-      patientId: '75311093',
+      patientCode: 'UBH0001',
       message: 'Follow-up check-up due in two days',
       time: '10:00 am · 1 Sep 2026',
     },
@@ -105,7 +111,7 @@ export default function DashboardPage() {
       id: 2,
       category: 'update',
       patientName: 'Jane Doe',
-      patientId: '88733825',
+      patientCode: 'UBH0002',
       message: 'New device readings available',
       time: '5:15 pm · 30 Aug 2026',
     },
@@ -113,7 +119,7 @@ export default function DashboardPage() {
       id: 3,
       category: 'critical',
       patientName: 'John Doe',
-      patientId: '67999018',
+      patientCode: 'UBH0003',
       message: 'Low heart rate detected',
       time: '12:35 pm · 26 Aug 2026',
     },
@@ -121,7 +127,7 @@ export default function DashboardPage() {
       id: 4,
       category: 'critical',
       patientName: 'John Doe',
-      patientId: '67999018',
+      patientCode: 'UBH0003',
       message: 'Abnormal flow rate detected',
       time: '12:30 pm · 26 Aug 2026',
     },
@@ -129,7 +135,7 @@ export default function DashboardPage() {
       id: 5,
       category: 'critical',
       patientName: 'Jane Doe',
-      patientId: '88733825',
+      patientCode: 'UBH0002',
       message: 'Low flow rate detected',
       time: '2:03 am · 20 Aug 2026',
     },
@@ -137,7 +143,7 @@ export default function DashboardPage() {
       id: 6,
       category: 'critical',
       patientName: 'David Bowie',
-      patientId: '19470801',
+      patientCode: 'UBH0004',
       message: 'Device battery is low',
       time: '7:49 pm · 18 Aug 2026',
     },
@@ -145,7 +151,7 @@ export default function DashboardPage() {
       id: 7,
       category: 'task',
       patientName: 'Marc Bolan',
-      patientId: '19473009',
+      patientCode: 'UBH0005',
       message: 'Review uploaded driveline image',
       time: '10:08 am · 16 Aug 2026',
     },
@@ -160,11 +166,29 @@ export default function DashboardPage() {
 
   return (
     <div className="page">
-      <div className="dashboard-greeting">
-        <Header3>
+      {/* <div className="dashboard-greeting">
+        <Header2>
           Good {timePeriod}, <span className="greeting">{user}!</span>
-        </Header3>
-        <Header5>You have {totalPatients} patients under your care.</Header5>
+        </Header2>
+        <Header6>You currently have {totalPatients} patients under your care.</Header6>
+      </div> */}
+      <div className="dashboard-greeting">
+        <Header2>
+          Good {timePeriod},{' '}
+          <span className="greeting">
+            {isLoading
+              ? 'Loading...'
+              : clinician
+                ? `Dr. ${clinician.firstName}!`
+                : 'Welcome!'}
+          </span>
+        </Header2>
+
+        {error && <Body2>{error}</Body2>}
+
+        <Header5>
+          You have {totalPatients} patients under your care.
+        </Header5>
       </div>
       <div className="dashboard-card-container">
         <div className={`dashboard-card ${urgentCareStatus}`}>
@@ -222,7 +246,7 @@ export default function DashboardPage() {
           {filteredNotifications.map(notification => (
             <div className="dashboard-patient-card" key={notification.id}>
               <Header6>
-                {notification.patientName} | ID: {notification.patientId}
+                {notification.patientName} | Patient ID: {notification.patientCode ?? 'Pending'}
               </Header6>
               <div className="dashboard-patient-card-info">
                 <Body1>{notification.message}</Body1>

@@ -29,24 +29,29 @@
 
 .sensor-card {
   max-height: none;
-  border: none;
+  min-width: 0;
+  border: 1px solid var(--mantine-color-ubhNeutral-3);
+  border-radius: 16px;
+  padding: 18px;
+  gap: 10px;
 }
 
 .sensor-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .sensor-card-title {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 }
 
 .info-icon {
   cursor: help;
-  color: var(--mantine-color-ubhNeutral-7);
+  color: #000;
 }
 
 .chart-wrapper {
@@ -57,8 +62,11 @@
   margin-top: 10px;
 }
 
-.recharts-legend-item {
-  margin-right: 24px !important;
+@media (max-width: 600px) {
+  .sensor-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
 }
 
 .logbook-card {
@@ -251,4 +259,14 @@
   gap: 20px;
   flex: 1;
   min-width: 240px;
+}
+
+.logbook-table th svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+.logbook-table .status-pill {
+  border: none;
 }
