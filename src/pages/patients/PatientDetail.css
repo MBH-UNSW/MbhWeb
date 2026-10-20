@@ -270,3 +270,55 @@
 .logbook-table .status-pill {
   border: none;
 }
+
+.logbook-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.logbook-table {
+  width: 100%;
+  min-width: 850px;
+}
+
+.logbook-table th,
+.logbook-table td {
+  white-space: nowrap;
+}
+
+.logbook-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .logbook-table {
+    min-width: 850px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logbook-controls {
+    gap: 8px;
+  }
+
+  .logbook-controls .mantine-Button-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .logbook-controls .mantine-Button-section {
+    margin: 0;
+  }
+
+  .logbook-controls > button {
+    aspect-ratio: 1 / 1;
+    padding-inline: 0;
+  }
+}
