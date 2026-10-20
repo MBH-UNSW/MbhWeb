@@ -19,9 +19,9 @@ function App() {
     <>
       <PageTitle />
       <Routes>
-        <Route path="/" element={<AllComponents />} />
+        <Route path="/components" element={<AllComponents />} />
         <Route path="/test" element={<TestPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
