@@ -23,25 +23,25 @@ export function Calendar({
   fullWidth = true,
 }: CalendarProps) {
   return (
-		<MantineCalendar
-			size={size}
-			fullWidth={fullWidth}
-			defaultDate={defaultDate}
-			previousIcon={<ChevronLeft />}
-			nextIcon={<ChevronRight />}
-			getDayProps={(date) => ({
-			selected: value ? dayjs(date).isSame(value, 'date') : false,
-			onClick: () => onChange?.(date),
-			})}
-			classNames={{
-			calendarHeader: classes.calendarHeader,
-			calendarHeaderControl: classes.calendarHeaderControl,
-			calendarHeaderControlIcon: classes.calendarHeaderControlIcon,
-			calendarHeaderLevel: classes.calendarHeaderLevel,
-			weekday: classes.weekday,
-			month: classes.month,
-			day: classes.day,
-			}}
-		/>
-	);
+    <MantineCalendar
+      size={size}
+      fullWidth={fullWidth}
+      defaultDate={defaultDate}
+      previousIcon={<ChevronLeft />}
+      nextIcon={<ChevronRight />}
+      getDayProps={date => ({
+        selected: value ? dayjs(date).isSame(value, 'date') : false,
+        onClick: () => onChange?.(date),
+      })}
+      classNames={{
+        calendarHeader: classes.calendarHeader,
+        calendarHeaderControl: classes.calendarHeaderControl,
+        calendarHeaderControlIcon: classes.calendarHeaderControlIcon,
+        calendarHeaderLevel: classes.calendarHeaderLevel,
+        weekday: classes.weekday,
+        month: classes.month,
+        day: classes.day,
+      }}
+    />
+  );
 }

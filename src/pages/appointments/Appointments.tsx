@@ -1,6 +1,6 @@
 import '../Page.css';
-import './Appointments.css'
-import { Header2, Header5, Header4, Header6  } from '../../components/typography/Header';
+import './Appointments.css';
+import { Header2, Header5, Header4, Header6 } from '../../components/typography/Header';
 import { Body1, Body2 } from '../../components/typography/Body';
 import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
@@ -42,21 +42,25 @@ const MOCK_PATIENTS: PatientSummary[] = [
   { pid: 'M100005', displayId: 'M100005', name: 'Hungre Jack', status: 'Warning' },
 ];
 
-
 // Appointment Page Helpers
 function getDate(): string {
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, '0');
   const day = String(today.getDate()).padStart(2, '0');
-  
+
   return `${year}-${month}-${day}`;
 }
 
 function formatFullDate(dateKey: string): string {
   const date = new Date(`${dateKey}T00:00:00`);
 
-  return date.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  return date.toLocaleDateString('en-AU', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
 }
 
 function formatWeekdayShort(dateKey: string): string {
@@ -169,95 +173,170 @@ function buildMockAppointments(patients: PatientSummary[]): Appointment[] {
   const today = getDate();
 
   return [
-    { id: 1, patientName: getName(0), patientPid: getPid(0), reason: 'Introductory', date: today, time: '08:00 am', notes: '', status: 'Scheduled' },
-    { id: 2, patientName: getName(1), patientPid: getPid(1), reason: 'Monthly Check Up', date: today, time: '09:45 am', notes: '', status: 'Scheduled' },
-    { id: 3, patientName: 'Online Board Meeting', patientPid: null, reason: 'Internal', date: today, time: '10:50 am', notes: '', status: 'Scheduled' },
-    { id: 4, patientName: getName(2), patientPid: getPid(2), reason: 'Monthly Check Up', date: today, time: '02:40 pm', notes: '', status: 'Scheduled' },
-    { id: 5, patientName: getName(3), patientPid: getPid(3), reason: 'Introductory', date: today, time: '04:00 pm', notes: 'OMG new tah needed', status: 'In Progress' },
-    { id: 6, patientName: getName(0), patientPid: getPid(0), reason: 'Introductory', date: addDays(today, 35), time: '09:00 am', notes: 'OMG NEW TAH NEEDED', status: 'In Progress' },
-    { id: 7, patientName: getName(4), patientPid: getPid(4), reason: 'Follow Up', date: addDays(today, 1), time: '11:00 am', notes: '', status: 'Scheduled' },
-    { id: 8, patientName: getName(1), patientPid: getPid(1), reason: 'Monthly Check Up', date: addDays(today, 2), time: '01:30 pm', notes: '', status: 'Scheduled' },
+    {
+      id: 1,
+      patientName: getName(0),
+      patientPid: getPid(0),
+      reason: 'Introductory',
+      date: today,
+      time: '08:00 am',
+      notes: '',
+      status: 'Scheduled',
+    },
+    {
+      id: 2,
+      patientName: getName(1),
+      patientPid: getPid(1),
+      reason: 'Monthly Check Up',
+      date: today,
+      time: '09:45 am',
+      notes: '',
+      status: 'Scheduled',
+    },
+    {
+      id: 3,
+      patientName: 'Online Board Meeting',
+      patientPid: null,
+      reason: 'Internal',
+      date: today,
+      time: '10:50 am',
+      notes: '',
+      status: 'Scheduled',
+    },
+    {
+      id: 4,
+      patientName: getName(2),
+      patientPid: getPid(2),
+      reason: 'Monthly Check Up',
+      date: today,
+      time: '02:40 pm',
+      notes: '',
+      status: 'Scheduled',
+    },
+    {
+      id: 5,
+      patientName: getName(3),
+      patientPid: getPid(3),
+      reason: 'Introductory',
+      date: today,
+      time: '04:00 pm',
+      notes: 'OMG new tah needed',
+      status: 'In Progress',
+    },
+    {
+      id: 6,
+      patientName: getName(0),
+      patientPid: getPid(0),
+      reason: 'Introductory',
+      date: addDays(today, 35),
+      time: '09:00 am',
+      notes: 'OMG NEW TAH NEEDED',
+      status: 'In Progress',
+    },
+    {
+      id: 7,
+      patientName: getName(4),
+      patientPid: getPid(4),
+      reason: 'Follow Up',
+      date: addDays(today, 1),
+      time: '11:00 am',
+      notes: '',
+      status: 'Scheduled',
+    },
+    {
+      id: 8,
+      patientName: getName(1),
+      patientPid: getPid(1),
+      reason: 'Monthly Check Up',
+      date: addDays(today, 2),
+      time: '01:30 pm',
+      notes: '',
+      status: 'Scheduled',
+    },
   ];
 }
 
 export default function AppointmentsPage() {
   const navigate = useNavigate();
   const patients = MOCK_PATIENTS;
- 
+
   const [appointments, setAppointments] = useState<Appointment[]>([]);
- 
+
   useEffect(() => {
     if (patients.length > 0 && appointments.length === 0) {
       setAppointments(buildMockAppointments(patients));
     }
   }, [patients, appointments.length]);
- 
+
   const [selectedDate, setSelectedDate] = useState(getDate());
- 
+
   const weekStrip = buildWeekStrip(getDate());
   const scheduleForSelectedDate = sortAppointments(
     appointments.filter(appointment => appointment.date === selectedDate),
   );
- 
+
   const [detailsAppointmentId, setDetailsAppointmentId] = useState<number | null>(null);
   const sortedAppointments = sortAppointments(appointments);
   const currentDetailsAppointment = sortedAppointments.find(
     appointment => appointment.id === detailsAppointmentId,
   );
- 
+
   const updateAppointment = (id: number, changes: Partial<Appointment>) => {
-    setAppointments(appointments.map(appointment => {
-      if (appointment.id === id) {
-        return { ...appointment, ...changes };
-      } else {
-        return appointment;
-      }
-    }));
+    setAppointments(
+      appointments.map(appointment => {
+        if (appointment.id === id) {
+          return { ...appointment, ...changes };
+        } else {
+          return appointment;
+        }
+      }),
+    );
   };
- 
+
   const showAdjacentAppointment = (direction: 1 | -1) => {
     if (!currentDetailsAppointment) {
       return;
     }
- 
+
     const currentIndex = sortedAppointments.findIndex(
       appointment => appointment.id === currentDetailsAppointment.id,
     );
-    const nextIndex = (currentIndex + direction + sortedAppointments.length) % sortedAppointments.length;
+    const nextIndex =
+      (currentIndex + direction + sortedAppointments.length) % sortedAppointments.length;
     setDetailsAppointmentId(sortedAppointments[nextIndex].id);
   };
- 
+
   // PLACEHOLDER UNTIL THERE'S A REAL REPORTING BACKEND.
   const generateSummaryReport = (appointment: Appointment) => {
     console.log('generate summary report', appointment.patientName, appointment.id);
   };
- 
+
   const [isNewAppointmentOpen, setIsNewAppointmentOpen] = useState(false);
   const [newDate, setNewDate] = useState('');
   const [newReason, setNewReason] = useState<string | null>('Introductory');
   const [newPatientPid, setNewPatientPid] = useState<string | null>(null);
- 
+
   const patientOptions = patients.map(patient => ({ value: patient.pid, label: patient.name }));
- 
+
   const closeNewAppointmentModal = () => {
     setIsNewAppointmentOpen(false);
     setNewDate('');
     setNewReason('Introductory');
     setNewPatientPid(null);
   };
- 
+
   const createAppointment = () => {
     if (!newDate || !newReason || !newPatientPid) {
       return;
     }
- 
+
     const patient = patients.find(p => p.pid === newPatientPid);
     if (!patient) {
       return;
     }
- 
+
     const nextId = appointments.length > 0 ? Math.max(...appointments.map(a => a.id)) + 1 : 1;
- 
+
     setAppointments([
       ...appointments,
       {
@@ -271,16 +350,16 @@ export default function AppointmentsPage() {
         status: 'Scheduled',
       },
     ]);
- 
+
     closeNewAppointmentModal();
   };
- 
+
   return (
     <div className="page appointments-page">
       <div className="appointments-header">
         <Header2>Appointments</Header2>
       </div>
- 
+
       <div className="appointments-layout">
         <div className="appointments-main">
           <div className="card today-summary-card">
@@ -308,16 +387,16 @@ export default function AppointmentsPage() {
               </Button>
             </div>
           </div>
- 
+
           <div className="card calendar-card">
             <Calendar value={selectedDate} onChange={setSelectedDate} size="lg" />
           </div>
         </div>
- 
+
         <div className="card schedule-panel">
           <Body2>Today's Schedule</Body2>
           <Header4>{formatFullDate(selectedDate)}</Header4>
- 
+
           <div className="day-picker">
             {weekStrip.map(dateKey => (
               <button
@@ -332,18 +411,18 @@ export default function AppointmentsPage() {
               </button>
             ))}
           </div>
- 
+
           <div className="timeline">
             {scheduleForSelectedDate.length === 0 && (
               <Body2>No appointments scheduled for this day.</Body2>
             )}
- 
+
             {scheduleForSelectedDate.map(appointment => (
               <div className="timeline-row" key={appointment.id}>
                 <div className="timeline-time">
                   <Body2>{appointment.time}</Body2>
                 </div>
- 
+
                 <div className={getTimelineCardClass(appointment)}>
                   <div className="timeline-card-info">
                     <Body1 bold>
@@ -352,7 +431,7 @@ export default function AppointmentsPage() {
                     </Body1>
                     {appointment.patientPid && <Body2>{appointment.reason}</Body2>}
                   </div>
- 
+
                   <div className="timeline-actions">
                     {appointment.patientPid && (
                       <IconButton
@@ -375,7 +454,7 @@ export default function AppointmentsPage() {
           </div>
         </div>
       </div>
- 
+
       <Modal
         opened={currentDetailsAppointment !== undefined}
         onClose={() => setDetailsAppointmentId(null)}
@@ -399,11 +478,11 @@ export default function AppointmentsPage() {
                 </Button>
               )}
             </div>
- 
+
             <Body1>
               <strong>Reason:</strong> {currentDetailsAppointment.reason}
             </Body1>
- 
+
             <div className="details-modal-row">
               <Body1>
                 <strong>Time:</strong> {currentDetailsAppointment.time}
@@ -412,36 +491,43 @@ export default function AppointmentsPage() {
                 <strong>Date:</strong> {formatFullDate(currentDetailsAppointment.date)}
               </Body1>
             </div>
- 
+
             <div className="info-divider" />
- 
+
             <Header6>Appointment Notes</Header6>
             <Textarea
               value={currentDetailsAppointment.notes}
-              onChange={e => updateAppointment(currentDetailsAppointment.id, { notes: e.target.value })}
+              onChange={e =>
+                updateAppointment(currentDetailsAppointment.id, { notes: e.target.value })
+              }
               minRows={3}
             />
- 
-            <Button variant="default" onClick={() => generateSummaryReport(currentDetailsAppointment)}>
+
+            <Button
+              variant="default"
+              onClick={() => generateSummaryReport(currentDetailsAppointment)}
+            >
               Generate Summary Report
             </Button>
- 
+
             <Header6>Appointment Status</Header6>
             <Select
               data={BOOKING_STATUS}
               value={currentDetailsAppointment.status}
               onChange={value => {
                 if (value) {
-                  updateAppointment(currentDetailsAppointment.id, { status: value as AppointmentStatus });
+                  updateAppointment(currentDetailsAppointment.id, {
+                    status: value as AppointmentStatus,
+                  });
                 }
               }}
             />
- 
+
             <div className="info-divider" />
             <span className={getStatusPillClass(currentDetailsAppointment.status)}>
               {currentDetailsAppointment.status}
             </span>
- 
+
             <div className="details-modal-nav">
               <IconButton
                 icon={ArrowLeft}
@@ -459,7 +545,7 @@ export default function AppointmentsPage() {
           </div>
         )}
       </Modal>
- 
+
       <Modal
         opened={isNewAppointmentOpen}
         onClose={closeNewAppointmentModal}
@@ -474,14 +560,14 @@ export default function AppointmentsPage() {
             value={newDate}
             onChange={e => setNewDate(e.target.value)}
           />
- 
+
           <Select
             label="Appointment Reason"
             data={BOOKING_REASON}
             value={newReason}
             onChange={setNewReason}
           />
- 
+
           <Select
             label="Patient"
             data={patientOptions}
@@ -489,7 +575,7 @@ export default function AppointmentsPage() {
             onChange={setNewPatientPid}
             searchable
           />
- 
+
           <Button variant="default" onClick={createAppointment}>
             Create Appointment
           </Button>
