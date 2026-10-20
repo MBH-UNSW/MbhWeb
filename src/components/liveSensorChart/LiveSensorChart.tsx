@@ -169,10 +169,6 @@ export function LiveSensorChart({ kind, startedAt, expanded = false }: Props) {
   return (
     <div className={`live-sensor-chart${expanded ? ' live-sensor-chart-expanded' : ''}`}>
       <div className="sensor-readout-row">
-        <span className="sensor-simulation-label">
-          <span />
-          Simulated · 8 s window
-        </span>
         <div className="sensor-readouts">
           {kind === 'flow' ? (
             <span className="sensor-reading sensor-reading-blue">
