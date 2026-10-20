@@ -9,7 +9,7 @@ import { SearchBar } from '../../components/searchBar/SearchBar';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react'
+import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react';
 import { LiveSensorChart } from '../../components/liveSensorChart/LiveSensorChart';
 
 import { Modal, Tooltip } from '@mantine/core';
@@ -495,7 +495,12 @@ export default function PatientDetailPage() {
             Download
           </Button>
         </div>
-        <div className="logbook-table-scroll" role="region" aria-label="Patient logbook data" tabIndex={0}>
+        <div
+          className="logbook-table-scroll"
+          role="region"
+          aria-label="Patient logbook data"
+          tabIndex={0}
+        >
           <table className="logbook-table">
             <thead>
               <tr>
@@ -642,7 +647,7 @@ export default function PatientDetailPage() {
             <Header4>Personal Information</Header4>
             <div className="info-divider" />
           </div>
- 
+
           <div className="general-info-body">
             <div className="general-info-identity">
               <div className="general-info-avatar" />
@@ -655,7 +660,7 @@ export default function PatientDetailPage() {
                 </Body1>
               </div>
             </div>
- 
+
             <div className="general-info-fields">
               <Body1>
                 <strong>DOB:</strong> {formatDob(patient.dob)}
@@ -665,14 +670,14 @@ export default function PatientDetailPage() {
               </Body1>
             </div>
           </div>
- 
+
           <div className="general-info-sections">
             <div className="info-section">
               <div className="info-section-heading">
                 <Header4>Medical</Header4>
                 <div className="info-divider" />
               </div>
- 
+
               <div className="general-info-fields">
                 <Body1>
                   <strong>Blood Type:</strong> {patient.bloodType}
@@ -682,13 +687,13 @@ export default function PatientDetailPage() {
                 </Body1>
               </div>
             </div>
- 
+
             <div className="info-section">
               <div className="info-section-heading">
                 <Header4>Contact</Header4>
                 <div className="info-divider" />
               </div>
- 
+
               <div className="general-info-fields">
                 <Body1>
                   <strong>Phone:</strong> {patient.phone}

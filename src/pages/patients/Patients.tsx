@@ -7,29 +7,24 @@ import { IconButton } from '../../components/buttons/IconButton';
 import { SearchBar } from '../../components/searchBar/SearchBar';
 import { Input } from '../../components/input/Input';
 import { DropdownList } from '../../components/dropdownList/DropdownList';
- 
+
 import { Loader, Modal } from '@mantine/core';
- 
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
- 
-import { LayoutGrid, List as ListIcon, Plus, ChevronRight, X } from 'lucide-react';
- 
-import {
-  type PatientStatus,
-  type PatientSummary,
-} from '../../api/patientApi';
- 
-import { usePatients } from '../../hooks/usePatient'
- 
-import { auth } from '../../firebase/client'
- 
+
+import { LayoutGrid, List as ListIcon, Plus, ChevronRight, X, UserRoundPlus } from 'lucide-react';
+
+import { type PatientStatus, type PatientSummary } from '../../api/patientApi';
+
+import { usePatients } from '../../hooks/usePatient';
+
 // TODO: make a proper component class for cards.
 // import { PatientCard } from '../components/patientCard/PatientCard';
- 
+
 type StatusFilter = 'all' | PatientStatus;
 type ViewMode = 'grid' | 'list';
- 
+
 const statusFilters: { value: PatientStatus; label: string }[] = [
   { value: 'Unstable', label: 'Unstable' },
   { value: 'Warning', label: 'Warning' },
@@ -52,30 +47,28 @@ function getStatusClass(status: PatientStatus) {
     return 'good';
   }
 }
- 
+
 export default function PatientsPage() {
   const navigate = useNavigate();
- 
+
   const { patients, isLoading, error } = usePatients();
- 
-  console.log('Current user:', auth.currentUser);
 
   const [view, setView] = useState<ViewMode>('grid');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
- 
+
   const filteredPatients = patients
-  .filter(patient => {
-    const matchesSearch = patient.name.toLowerCase().includes(search.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || patient.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  })
-  .sort((a, b) => statusPriority[a.status] - statusPriority[b.status]);
- 
+    .filter(patient => {
+      const matchesSearch = patient.name.toLowerCase().includes(search.toLowerCase());
+      const matchesStatus = statusFilter === 'all' || patient.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => statusPriority[a.status] - statusPriority[b.status]);
+
   const patientCardOnClick = (patient: PatientSummary) => {
     navigate(`/patients/${patient.pid}`);
   };
- 
+
   const toggleStatusFilter = (value: PatientStatus) => {
     if (statusFilter === value) {
       setStatusFilter('all');
@@ -83,37 +76,37 @@ export default function PatientsPage() {
       setStatusFilter(value);
     }
   };
- 
+
   const [isNewPatientOpen, setIsNewPatientOpen] = useState(false);
   const [newName, setNewName] = useState('');
   const [newPatientId, setNewPatientId] = useState('');
   const [newStatus, setNewStatus] = useState<PatientStatus | null>(null);
- 
+
   const closeNewPatientModal = () => {
     setIsNewPatientOpen(false);
     setNewName('');
     setNewPatientId('');
     setNewStatus(null);
   };
- 
+
   const createPatient = () => {
     if (!newName || !newPatientId || !newStatus) {
       return;
     }
- 
+
     // PLACEHOLDER UNTIL THERE'S A REAL PATIENTS BACKEND.
     console.log('create patient requested', { newName, newPatientId, newStatus });
     closeNewPatientModal();
   };
- 
+
   let patientDisplay;
- 
+
   if (isLoading) {
     patientDisplay = <Loader />;
   } else if (error) {
     patientDisplay = <Body1>{error}</Body1>;
   } else if (filteredPatients.length === 0) {
-    patientDisplay = <Body1>No patients matching filter.</Body1>
+    patientDisplay = <Body1>No patients matching filter.</Body1>;
   } else if (view === 'grid') {
     patientDisplay = (
       <div className="patient-grid">
@@ -127,7 +120,7 @@ export default function PatientsPage() {
               <Header6>{patient.name}</Header6>
               <Body2>Patient ID: {patient.displayId}</Body2>
             </div>
- 
+
             <div className="patient-tile-footer">
               <Body2 bold>{patient.status}</Body2>
               <ChevronRight size={18} strokeWidth={2.5} />
@@ -150,7 +143,7 @@ export default function PatientsPage() {
                 <Body1>{patient.name}</Body1>
                 <Body2>Patient ID: {patient.displayId}</Body2>
               </div>
- 
+
               <div className="patient-card-status">
                 <Body2 bold>{patient.status}</Body2>
                 <ChevronRight size={18} strokeWidth={2.5} />
@@ -161,14 +154,14 @@ export default function PatientsPage() {
       </div>
     );
   }
- 
+
   return (
     <div className="page">
       <div className="patients-header">
         <div className="overview-greeting">
           <Header2>Patients Overview</Header2>
         </div>
- 
+
         <div className="view-toggle">
           <IconButton
             icon={LayoutGrid}
@@ -182,7 +175,7 @@ export default function PatientsPage() {
           />
         </div>
       </div>
- 
+
       <div className="patients-controls">
         <div className="patients-controls-top">
           <SearchBar
@@ -191,10 +184,19 @@ export default function PatientsPage() {
             onChange={e => setSearch(e.target.value)}
             onClear={() => setSearch('')}
           />
- 
-          <Button variant="default" size="sm" leftIcon={Plus} onClick={() => setIsNewPatientOpen(true)}>
-            New Patient
-          </Button>
+          <div className="mini">
+            <IconButton size="md" icon={UserRoundPlus} onClick={() => setIsNewPatientOpen(true)} />
+          </div>
+          <div className="full">
+            <Button
+              variant="default"
+              size="sm"
+              leftIcon={Plus}
+              onClick={() => setIsNewPatientOpen(true)}
+            >
+              New Patient
+            </Button>
+          </div>
         </div>
         <div className="notification-filters">
           {statusFilters.map(({ value, label }) => (
@@ -212,9 +214,9 @@ export default function PatientsPage() {
           ))}
         </div>
       </div>
- 
+
       {patientDisplay}
- 
+
       <Modal
         opened={isNewPatientOpen}
         onClose={closeNewPatientModal}
@@ -230,7 +232,7 @@ export default function PatientsPage() {
             value={newName}
             onChange={value => setNewName(String(value))}
           />
- 
+
           <Input
             variant="single-line"
             label="Patient ID"
@@ -238,7 +240,7 @@ export default function PatientsPage() {
             value={newPatientId}
             onChange={value => setNewPatientId(String(value))}
           />
- 
+
           <DropdownList
             label="Status"
             placeholder="Select a status"
@@ -246,7 +248,7 @@ export default function PatientsPage() {
             data={['Unstable', 'Warning', 'Stable']}
             onChange={value => setNewStatus(value as PatientStatus)}
           />
- 
+
           <Button variant="default" onClick={createPatient}>
             Create Patient
           </Button>

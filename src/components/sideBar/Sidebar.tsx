@@ -45,7 +45,7 @@ export function Sidebar({
   async function handleLogout() {
     try {
       await signOut(auth);
-      navigate('/login');
+      navigate('/', { replace: true });
     } catch (error) {
       console.error('Unable to sign out', error);
     }
