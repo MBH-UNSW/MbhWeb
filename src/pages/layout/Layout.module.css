@@ -1,0 +1,28 @@
+.layout {
+  min-height: 100vh;
+}
+
+.main {
+  margin-left: var(--sidebar-width);
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+.main.collapsed {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .main {
+    margin-left: var(--sidebar-tablet-width);
+  }
+  .main.collapsed {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .main, .main.collapsed {
+    margin-left: 0;
+  }
+}

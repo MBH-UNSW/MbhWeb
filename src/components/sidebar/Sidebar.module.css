@@ -1,0 +1,316 @@
+/* FYI: If you need to change the width of this component, layout.tsx must also be updated. */
+.sideBar {
+  width: var(--sidebar-width);
+	height: 100dvh;
+	position: fixed;
+	inset: 0 auto 0 0;
+  z-index: 100;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding: 2.4vw 1.6vw;
+	background: var(--mantine-color-ubhNeutral-0);
+  transition: width 0.1s ease, transform 0.25s ease;
+}
+
+.expanded {
+  width: var(--sidebar-width);
+}
+
+.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.header {
+  display: flex;
+  /* flex-direction: column; */
+	align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+	padding: 1vw 1.6vw 1.6vw;
+  min-height: 6dvh;
+}
+
+.full,
+.mini {
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.full {
+  display: flex;
+}
+
+.mini {
+  display: none;
+}
+
+.collapsed .full {
+  display: none;
+}
+
+.collapsed .mini {
+  display: flex;
+}
+
+.divider {
+	height: 2px;
+  flex-shrink: 0;
+	background: var(--mantine-color-ubhNeutral-2);
+	margin: 1dvh 2dvw;
+  border-radius: var(--mantine-radius-xs);
+}
+
+.sideBarMain {
+  padding-top: var(--mantine-spacing-sm);
+	display: flex;
+	flex-direction: column;
+	gap: var(--mantine-spacing-md);
+}
+
+.link {
+	display: flex;
+	align-items: center;
+	gap: var(--mantine-spacing-lg);
+	padding: 1.6vw 2vw;
+	border-radius: var(--mantine-radius-xl);
+  color: var(--mantine-color-ubhNeutral-9);
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-semibold);
+  line-height: var(--mantine-line-height-sm);
+  cursor: pointer;
+	text-decoration: none;
+	transition: color 0.15s ease;
+}
+
+.link span {
+  flex: 1;
+  min-width: 0;
+}
+
+.link:hover {
+	background-color: var(--mantine-color-ubhNeutral-2);
+}
+
+.linkIcon {
+	flex-shrink: 0;
+}
+
+.active {
+	background-color: var(--mantine-color-ubhRed-8);
+	color: var(--mantine-color-ubhNeutral-0);
+}
+
+.active:hover {
+	background-color: var(--mantine-color-ubhRed-8);
+}
+
+.collapsed .link {
+  justify-content: center;
+}
+
+.collapsed .link span {
+  display: none;
+}
+
+.footerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: auto;
+}
+
+.footerWrapper button:last-of-type {
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--mantine-spacing-lg);
+  padding: 1.6vw 2vw;
+  border-radius: var(--mantine-radius-lg);
+  background: transparent;
+  color: var(--mantine-color-ubhNeutral-9);
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-semibold);
+  line-height: var(--mantine-line-height-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.footerWrapper button:last-of-type:hover {
+  background: var(--mantine-color-ubhNeutral-2);
+}
+
+.collapsed .footerWrapper .full {
+  display: none;
+}
+
+.collapsed .footerWrapper .mini {
+  display: flex;
+}
+
+.mobileTopbar {
+  display: none;
+  background: var(--mantine-color-ubhNeutral-2);
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  padding: 5rem;
+}
+
+.topbarLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.topbarLogo svg {
+  display: block;
+  width: auto;
+  height: 2rem;
+  max-width: 100%;
+}
+
+.tabletMenuButton,
+.phoneMenuButton {
+  display: none;
+}
+
+.sidebarToggle {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .mobileTopbar {
+    display: flex;
+    z-index: 210;
+    min-height: 3.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .tabletMenuButton {
+    display: flex;
+  }
+
+  .sideBar {
+    width: var(--sidebar-tablet-width);
+    height: 100dvh;
+    padding: 1rem 0.5rem;
+    z-index: 200;
+
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 0.25s ease, visibility 0.25s ease;
+  }
+
+  .sideBar.collapsed {
+    transform: translateX(-100%);
+    visibility: hidden;
+  }
+
+  .sideBar .full {
+    display: none;
+  }
+
+  .sideBar .mini {
+    display: flex;
+  }
+
+  .sideBar .link {
+    justify-content: center;
+  }
+
+  .sideBar .link span {
+    display: none;
+  }
+
+  .sideBar .footerWrapper > :first-child {
+    display: none;
+  }
+
+  .mobileTopbar.tabletSidebarVisible {
+    z-index: 0;
+  }
+
+  .mobileTopbar.tabletSidebarVisible .topbarLogo {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileTopbar {
+    display: flex;
+    z-index: 300;
+    width: auto;
+    min-height: 0;
+    padding: 0.5rem;
+    justify-content: space-between;
+  }
+
+  .mobileTopbar:has(+ .sideBar.mobileOpen) {
+    background: transparent;
+  }
+
+  .mobileTopbar:has(+ .sideBar.mobileOpen) .topbarLogo {
+    opacity: 0;
+  }
+
+  .phoneMenuButton {
+    display: flex;
+  }
+
+  .sideBar {
+    width: 100%;
+    height: 100dvh;
+    padding: 5rem 1.25rem 1.5rem;
+    z-index: 200;
+
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.25s ease, visibility 0.25s ease;
+  }
+
+  .sideBar.mobileOpen {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .sideBar .full {
+    display: flex;
+  }
+
+  .sideBar .mini {
+    display: none;
+  }
+
+  .sideBar .full svg {
+    height: 7rem;
+  }
+
+  .sideBar .link {
+    justify-content: flex-start;
+    padding: 18px 12px;
+  }
+
+  .sideBar .link span {
+    display: flex;
+  }
+
+  .sideBar .footerWrapper > :first-child {
+    display: none;
+  }
+
+  .sideBar .footerWrapper .full {
+    display: flex;
+  }
+
+  .sideBar .footerWrapper .mini {
+    display: none;
+  }
+}
