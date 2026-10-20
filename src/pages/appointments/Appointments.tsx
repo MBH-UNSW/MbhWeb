@@ -9,7 +9,7 @@ import { Calendar } from '../../components/calendar/Calendar';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowLeft, ArrowRight, Info, Pencil, Plus } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarPlus, Info, Pencil, Plus } from 'lucide-react';
 
 import { Modal, Select, TextInput, Textarea } from '@mantine/core';
 
@@ -284,7 +284,7 @@ export default function AppointmentsPage() {
       <div className="appointments-layout">
         <div className="appointments-main">
           <div className="card today-summary-card">
-            <Header5>Today&apos;s Appointments</Header5>
+            <Header5>Today's Appointments</Header5>
             <div className="today-summary-actions">
               <Button
                 variant="outlined"
@@ -296,12 +296,12 @@ export default function AppointmentsPage() {
                   }
                 }}
               >
-                View Next Appointment Details
+                View Next Appointment
               </Button>
               <Button
                 variant="default"
                 size="sm"
-                leftIcon={Plus}
+                leftIcon={CalendarPlus}
                 onClick={() => setIsNewAppointmentOpen(true)}
               >
                 New Appointment
@@ -315,7 +315,7 @@ export default function AppointmentsPage() {
         </div>
  
         <div className="card schedule-panel">
-          <Body2>Today&apos;s Schedule</Body2>
+          <Body2>Today's Schedule</Body2>
           <Header4>{formatFullDate(selectedDate)}</Header4>
  
           <div className="day-picker">
