@@ -1,5 +1,6 @@
 import { Loader, Select } from '@mantine/core';
 import { ChevronDown } from 'lucide-react';
+
 import classes from './DropdownList.module.css';
 
 type DropdownProps = {

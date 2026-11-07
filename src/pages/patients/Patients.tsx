@@ -1,22 +1,19 @@
 import '../Page.css';
 import './Patients.css';
-import { Header2, Header4, Header6 } from '../../components/typography/Header';
-import { Body1, Body2 } from '../../components/typography/Body';
-import { Button } from '../../components/buttons/Button';
-import { IconButton } from '../../components/buttons/IconButton';
-import { SearchBar } from '../../components/searchBar/SearchBar';
-import { Input } from '../../components/input/Input';
-import { DropdownList } from '../../components/dropdownList/DropdownList';
 
 import { Loader, Modal } from '@mantine/core';
-
+import { ChevronRight, LayoutGrid, List as ListIcon, UserRoundPlus,X } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { LayoutGrid, List as ListIcon, ChevronRight, X, UserRoundPlus } from 'lucide-react';
-
 import { type PatientStatus, type PatientSummary } from '../../api/patientApi';
-
+import { Button } from '../../components/buttons/Button';
+import { IconButton } from '../../components/buttons/IconButton';
+import { DropdownList } from '../../components/dropdownList/DropdownList';
+import { Input } from '../../components/input/Input';
+import { SearchBar } from '../../components/searchBar/SearchBar';
+import { Body1, Body2 } from '../../components/typography/Body';
+import { Header2, Header4, Header6 } from '../../components/typography/Header';
 import { usePatients } from '../../hooks/usePatient';
 
 // TODO: make a proper component class for cards.

@@ -1,10 +1,11 @@
 import {
   getPatient,
-  listPatients,
   type GetPatientData,
+  listPatients,
   type ListPatientsData,
 } from '@mbh/dataconnect';
 import { httpsCallable } from 'firebase/functions';
+
 import { functions } from '../firebase/client';
 
 export type PatientStatus = 'Stable' | 'Warning' | 'Unstable';

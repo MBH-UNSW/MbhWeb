@@ -1,14 +1,13 @@
 import '../Page.css';
 import './Settings.css';
 
-import { Header2, Header4 } from '../../components/typography/Header';
-import { Body1, Body2, Caption } from '../../components/typography/Body';
-import { Button } from '../../components/buttons/Button';
-import { ToggleSwitch } from '../../components/toggle/Toggle';
-
+import { Modal, PasswordInput } from '@mantine/core';
 import { useState } from 'react';
 
-import { Modal, PasswordInput } from '@mantine/core';
+import { Button } from '../../components/buttons/Button';
+import { ToggleSwitch } from '../../components/toggle/Toggle';
+import { Body1, Body2, Caption } from '../../components/typography/Body';
+import { Header2, Header4 } from '../../components/typography/Header';
 
 // Mock state until there's a real settings/account API to read from and write to.
 export default function SettingsPage() {

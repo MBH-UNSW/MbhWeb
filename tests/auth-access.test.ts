@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+
 import { hasActiveStaffProfile, isStaffRole } from '../src/auth/access.ts';
 
 test('only clinician and nurse claims grant portal access', () => {

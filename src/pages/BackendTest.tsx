@@ -1,8 +1,9 @@
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+
 import { Button } from '../components/buttons/Button';
-import { Header1 } from '../components/typography/Header';
 import { Body1 } from '../components/typography/Body';
+import { Header1 } from '../components/typography/Header';
 
 export default function TestPage() {
   const navigate = useNavigate();

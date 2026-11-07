@@ -1,20 +1,18 @@
 import '../Page.css';
 import './Appointments.css';
-import { Header2, Header5, Header4, Header6 } from '../../components/typography/Header';
-import { Body1, Body2 } from '../../components/typography/Body';
-import { Button } from '../../components/buttons/Button';
-import { IconButton } from '../../components/buttons/IconButton';
-import { Calendar } from '../../components/calendar/Calendar';
 
+import { Modal, Select, Textarea,TextInput } from '@mantine/core';
+import { ArrowLeft, ArrowRight, CalendarPlus, Info, Pencil } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowLeft, ArrowRight, CalendarPlus, Info, Pencil } from 'lucide-react';
-
-import { Modal, Select, TextInput, Textarea } from '@mantine/core';
-
 // just going to mock data with same output type as our database
 import { type PatientSummary } from '../../api/patientApi';
+import { Button } from '../../components/buttons/Button';
+import { IconButton } from '../../components/buttons/IconButton';
+import { Calendar } from '../../components/calendar/Calendar';
+import { Body1, Body2 } from '../../components/typography/Body';
+import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
 
 // Appointment tab specific interfaces/structs
 type AppointmentStatus = 'Scheduled' | 'In Progress' | 'Completed' | 'Cancelled';

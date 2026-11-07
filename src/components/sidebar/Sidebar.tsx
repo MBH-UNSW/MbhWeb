@@ -1,22 +1,23 @@
-import classes from './Sidebar.module.css';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase/client';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
-  House,
-  SquareActivity,
   Calendar,
-  UserRound,
-  MessageSquare,
-  Settings,
+  House,
   LogOut,
   Menu,
+  MessageSquare,
+  Settings,
+  SquareActivity,
+  UserRound,
   X,
 } from 'lucide-react';
-import { Logo, FullLogo } from '../icons/Logo';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../../auth/useAuth';
+import { auth } from '../../firebase/client';
 import { Button } from '../buttons/Button';
 import { IconButton } from '../buttons/IconButton';
+import { FullLogo,Logo } from '../icons/Logo';
+import classes from './Sidebar.module.css';
 
 type sidebarProps = {
   collapsed: boolean;

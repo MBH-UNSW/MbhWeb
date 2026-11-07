@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+
 import {
-  fetchPatients,
-  type PatientSummary,
   fetchPatient,
+  fetchPatients,
   type PatientDetails,
+  type PatientSummary,
 } from '../api/patientApi';
 
 export function usePatients() {

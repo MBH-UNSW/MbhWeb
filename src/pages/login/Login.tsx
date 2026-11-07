@@ -1,15 +1,17 @@
 import '../Page.css';
 import './Login.css';
-import { type FormEvent, useEffect, useState } from 'react';
+
 import { FirebaseError } from 'firebase/app';
 import { sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { type FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Logo } from '../../components/icons/Logo';
-import { Header3, Header5, Header6 } from '../../components/typography/Header';
-import { Input } from '../../components/input/Input';
-import { Button } from '../../components/buttons/Button';
-import { auth } from '../../firebase/client';
+
 import { useAuth } from '../../auth/useAuth';
+import { Button } from '../../components/buttons/Button';
+import { Logo } from '../../components/icons/Logo';
+import { Input } from '../../components/input/Input';
+import { Header3, Header5, Header6 } from '../../components/typography/Header';
+import { auth } from '../../firebase/client';
 
 const NURSE_DEMO_EMAIL = 'clinician2@ubh.com.au';
 const NURSE_DEMO_PASSWORD = 'clinician';

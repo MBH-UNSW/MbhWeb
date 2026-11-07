@@ -1,6 +1,6 @@
 import { createTheme } from '@mantine/core';
 
-import { ubhRed, ubhBlue, ubhNeutral } from './colors';
+import { ubhBlue, ubhNeutral,ubhRed } from './colors';
 import { typography } from './typography';
 
 export const theme = createTheme({

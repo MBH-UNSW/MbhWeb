@@ -1,15 +1,17 @@
 import '../Page.css';
 import './Profile.css';
-import { useState } from 'react';
+
 import { Modal } from '@mantine/core';
 import { UserPen } from 'lucide-react';
-import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
-import { Body2 } from '../../components/typography/Body';
+import { useState } from 'react';
+
 import { Avatar } from '../../components/avatar/Avatar';
+import { Button } from '../../components/buttons/Button';
 import { IconButton } from '../../components/buttons/IconButton';
 import { DropdownList } from '../../components/dropdownList/DropdownList';
 import { Input } from '../../components/input/Input';
-import { Button } from '../../components/buttons/Button';
+import { Body2 } from '../../components/typography/Body';
+import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
 
 type Role = 'Clinician' | 'Nurse';
 type Status = 'online' | 'offline';

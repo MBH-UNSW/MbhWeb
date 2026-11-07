@@ -1,4 +1,5 @@
 import { Checkbox } from '@mantine/core';
+
 import classes from './Checkbox.module.css';
 
 type CheckboxProps = {

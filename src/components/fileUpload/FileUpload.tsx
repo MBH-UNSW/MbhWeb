@@ -1,7 +1,8 @@
-import { Upload, FileText, Camera, CheckCircle } from 'lucide-react';
+import { Camera, CheckCircle,FileText, Upload } from 'lucide-react';
+import { useRef } from 'react';
+
 import { CircleAlertFilled } from '../icons/CircleAlertFilled';
 import { CircleXFilled } from '../icons/CircleXFilled';
-import { useRef } from 'react';
 import classes from './FileUpload.module.css';
 
 type FileUploadVariant = 'click' | 'drag' | 'camera';
