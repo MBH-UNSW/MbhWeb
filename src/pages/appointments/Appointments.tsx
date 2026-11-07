@@ -9,7 +9,7 @@ import { Calendar } from '../../components/calendar/Calendar';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowLeft, ArrowRight, CalendarPlus, Info, Pencil, Plus } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarPlus, Info, Pencil } from 'lucide-react';
 
 import { Modal, Select, TextInput, Textarea } from '@mantine/core';
 

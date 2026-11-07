@@ -176,19 +176,13 @@ export default function DashboardPage() {
         <Header2>
           Good {timePeriod},{' '}
           <span className="greeting">
-            {isLoading
-              ? 'Loading...'
-              : clinician
-                ? `Dr. ${clinician.firstName}!`
-                : 'Welcome!'}
+            {isLoading ? 'Loading...' : clinician ? `Dr. ${clinician.firstName}!` : 'Welcome!'}
           </span>
         </Header2>
 
         {error && <Body2>{error}</Body2>}
 
-        <Header5>
-          You have {totalPatients} patients under your care.
-        </Header5>
+        <Header5>You have {totalPatients} patients under your care.</Header5>
       </div>
       <div className="dashboard-card-container">
         <div className={`dashboard-card ${urgentCareStatus}`}>

@@ -185,7 +185,12 @@ export default function PatientsPage() {
             onClear={() => setSearch('')}
           />
           <div className="mini">
-            <IconButton icon={UserRoundPlus} tooltip='Add new patient' size="md" onClick={() => setIsNewPatientOpen(true)} />
+            <IconButton
+              icon={UserRoundPlus}
+              tooltip="Add new patient"
+              size="md"
+              onClick={() => setIsNewPatientOpen(true)}
+            />
           </div>
           <div className="full">
             <Button
