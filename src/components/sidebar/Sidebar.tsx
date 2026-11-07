@@ -108,7 +108,7 @@ export function Sidebar({
         </div>
       </header>
       <nav
-        className={`${classes.sideBar} ${collapsed ? classes.collapsed : classes.expanded} ${mobileOpen ? classes.mobileOpen : ''}`}
+        className={`${classes.sidebar} ${collapsed ? classes.collapsed : classes.expanded} ${mobileOpen ? classes.mobileOpen : ''}`}
       >
         <div className={classes.header}>
           <div className={classes.full}>
@@ -120,7 +120,7 @@ export function Sidebar({
         </div>
 
         <div className={classes.divider} />
-        <div className={classes.sideBarMain}>{links}</div>
+        <div className={classes.sidebarMain}>{links}</div>
         <div className={classes.footerWrapper}>
           <IconButton
             tooltip={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
