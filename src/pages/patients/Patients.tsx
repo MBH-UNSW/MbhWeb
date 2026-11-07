@@ -2,7 +2,7 @@ import '../Page.css';
 import './Patients.css';
 
 import { Loader, Modal } from '@mantine/core';
-import { ChevronRight, LayoutGrid, List as ListIcon, UserRoundPlus,X } from 'lucide-react';
+import { ChevronRight, LayoutGrid, List as ListIcon, UserRoundPlus, X } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

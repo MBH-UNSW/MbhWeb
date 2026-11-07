@@ -2,8 +2,8 @@ import '../Page.css';
 import './PatientDetail.css';
 
 import { Modal, Tooltip } from '@mantine/core';
-import { ArrowLeft, ArrowUpDown, Download, FileText,Filter, Info, Maximize2 } from 'lucide-react';
-import { useEffect, useRef,useState } from 'react';
+import { ArrowLeft, ArrowUpDown, Download, FileText, Filter, Info, Maximize2 } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/buttons/Button';

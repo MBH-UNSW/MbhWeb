@@ -1,4 +1,4 @@
-import { Loader,TextInput } from '@mantine/core';
+import { Loader, TextInput } from '@mantine/core';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
 

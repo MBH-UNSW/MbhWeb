@@ -1,4 +1,4 @@
-import { Camera, CheckCircle,FileText, Upload } from 'lucide-react';
+import { Camera, CheckCircle, FileText, Upload } from 'lucide-react';
 import { useRef } from 'react';
 
 import { CircleAlertFilled } from '../icons/CircleAlertFilled';

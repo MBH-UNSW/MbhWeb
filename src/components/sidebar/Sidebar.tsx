@@ -16,7 +16,7 @@ import { useAuth } from '../../auth/useAuth';
 import { auth } from '../../firebase/client';
 import { Button } from '../buttons/Button';
 import { IconButton } from '../buttons/IconButton';
-import { FullLogo,Logo } from '../icons/Logo';
+import { FullLogo, Logo } from '../icons/Logo';
 import classes from './Sidebar.module.css';
 
 type sidebarProps = {

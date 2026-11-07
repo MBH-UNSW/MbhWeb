@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
-import { clearClinicianCache, type ClinicianDetails,fetchClinician } from '../api/clinicianApi';
+import { clearClinicianCache, type ClinicianDetails, fetchClinician } from '../api/clinicianApi';
 import { auth } from '../firebase/client';
 
 export function useClinician() {

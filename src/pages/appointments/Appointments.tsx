@@ -1,7 +1,7 @@
 import '../Page.css';
 import './Appointments.css';
 
-import { Modal, Select, Textarea,TextInput } from '@mantine/core';
+import { Modal, Select, Textarea, TextInput } from '@mantine/core';
 import { ArrowLeft, ArrowRight, CalendarPlus, Info, Pencil } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

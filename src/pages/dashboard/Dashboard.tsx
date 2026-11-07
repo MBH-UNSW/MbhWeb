@@ -2,7 +2,7 @@
 import '../Page.css';
 import './Dashboard.css';
 
-import { HeartHandshake,HeartPulse, ListChecks } from 'lucide-react';
+import { HeartHandshake, HeartPulse, ListChecks } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

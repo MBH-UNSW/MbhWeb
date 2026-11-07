@@ -1,4 +1,4 @@
-import { Divider,Title } from '@mantine/core';
+import { Divider, Title } from '@mantine/core';
 
 type HeaderAlign = 'left' | 'center' | 'right';
 
