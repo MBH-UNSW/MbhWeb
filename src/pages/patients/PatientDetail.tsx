@@ -1,19 +1,17 @@
 import '../Page.css';
 import './PatientDetail.css';
-import { Header3, Header4 } from '../../components/typography/Header';
-import { Body1 } from '../../components/typography/Body';
-import { Button } from '../../components/buttons/Button';
-import { IconButton } from '../../components/buttons/IconButton';
-import { SearchBar } from '../../components/searchBar/SearchBar';
-
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { ArrowLeft, Info, Maximize2, Filter, Download, ArrowUpDown, FileText } from 'lucide-react';
-import { LiveSensorChart } from '../../components/liveSensorChart/LiveSensorChart';
 
 import { Modal, Tooltip } from '@mantine/core';
+import { ArrowLeft, ArrowUpDown, Download, FileText, Filter, Info, Maximize2 } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { Button } from '../../components/buttons/Button';
+import { IconButton } from '../../components/buttons/IconButton';
+import { LiveSensorChart } from '../../components/liveSensorChart/LiveSensorChart';
+import { SearchBar } from '../../components/searchBar/SearchBar';
+import { Body1 } from '../../components/typography/Body';
+import { Header3, Header4 } from '../../components/typography/Header';
 import { usePatient } from '../../hooks/usePatient';
 
 type DetailTab = 'sensor' | 'logbook' | 'documents' | 'general';

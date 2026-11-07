@@ -1,8 +1,9 @@
-import { TextInput, Textarea, NumberInput, Loader, PasswordInput } from '@mantine/core';
+import { Loader, NumberInput, PasswordInput, Textarea, TextInput } from '@mantine/core';
 import { AtSign, Eye, EyeClosed, LockKeyhole } from 'lucide-react';
+import { useState } from 'react';
+
 import { CircleAlertFilled } from '../icons/CircleAlertFilled';
 import classes from './Input.module.css';
-import { useState } from 'react';
 
 type InputVariant = 'single-line' | 'multi-line' | 'numeric' | 'email' | 'phone' | 'password';
 

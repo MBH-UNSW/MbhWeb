@@ -1,3 +1,24 @@
+import { Box } from '@mantine/core';
+import { X } from 'lucide-react'; // placeholder, maybe we can move this into individual wrapper for icons.
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Avatar } from '../components/avatar/Avatar';
+import { Button } from '../components/buttons/Button';
+import { IconButton } from '../components/buttons/IconButton';
+import { Calendar } from '../components/calendar/Calendar';
+import { CheckboxInput } from '../components/checkbox/Checkbox';
+import { DropdownList } from '../components/dropdownList/DropdownList';
+import { FileUpload } from '../components/fileUpload/FileUpload';
+import { Input } from '../components/input/Input';
+import { LoadingBar } from '../components/loadingBar/LoadingBar';
+import { NumberedPagination } from '../components/pagination/Pagination';
+import { Passcode } from '../components/passcode/Passcode';
+import { PillInput } from '../components/pill/Pill';
+import { RadioInput } from '../components/radio/Radio';
+import { SearchBar } from '../components/searchBar/SearchBar';
+import { ToggleSwitch } from '../components/toggle/Toggle';
+import { Body1, Body2, Caption } from '../components/typography/Body';
 import {
   Header1,
   Header2,
@@ -7,27 +28,6 @@ import {
   Header6,
   SectionHeader,
 } from '../components/typography/Header';
-import { Body1, Body2, Caption } from '../components/typography/Body';
-import { Input } from '../components/input/Input';
-import { SearchBar } from '../components/searchBar/SearchBar';
-import { useState } from 'react';
-import { Button } from '../components/buttons/Button';
-import { DropdownList } from '../components/dropdownList/DropdownList';
-import { CheckboxInput } from '../components/checkbox/Checkbox';
-
-import { X } from 'lucide-react'; // placeholder, maybe we can move this into individual wrapper for icons.
-import { Box } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
-import { RadioInput } from '../components/radio/Radio';
-import { ToggleSwitch } from '../components/toggle/Toggle';
-import { PillInput } from '../components/pill/Pill';
-import { IconButton } from '../components/buttons/IconButton';
-import { FileUpload } from '../components/fileUpload/FileUpload';
-import { LoadingBar } from '../components/loadingBar/LoadingBar';
-import { Avatar } from '../components/avatar/Avatar';
-import { NumberedPagination } from '../components/pagination/Pagination';
-import { Passcode } from '../components/passcode/Passcode';
-import { Calendar } from '../components/calendar/Calendar';
 
 export default function AllComponents() {
   const [searchQuery, setSearchQuery] = useState('');

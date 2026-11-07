@@ -1,7 +1,8 @@
-import classes from './Layout.module.css';
-import { Outlet } from 'react-router-dom';
-import { Sidebar } from '../../components/sideBar/Sidebar';
 import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+
+import { Sidebar } from '../../components/sidebar/Sidebar';
+import classes from './Layout.module.css';
 
 // This is the shared page wrapper for side bar.
 export function Layout() {

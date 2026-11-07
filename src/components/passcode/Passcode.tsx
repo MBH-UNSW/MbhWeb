@@ -1,4 +1,5 @@
 import { PinInput } from '@mantine/core';
+
 import classes from './Passcode.module.css';
 
 type PasscodeProps = {

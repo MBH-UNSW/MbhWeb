@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { fetchPatients, type PatientSummary, fetchPatient, type PatientDetails } from '../api/patientApi';
+
+import {
+  fetchPatient,
+  fetchPatients,
+  type PatientDetails,
+  type PatientSummary,
+} from '../api/patientApi';
 
 export function usePatients() {
   const [patients, setPatients] = useState<PatientSummary[]>([]);
@@ -18,11 +24,7 @@ export function usePatients() {
         }
       } catch (error) {
         if (active) {
-          setError(
-            error instanceof Error
-              ? error.message
-              : 'Unable to load patients.',
-          );
+          setError(error instanceof Error ? error.message : 'Unable to load patients.');
         }
       } finally {
         if (active) {
@@ -69,11 +71,7 @@ export function usePatient(pid: string | undefined) {
         }
       } catch (error) {
         if (active) {
-          setError(
-            error instanceof Error
-              ? error.message
-              : 'Unable to load patient.',
-          );
+          setError(error instanceof Error ? error.message : 'Unable to load patient.');
         }
       } finally {
         if (active) {

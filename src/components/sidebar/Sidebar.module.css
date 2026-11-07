@@ -1,5 +1,5 @@
 /* FYI: If you need to change the width of this component, layout.tsx must also be updated. */
-.sideBar {
+.sidebar {
   width: var(--sidebar-width);
 	height: 100dvh;
 	position: fixed;
@@ -63,7 +63,7 @@
   border-radius: var(--mantine-radius-xs);
 }
 
-.sideBarMain {
+.sidebarMain {
   padding-top: var(--mantine-spacing-sm);
 	display: flex;
 	flex-direction: column;
@@ -198,7 +198,7 @@
     display: flex;
   }
 
-  .sideBar {
+  .sidebar {
     width: var(--sidebar-tablet-width);
     height: 100dvh;
     padding: 1rem 0.5rem;
@@ -209,28 +209,28 @@
     transition: transform 0.25s ease, visibility 0.25s ease;
   }
 
-  .sideBar.collapsed {
+  .sidebar.collapsed {
     transform: translateX(-100%);
     visibility: hidden;
   }
 
-  .sideBar .full {
+  .sidebar .full {
     display: none;
   }
 
-  .sideBar .mini {
+  .sidebar .mini {
     display: flex;
   }
 
-  .sideBar .link {
+  .sidebar .link {
     justify-content: center;
   }
 
-  .sideBar .link span {
+  .sidebar .link span {
     display: none;
   }
 
-  .sideBar .footerWrapper > :first-child {
+  .sidebar .footerWrapper > :first-child {
     display: none;
   }
 
@@ -253,11 +253,11 @@
     justify-content: space-between;
   }
 
-  .mobileTopbar:has(+ .sideBar.mobileOpen) {
+  .mobileTopbar:has(+ .sidebar.mobileOpen) {
     background: transparent;
   }
 
-  .mobileTopbar:has(+ .sideBar.mobileOpen) .topbarLogo {
+  .mobileTopbar:has(+ .sidebar.mobileOpen) .topbarLogo {
     opacity: 0;
   }
 
@@ -265,7 +265,7 @@
     display: flex;
   }
 
-  .sideBar {
+  .sidebar {
     width: 100%;
     height: 100dvh;
     padding: 5rem 1.25rem 1.5rem;
@@ -276,41 +276,41 @@
     transition: transform 0.25s ease, visibility 0.25s ease;
   }
 
-  .sideBar.mobileOpen {
+  .sidebar.mobileOpen {
     transform: translateX(0);
     visibility: visible;
   }
 
-  .sideBar .full {
+  .sidebar .full {
     display: flex;
   }
 
-  .sideBar .mini {
+  .sidebar .mini {
     display: none;
   }
 
-  .sideBar .full svg {
+  .sidebar .full svg {
     height: 7rem;
   }
 
-  .sideBar .link {
+  .sidebar .link {
     justify-content: flex-start;
     padding: 18px 12px;
   }
 
-  .sideBar .link span {
+  .sidebar .link span {
     display: flex;
   }
 
-  .sideBar .footerWrapper > :first-child {
+  .sidebar .footerWrapper > :first-child {
     display: none;
   }
 
-  .sideBar .footerWrapper .full {
+  .sidebar .footerWrapper .full {
     display: flex;
   }
 
-  .sideBar .footerWrapper .mini {
+  .sidebar .footerWrapper .mini {
     display: none;
   }
 }

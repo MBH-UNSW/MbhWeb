@@ -1,8 +1,8 @@
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { type LucideIcon, type LucideProps, X } from 'lucide-react';
 
-import classes from './IconButton.module.css';
 import { Caption } from '../typography/Body';
+import classes from './IconButton.module.css';
 
 type IconButtonVariant = 'default' | 'outlined' | 'text';
 

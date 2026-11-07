@@ -1,18 +1,19 @@
-import { Routes, Route } from 'react-router-dom';
-import { Layout } from './pages/layout/Layout';
+import { Route, Routes } from 'react-router-dom';
+
+import { PageTitle } from './components/pageTitle/PageTitle';
 import AllComponents from './pages/AllComponents';
+import AppointmentsPage from './pages/appointments/Appointments';
 import TestPage from './pages/BackendTest';
 import DashboardPage from './pages/dashboard/Dashboard';
+import { Layout } from './pages/layout/Layout';
 import LoginPage from './pages/login/Login';
-import PatientsPage from './pages/patients/Patients';
-import PatientDetail from './pages/patients/PatientDetail';
-import AppointmentsPage from './pages/appointments/Appointments';
-import ProfilePage from './pages/profile/Profile';
-import SettingsPage from './pages/settings/Settings';
-import { PageTitle } from './components/pageTitle/PageTitle';
-import { ProtectedRoute } from './pages/ProtectedRoute';
-import MessagesPage from './pages/messages/Messages';
 import ConversationPage from './pages/messages/Conversation';
+import MessagesPage from './pages/messages/Messages';
+import PatientDetail from './pages/patients/PatientDetail';
+import PatientsPage from './pages/patients/Patients';
+import ProfilePage from './pages/profile/Profile';
+import { ProtectedRoute } from './pages/ProtectedRoute';
+import SettingsPage from './pages/settings/Settings';
 
 function App() {
   return (

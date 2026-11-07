@@ -1,9 +1,8 @@
-import dayjs from 'dayjs';
 import { Calendar as MantineCalendar } from '@mantine/dates';
+import dayjs from 'dayjs';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import classes from './Calendar.module.css';
-
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type CalendarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

@@ -1,10 +1,11 @@
 import {
   getPatient,
-  listPatients,
   type GetPatientData,
+  listPatients,
   type ListPatientsData,
 } from '@mbh/dataconnect';
 import { httpsCallable } from 'firebase/functions';
+
 import { functions } from '../firebase/client';
 
 export type PatientStatus = 'Stable' | 'Warning' | 'Unstable';
@@ -22,10 +23,10 @@ export interface PatientSummary {
 // The local generated SDK predates the patientCode field.
 export type PatientDetails = NonNullable<GetPatientData['patient']> & PatientCodeField;
 
-const getPatientDisplayCode = httpsCallable<
-  { pid: string },
-  { pid: string; patientCode: string }
->(functions, 'getPatientDisplayCode');
+const getPatientDisplayCode = httpsCallable<{ pid: string }, { pid: string; patientCode: string }>(
+  functions,
+  'getPatientDisplayCode',
+);
 
 function formatStatus(status: string): PatientStatus {
   switch (status.toUpperCase()) {
@@ -38,7 +39,9 @@ function formatStatus(status: string): PatientStatus {
   }
 }
 
-async function resolvePatientCode(patient: { pid: string } & PatientCodeField): Promise<string | null> {
+async function resolvePatientCode(
+  patient: { pid: string } & PatientCodeField,
+): Promise<string | null> {
   if (patient.patientCode) return patient.patientCode;
 
   try {

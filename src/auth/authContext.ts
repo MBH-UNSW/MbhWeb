@@ -1,5 +1,6 @@
-import { createContext } from 'react';
 import { type User } from 'firebase/auth';
+import { createContext } from 'react';
+
 import type { StaffProfile } from '../services/staffPortal';
 import type { StaffRole } from './access';
 

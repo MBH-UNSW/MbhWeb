@@ -1,17 +1,19 @@
 import '../Page.css';
 import './Conversation.css';
+
+import { Paperclip, Send } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { conversations as initialConversations, messages } from './mockData';
-import { Header3 } from '../../components/typography/Header';
+
+import { Avatar } from '../../components/avatar/Avatar';
+import { Button } from '../../components/buttons/Button';
+import { IconButton } from '../../components/buttons/IconButton';
+import { Input } from '../../components/input/Input';
+import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { PillInput } from '../../components/pill/Pill';
 import { Body1 } from '../../components/typography/Body';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
-import { Button } from '../../components/buttons/Button';
-import { useRef, useState } from 'react';
-import { Avatar } from '../../components/avatar/Avatar';
-import { IconButton } from '../../components/buttons/IconButton';
-import { Paperclip, Send } from 'lucide-react';
-import { Input } from '../../components/input/Input';
+import { Header3 } from '../../components/typography/Header';
+import { conversations as initialConversations, messages } from './mockData';
 
 type Status = 'online' | 'offline';
 

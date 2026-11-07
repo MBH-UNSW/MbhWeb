@@ -1,22 +1,23 @@
-import classes from './Sidebar.module.css';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase/client';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
-  House,
-  SquareActivity,
   Calendar,
-  UserRound,
-  MessageSquare,
-  Settings,
+  House,
   LogOut,
   Menu,
+  MessageSquare,
+  Settings,
+  SquareActivity,
+  UserRound,
   X,
 } from 'lucide-react';
-import { Logo, FullLogo } from '../icons/Logo';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../../auth/useAuth';
+import { auth } from '../../firebase/client';
 import { Button } from '../buttons/Button';
 import { IconButton } from '../buttons/IconButton';
+import { FullLogo, Logo } from '../icons/Logo';
+import classes from './Sidebar.module.css';
 
 type sidebarProps = {
   collapsed: boolean;
@@ -108,7 +109,7 @@ export function Sidebar({
         </div>
       </header>
       <nav
-        className={`${classes.sideBar} ${collapsed ? classes.collapsed : classes.expanded} ${mobileOpen ? classes.mobileOpen : ''}`}
+        className={`${classes.sidebar} ${collapsed ? classes.collapsed : classes.expanded} ${mobileOpen ? classes.mobileOpen : ''}`}
       >
         <div className={classes.header}>
           <div className={classes.full}>
@@ -120,7 +121,7 @@ export function Sidebar({
         </div>
 
         <div className={classes.divider} />
-        <div className={classes.sideBarMain}>{links}</div>
+        <div className={classes.sidebarMain}>{links}</div>
         <div className={classes.footerWrapper}>
           <IconButton
             tooltip={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}

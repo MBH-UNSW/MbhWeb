@@ -1,14 +1,14 @@
 // import { useNavigate } from 'react-router-dom';
 import '../Page.css';
 import './Dashboard.css';
-import { HeartPulse, ListChecks, HeartHandshake } from 'lucide-react';
-import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
-import { Button } from '../../components/buttons/Button';
-import { Body1, Body2 } from '../../components/typography/Body';
-import { useState } from 'react';
 
+import { HeartHandshake, HeartPulse, ListChecks } from 'lucide-react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Button } from '../../components/buttons/Button';
+import { Body1, Body2 } from '../../components/typography/Body';
+import { Header2, Header4, Header5, Header6 } from '../../components/typography/Header';
 import { useClinician } from '../../hooks/useClinician';
 
 type TimePeriod = 'morning' | 'afternoon' | 'evening' | 'night';
@@ -176,19 +176,13 @@ export default function DashboardPage() {
         <Header2>
           Good {timePeriod},{' '}
           <span className="greeting">
-            {isLoading
-              ? 'Loading...'
-              : clinician
-                ? `Dr. ${clinician.firstName}!`
-                : 'Welcome!'}
+            {isLoading ? 'Loading...' : clinician ? `Dr. ${clinician.firstName}!` : 'Welcome!'}
           </span>
         </Header2>
 
         {error && <Body2>{error}</Body2>}
 
-        <Header5>
-          You have {totalPatients} patients under your care.
-        </Header5>
+        <Header5>You have {totalPatients} patients under your care.</Header5>
       </div>
       <div className="dashboard-card-container">
         <div className={`dashboard-card ${urgentCareStatus}`}>

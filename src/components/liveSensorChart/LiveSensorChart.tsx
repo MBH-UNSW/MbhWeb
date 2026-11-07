@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { sensorSample } from './simulation';
 import './LiveSensorChart.css';
+
+import { useEffect, useRef, useState } from 'react';
+
+import { sensorSample } from './simulation';
 
 interface Props {
   kind: 'flow' | 'pressure';

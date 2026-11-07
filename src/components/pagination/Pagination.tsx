@@ -1,4 +1,5 @@
 import { Pagination } from '@mantine/core';
+
 import classes from './Pagination.module.css';
 
 type PaginationProps = {

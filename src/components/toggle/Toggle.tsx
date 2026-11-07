@@ -1,4 +1,5 @@
 import { Switch } from '@mantine/core';
+
 import classes from './Toggle.module.css';
 
 type ToggleProps = {

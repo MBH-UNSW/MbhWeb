@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
 import { FirebaseError } from 'firebase/app';
 import { onIdTokenChanged, signOut, type User } from 'firebase/auth';
 import { httpsCallable } from 'firebase/functions';
+import { useEffect, useMemo, useState } from 'react';
+
 import { auth, functions } from '../firebase/client';
-import { AuthContext } from './authContext';
 import { getMyStaffProfile, type StaffProfile } from '../services/staffPortal';
 import { hasActiveStaffProfile, isStaffRole, type StaffRole } from './access';
+import { AuthContext } from './authContext';
 
 type CurrentUserProfile = {
   uid: string;

@@ -1,13 +1,8 @@
-
-import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 
+import { clearClinicianCache, type ClinicianDetails, fetchClinician } from '../api/clinicianApi';
 import { auth } from '../firebase/client';
-import {
-  fetchClinician,
-  clearClinicianCache,
-  type ClinicianDetails,
-} from '../api/clinicianApi';
 
 export function useClinician() {
   const [clinician, setClinician] = useState<ClinicianDetails | null>(null);
@@ -45,21 +40,14 @@ export function useClinician() {
 
         async function loadClinician() {
           try {
-            const result = await fetchClinician(
-              user.uid,
-              user.email!,
-            );
+            const result = await fetchClinician(user.uid, user.email!);
 
             if (active && currentRequest === requestId) {
               setClinician(result);
             }
           } catch (error) {
             if (active && currentRequest === requestId) {
-              setError(
-                error instanceof Error
-                  ? error.message
-                  : 'Unable to load clinician.',
-              );
+              setError(error instanceof Error ? error.message : 'Unable to load clinician.');
             }
           } finally {
             if (active && currentRequest === requestId) {

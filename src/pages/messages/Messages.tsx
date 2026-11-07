@@ -1,12 +1,14 @@
 import '../Page.css';
 import './Messages.css';
-import { Plus, MoveDown, MoveUp } from 'lucide-react';
-import { Header3 } from '../../components/typography/Header';
+
+import { MoveDown, MoveUp, Plus } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Button } from '../../components/buttons/Button';
 import { PillInput } from '../../components/pill/Pill';
 import { SearchBar } from '../../components/searchBar/SearchBar';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Header3 } from '../../components/typography/Header';
 import { conversations } from './mockData';
 
 type InboxFilter = 'all' | 'unread' | 'unassigned' | 'archived';

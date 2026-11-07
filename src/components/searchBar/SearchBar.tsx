@@ -1,8 +1,9 @@
+import { Loader, TextInput } from '@mantine/core';
+import { Search } from 'lucide-react';
 import { useState } from 'react';
-import { TextInput, Loader } from '@mantine/core';
+
 import { CircleAlertFilled } from '../icons/CircleAlertFilled';
 import { CircleXFilled } from '../icons/CircleXFilled';
-import { Search } from 'lucide-react';
 import classes from './SearchBar.module.css';
 
 type SearchProps = {

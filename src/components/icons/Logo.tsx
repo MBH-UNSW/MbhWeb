@@ -1,4 +1,5 @@
 import type { SVGProps } from 'react';
+
 import HeartLogo from '../../assets/heartLogo.svg?react';
 import HeartLogoWithText from '../../assets/heartLogoWithText.svg?react';
 

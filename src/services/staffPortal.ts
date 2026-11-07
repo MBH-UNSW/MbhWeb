@@ -1,4 +1,5 @@
 import { executeQuery, getDataConnect, queryRef } from 'firebase/data-connect';
+
 import { firebaseApp } from '../firebase/client';
 
 export type StaffProfile = {

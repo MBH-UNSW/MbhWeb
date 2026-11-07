@@ -1,4 +1,4 @@
-import { ConnectorConfig, DataConnect, QueryRef, QueryPromise, ExecuteQueryOptions, MutationRef, MutationPromise } from 'firebase/data-connect';
+import { ConnectorConfig, DataConnect, ExecuteQueryOptions, MutationPromise,MutationRef, QueryPromise, QueryRef } from 'firebase/data-connect';
 
 export const connectorConfig: ConnectorConfig;
 
