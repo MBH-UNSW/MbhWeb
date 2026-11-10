@@ -1,11 +1,62 @@
 .root {
-  width: 100%;
+  width: fit-content;
+  margin: var(--mantine-spacing-xxs);
+}
+
+.checkbox {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border-radius: var(--mantine-spacing-xxs);
+  border: 1px solid var(--mantine-color-ubhNeutral-7);
+  background-color: var(--mantine-color-ubhNeutral-0);
+  cursor: pointer;
+}
+
+.checkbox:checked:not([data-error]) {
+  border-color: var(--mantine-color-ubhBlue-6);
+  background-color: var(--mantine-color-ubhBlue-6);
+}
+
+.checkbox[data-error]:not(:checked) {
+  background-color: var(--mantine-color-ubhNeutral-0);
+  border-color: var(--mantine-color-ubhRed-3);
+}
+
+.checkbox[data-error]:checked {
+  background-color: var(--mantine-color-ubhRed-3);
+  border-color: var(--mantine-color-ubhRed-3);
+}
+
+.checkbox:disabled {
+  cursor: not-allowed;
+  border-color: var(--mantine-color-ubhNeutral-7);
+  opacity: 0.5;
 }
 
 .label {
-  font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-ubhNeutral-9);
+  line-height: var(--checkbox-size);
+}
+
+.root[data-size='xs'] .label {
+  font-size: var(--mantine-font-size-xs);
+}
+
+.root[data-size='sm'] .label {
+  font-size: var(--mantine-font-size-md);
+}
+
+.root[data-size='md'] .label {
+  font-size: var(--mantine-font-size-md);
+}
+
+.root[data-size='lg'] .label {
+  font-size: var(--mantine-font-size-lg);
+}
+
+.root[data-size='xl'] .label {
+  font-size: var(--mantine-font-size-xl);
 }
 
 .description {
@@ -18,15 +69,4 @@
   font-size: var(--mantine-font-size-xs);
   color: var(--error-text);
   margin-left: var(--mantine-spacing-xxxs);
-}
-
-.checkbox {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.checkbox:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
 }
