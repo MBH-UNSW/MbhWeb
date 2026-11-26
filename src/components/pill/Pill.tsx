@@ -2,13 +2,16 @@ import { Pill } from '@mantine/core';
 
 import classes from './Pill.module.css';
 
-type PillVariant = 'solid' | 'outlined';
+type PillVariant = 'solid' | 'outlined' | 'status';
 type PillSize = 'sm' | 'md' | 'lg';
+export type PillStatus = 'good' | 'critical';
 
 type PillProps = {
   variant?: PillVariant;
   size?: PillSize;
+  bold?: boolean;
   label?: string;
+  status?: PillStatus;
 };
 
 function getPillColour(label?: string) {
@@ -37,20 +40,36 @@ function setLabelSize(size: PillSize) {
   }
 }
 
-export function PillInput({ variant = 'solid', size = 'md', label }: PillProps) {
+function setLabelWeight(bold: boolean) {
+  if (bold) {
+    return 'var(--mantine-font-weight-semibold)';
+  }
+  return 'var(--mantine-font-weight-regular)';
+}
+
+export function PillInput({
+  variant = 'solid',
+  size = 'md',
+  bold = false,
+  label,
+  status,
+}: PillProps) {
   const colour = getPillColour(label);
   const textSize = setLabelSize(size);
+  const textWeight = setLabelWeight(bold);
 
   return (
     <Pill
       size={size}
+      data-status={variant === 'status' ? status : undefined}
       classNames={{
-        root: variant === 'solid' ? classes.solidPill : classes.outlinedPill,
+        root: classes[`${variant}Pill`],
         label: classes.label,
       }}
       style={{
         '--pill-colour': colour,
         '--text-size': textSize,
+        '--text-weight': textWeight,
       }}
     >
       {label}

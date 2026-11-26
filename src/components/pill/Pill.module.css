@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   font-size: var(--text-size);
-  font-weight: var(--mantine-font-weight-regular);
+  font-weight: var(--text-weight);
   padding: 0px 3px;
   line-height: 1;
 }
@@ -16,7 +16,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 30px;
+  border-radius: var(--mantine-radius-xl);
   margin: 2px 5px;
   border: 1.5px solid var(--pill-colour);
 }
@@ -35,4 +35,29 @@
 
 .outlinedPill .label {
   color: var(--mantine-color-ubhNeutral-9);
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mantine-radius-xl);
+  height: auto;
+  padding: 7px 9px;
+
+  &[data-status='good'],
+  &[data-status='critical'] {
+    border: none;
+  }
+
+  &[data-status='good'] {
+    color: var(--success-text);
+  }
+  &[data-status='critical'] {
+    color: var(--error-text);
+  }
+}
+
+.statusPill .label {
+  overflow: visible;
 }
